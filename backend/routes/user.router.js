@@ -14,3 +14,5 @@ router.get("/profile", userProfile);
 
 // Update user profile (for musicians)
 router.put("/profile", updateProfile);
+
+module.exports = router;

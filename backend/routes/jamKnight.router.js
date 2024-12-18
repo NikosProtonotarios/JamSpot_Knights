@@ -21,3 +21,5 @@ router.put("/jamnight/:id/confirm", confirmJamNight);
 
 // Confirm musicians for a jam night (owner confirms musicians)
 router.put("/jamnight/:id/confirmMusician", confirmMusicianForJamNight);
+
+module.exports = router;

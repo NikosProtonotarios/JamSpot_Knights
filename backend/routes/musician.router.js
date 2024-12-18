@@ -12,3 +12,5 @@ router.put("/musician/:id/jamnight", addMusicianToJamNight);
 
 // Remove musician from a jam night (musician chooses to leave)
 router.put("/musician/:id/jamnight/remove", removeMusicianFromJamNight);
+
+module.exports = router;
