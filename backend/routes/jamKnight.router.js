@@ -1,6 +1,16 @@
 const express = require("express");
 const router = express.Router();
 
+const {
+    createJamNight,
+    getAllJamNights,
+    getJamNightById,
+    updateJamNight,
+    deleteJamNight,
+    confirmJamNight,
+    confirmMusicianForJamNight,
+} = require("../controller/jamKnight.controller");
+
 // Create a new jam night (owner can create)
 router.post("/jamnight", createJamNight);
 
