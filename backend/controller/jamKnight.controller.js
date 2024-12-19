@@ -1,8 +1,8 @@
-const jamKnight = require("../models/jamKnight");
+const JamNight = require("../models/jamKnight");
 
 const createJamNight = async (req, res) => {
     try {
-        const newJamNight = new jamKnight(req.body);
+        const newJamNight = new JamNight(req.body);
 
         const savedJamNight = await newJamNight.save();
 
@@ -15,7 +15,13 @@ const createJamNight = async (req, res) => {
 
 const getAllJamNights = async (req, res) => {
     try {
+        const jamNights = await JamNight.find();
 
+        if (!jamNights || jamNights.length === 0) {
+            return res.status(404).json({message: "No jam nights found"});
+        }
+
+        return res.status(200).json(jamNights);
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Error fetching jam nights" });
