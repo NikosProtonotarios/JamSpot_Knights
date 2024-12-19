@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 
-const URI =
-  "mongodb+srv://Nikos:Nikos1234@cluster0.ck9pj.mongodb.net/JamSpot_Knights?retryWrites=true&w=majority&appName=Cluster0";
+const URI = process.env.MONGODB_URI;
 
 // initialize mongo connection
 main()
