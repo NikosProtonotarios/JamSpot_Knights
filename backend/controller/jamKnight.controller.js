@@ -73,7 +73,19 @@ const deleteJamNight = async (req, res) => {
 
 const confirmJamNight = async (req, res) => {
     try {
+        const { id } = req.params;
 
+        const updatedJamNight = await JamNight.findByIdAndUpdate(
+            id, 
+            { isConfirmed: true }, // explicitly setting isConfirmed to true
+            { new: true }
+        );
+
+        if (!updatedJamNight) {
+            return res.status(404).json({ message: "Jam night not found" });
+        }
+
+        return res.status(200).json(updatedJamNight);
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Error confirming jam night" });
@@ -82,7 +94,28 @@ const confirmJamNight = async (req, res) => {
 
 const confirmMusicianForJamNight = async (req, res) => {
     try {
+        const { id } = req.params; // Jam night ID
+        const { musicianId } = req.body; // Musician ID to confirm
 
+        // Find the jam night by ID
+        const jamNight = await JamNight.findById(id);
+
+        if (!jamNight) {
+            return res.status(404).json({ message: "Jam night not found" });
+        }
+
+        // Check if the musician is already confirmed
+        if (jamNight.confirmedMusicians.includes(musicianId)) {
+            return res.status(400).json({ message: "Musician is already confirmed" });
+        }
+
+        // Add the musician to the confirmedMusicians array
+        jamNight.confirmedMusicians.push(musicianId);
+
+        // Update the jam night
+        const updatedJamNight = await jamNight.save();
+
+        return res.status(200).json(updatedJamNight);
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Error confirming musician for jam night" });
