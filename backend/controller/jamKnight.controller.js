@@ -30,7 +30,14 @@ const getAllJamNights = async (req, res) => {
 
 const getJamNightById = async (req, res) => {
     try {
+        const {id} = req.params;
+        const jamNight = await JamNight.findById(id);
 
+        if (!jamNight) {
+            return res.status(404).json({message: "Jam night not found"});
+        }
+
+        return res.status(200).json(jamNight);
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Error fetching jam night" });
@@ -39,7 +46,14 @@ const getJamNightById = async (req, res) => {
 
 const updateJamNight = async (req, res) => {
     try {
+        const {id} = req.params;
+        const updatedJamNight = await JamNight.findByIdAndUpdate(id, req.body, {new: true});
 
+        if (!updatedJamNight) {
+            return res.status(404).json({message: "Jam night not found"});
+        }
+
+        return res.status(200).json(updatedJamNight);
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Error updating jam night" });
@@ -48,7 +62,9 @@ const updateJamNight = async (req, res) => {
 
 const deleteJamNight = async (req, res) => {
     try {
-
+        const {id} = req.params;
+        await JamNight.findByIdAndDelete(id);
+        return res.status(200).json({message: "Jam night deleted"});
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Error deleting jam night" });
