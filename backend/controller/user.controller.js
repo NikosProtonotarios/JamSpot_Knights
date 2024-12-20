@@ -1,4 +1,7 @@
+require('dotenv').config();
 const User = require("../models/user");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 const userProfile = async (req, res) => {
   try {
@@ -13,7 +16,12 @@ const userProfile = async (req, res) => {
 const userRegister = async (req, res) => {
   try {
     const { username, email, password, userType } = req.body;
-    const user = new User({ username, email, password, userType });
+
+    // Hash the password before saving
+    const saltRounds = parseInt(process.env.SALT);  // Make sure to convert the SALT to a number
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+    const user = new User({ username, email, password: hashedPassword, userType });
     await user.save();
     return res.status(201).send({ message: "User created successfully" });
   } catch (error) {
@@ -29,7 +37,20 @@ const userLogin = async (req, res) => {
     if (!user) {
       return res.status(401).send({ message: "Invalid email or password" });
     }
-    return res.send({ message: "User logged in successfully" });
+
+    // Compare the provided password with the hashed password
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(401).send({ message: "Invalid email or password" });
+    }
+
+    // Token
+    const token = jwt.sign(
+      { userId: user._id, userType: user.userType }, 
+      process.env.SECRET_KEY,
+    );
+
+    return res.send({ message: "User logged in successfully", token });
   } catch (error) {
     console.error(error);
     return res.status(500).send({ message: "Error logging in user" });
@@ -54,6 +75,7 @@ const updateProfile = async (req, res) => {
     return res.status(500).send({ message: "Error updating user profile" });
   }
 };
+
 
 module.exports = {
   userProfile,

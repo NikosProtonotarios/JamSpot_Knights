@@ -1,4 +1,5 @@
 const JamNight = require("../models/jamKnight");
+const bcrypt = require("bcrypt");
 
 const createJamNight = async (req, res) => {
     try {
