@@ -30,16 +30,16 @@ const authenticate = (req, res, next) => {
 // Authorization Middleware
 const authorize = (roles = []) => {
   return (req, res, next) => {
-    // Check if the user is updating their own profile
-    if (req.params.id !== req.user.userId.toString()) {
-      return res.status(403).json({ message: "You can only update your own profile" });
-    }
+    // Convert the userType and roles to lowercase to avoid case sensitivity issues
+    const userType = req.user.userType.toLowerCase();
+    const allowedRoles = roles.map(role => role.toLowerCase());
 
-    // Check if the user's role matches one of the allowed roles (if roles are provided)
-    if (roles.length && !roles.includes(req.user.userType)) {
+    // If roles are provided, check if the user has one of the allowed roles
+    if (allowedRoles.length && !allowedRoles.includes(userType)) {
       return res.status(403).json({ message: "Access Denied, Insufficient Role" });
     }
 
+    // Move to the next middleware if the user has the right role
     next();
   };
 };

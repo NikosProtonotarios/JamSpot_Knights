@@ -12,7 +12,7 @@ const {
     confirmMusicianForJamNight,
 } = require("../controller/jamKnight.controller");
 
-// Create a new jam night (only authenticated users, ShowRunner role)
+// Create a new jam night (only authenticated users, ShowRunner)
 router.post("/jamnight", authenticate, authorize(['ShowRunner']), createJamNight);
 
 // Get all jam nights (public, no auth needed)

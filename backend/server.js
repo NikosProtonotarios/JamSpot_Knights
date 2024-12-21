@@ -17,7 +17,7 @@ app.use(cors());
 
 // Routes
 app.use("/users", userRoutes);
-app.use("/jamNights", authenticate, authorize(["showRunner"]), jamNightsRoutes);
+app.use("/jamNights", jamNightsRoutes);
 
 app.get("/", (req, res) => {
   res.send("Hello World");

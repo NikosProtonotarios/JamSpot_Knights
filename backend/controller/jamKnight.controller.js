@@ -5,21 +5,23 @@ const { authenticate, authorize } = require("../middleware/auth");
 
 const createJamNight = async (req, res) => {
   try {
-    const newJamNight = new JamNight(req.body);
+    // Create a new JamNight object
+    const newJamNight = new JamNight({
+      ...req.body, // Spread the request body
+      owner: req.user.userId, // Set the authenticated user's ID as the owner
+    });
 
-    // Make sure to add the creator's ID to the jam night
-    newJamNight.creator = req.user.userId;
-
+    // Save the new jam night to the database
     const savedJamNight = await newJamNight.save();
 
+    // Send the saved jam night as a response
     res.status(201).json(savedJamNight);
   } catch (error) {
     console.error(error);
-    res
-      .status(400)
-      .json({ message: "Error creating jam night", error: error.message });
+    res.status(400).json({ message: "Error creating jam night", error: error.message });
   }
 };
+
 
 const getAllJamNights = async (req, res) => {
   try {
