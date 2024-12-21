@@ -64,7 +64,7 @@ const updateJamNight = async (req, res) => {
     }
 
     // Check if the logged-in user is the creator
-    if (jamNight.creator.toString() !== req.user.userId) {
+    if (jamNight.owner.toString() !== req.user.userId) {
       return res
         .status(403)
         .json({ message: "You do not have permission to update this event" });
@@ -91,7 +91,7 @@ const deleteJamNight = async (req, res) => {
     }
 
     // Check if the logged-in user is the creator
-    if (jamNight.creator.toString() !== req.user.userId) {
+    if (jamNight.owner.toString() !== req.user.userId) {
       return res
         .status(403)
         .json({ message: "You do not have permission to delete this event" });
