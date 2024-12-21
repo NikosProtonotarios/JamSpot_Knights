@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const { authenticate, authorize } = require("../middleware/auth");
 
 const {
   userProfile,
@@ -8,18 +9,16 @@ const {
   updateProfile,
 } = require("../controller/user.controller");
 
-// CRUD operation / different routes
+// Get user profile (only authenticated users)
+router.get("/profile", authenticate, userProfile);
 
-// Get user profile
-router.get("/profile", userProfile);
-
-// Register a new user
+// Register a new user (public route)
 router.post("/register", userRegister);
 
-// Login route
+// Login route (public route)
 router.post("/login", userLogin);
 
-// Update user profile (for musicians)
-router.put("/profile/:id", updateProfile);
+// Update user profile (only authenticated users, possibly musicians only)
+router.put("/profile/:id", authenticate, authorize(), updateProfile);
 
 module.exports = router;
