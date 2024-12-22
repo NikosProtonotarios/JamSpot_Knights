@@ -1,18 +1,24 @@
-import './Events.css';
+import { Link } from "react-router-dom";
+import React from "react";
+import "./Events.css";
 
 function Events() {
-    return (
+  return (
+    <div>
+      <div className="EventContainer">
         <div>
-            <div className='EventContainer'>
-                <div>
-                    <button>Create Event</button>
-                </div>
-                <div>
-                    <button>Check Older Events</button>
-                </div>
-            </div>
+          <Link to="/createEvent">
+            <button>Create Event</button>
+          </Link>
         </div>
-    )
+        <div>
+          <Link to="/checkOlderEvents">
+            <button>Check Older Events</button>
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
 }
 
-export default Events
+export default Events;
