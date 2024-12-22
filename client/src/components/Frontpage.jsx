@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import React from "react";
 
 function Frontpage() {
   return (
@@ -12,7 +13,9 @@ function Frontpage() {
           <Link to="/signup">
             <button>Sign Up</button>
           </Link>
-          <button>Login</button>
+          <Link to="/login">
+            <button>Login</button>
+          </Link>
           <button>Logout</button>
         </div>
       </div>

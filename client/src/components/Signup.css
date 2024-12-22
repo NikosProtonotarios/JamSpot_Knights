@@ -1,0 +1,21 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.signTitle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  font-size: 50px;
+}
+
+.signUp {
+    display: flex;
+    justify-content: center;
+    font-size: 30px;
+    gap: 150px;
+    height: 150px;
+}
