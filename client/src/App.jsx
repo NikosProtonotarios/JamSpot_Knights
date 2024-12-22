@@ -6,6 +6,7 @@ import SignUp from "./components/Signup";
 import Login from "./components/LogIn";
 import RegisterShowRunner from "./components/RegisterShowRunner";
 import RegisterMusician from "./components/RegisterMusician";
+import CreateEvent from "./components/CreateEvent";
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/registershowrunner" element={<RegisterShowRunner />} />
           <Route path="/registermusician" element={<RegisterMusician />} />
+          <Route path="/createevent" element={<CreateEvent />} />
         </Routes>
       </div>
     </Router>

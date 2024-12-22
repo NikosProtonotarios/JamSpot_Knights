@@ -26,7 +26,7 @@ function Frontpage() {
 
       <div className="middleContainer">
         <div>
-          <Link to="/events">
+          <Link to="/createevent">
             <h3 className="middle-check-fonts">Check the Events</h3>
           </Link>
         </div>
