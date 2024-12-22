@@ -1,9 +1,9 @@
-import './CreateEvent.css';
+import './Events.css';
 
-function CreateEvent() {
+function Events() {
     return (
         <div>
-            <div className='createEventContainer'>
+            <div className='EventContainer'>
                 <div>
                     <button>Create Event</button>
                 </div>
@@ -15,4 +15,4 @@ function CreateEvent() {
     )
 }
 
-export default CreateEvent
+export default Events

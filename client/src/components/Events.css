@@ -4,11 +4,10 @@
   box-sizing: border-box;
 }
 
-.createEventContainer {
+.EventContainer {
     display: flex;
     justify-content: space-evenly;
     padding: 20px;
     font-size: 20px;
     border: 1px solid rgb(214, 214, 214);
 }
-
