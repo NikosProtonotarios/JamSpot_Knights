@@ -26,10 +26,14 @@ function Frontpage() {
 
       <div className="middleContainer">
         <div>
-          <h3 className="middle-check-fonts">Check the Events</h3>
+          <Link to="/events">
+            <h3 className="middle-check-fonts">Check the Events</h3>
+          </Link>
         </div>
         <div className="middle-check-fonts">
-          <h3>Check the musicians</h3>
+          <Link to="musicians">
+            <h3>Check the musicians</h3>
+          </Link>
         </div>
       </div>
       <div className="mainDescription">
