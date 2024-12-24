@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import React from "react";
 import "./Events.css";
 
-function Events() {
+function Events({user}) {
   return (
     <div>
       <div className="EventContainer">

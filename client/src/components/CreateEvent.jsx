@@ -1,12 +1,12 @@
-import { useState } from "react";
+import React, { useState, useCallback } from "react";
 import "./CreateEvent.css"; // Optional: Add styling for the form
 
 function CreateEvent() {
   const [songs, setSongs] = useState([{ name: "", artist: "", roles: [""] }]);
 
-  const handleAddSong = () => {
+  const handleAddSong = useCallback(() => {
     setSongs([...songs, { name: "", artist: "", roles: [""] }]);
-  };
+  }, [songs]);  
 
   const handleRemoveSong = (index) => {
     const updatedSongs = songs.filter((_, i) => i !== index);

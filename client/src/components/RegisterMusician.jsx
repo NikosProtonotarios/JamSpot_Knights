@@ -7,6 +7,8 @@ function RegisterMusician() {
     name: "",
     email: "",
     password: "",
+    instruments: "",
+    bio: "",
     photo: null,
   });
 
@@ -34,9 +36,11 @@ function RegisterMusician() {
     formDataToSend.append("name", formData.name);
     formDataToSend.append("email", formData.email);
     formDataToSend.append("password", formData.password);
+    formDataToSend.append("instruments", formData.instruments);
+    formDataToSend.append("bio", formData.bio);
     formDataToSend.append("photo", formData.photo);
 
-    // Log the data or send it to your backend
+    // Log the data
     console.log("Musician Registration Data:", formData);
   };
 
@@ -83,6 +87,34 @@ function RegisterMusician() {
           />
         </div>
 
+        {/* Instruments Input */}
+        <div className="formGroup">
+          <label htmlFor="instruments">Intruments:</label>
+          <input
+            type="instruments"
+            id="instruments"
+            name="instruments"
+            value={formData.instruments}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        {/* Bio Input */}
+        <div className="formGroup">
+          <label className="label-bio" htmlFor="bio">
+            Bio:
+          </label>
+          <textarea
+            type="bio"
+            id="bio"
+            name="bio"
+            value={formData.bio}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
         {/* Photo Input */}
         <div className="formGroup">
           <label htmlFor="photo">Upload your photo:</label>
@@ -97,7 +129,9 @@ function RegisterMusician() {
         </div>
 
         {/* Register Button */}
-        <button type="submit">Register</button>
+        <div className="button-register">
+          <button type="submit">Register</button>
+        </div>
       </form>
     </div>
   );
