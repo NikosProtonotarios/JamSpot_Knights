@@ -2,7 +2,6 @@ require("dotenv").config();
 const User = require("../models/user");
 const JamNight = require("../models/jamKnight");
 const Musician = require("../models/musician");
-const {authenticate, authorize} = require("../middleware/authenticate");
 
 const getAllMusicians = async (req, res) => {
     try {
@@ -79,7 +78,7 @@ const removeMusicianFromJamNight = async (req, res) => {
         jamNight.confirmedMusicians.pull(musicianId);
         await jamNight.save();
         res.status(200).json({message: "musician removed"});
-        
+
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: "Error removing musician from jam night" });
