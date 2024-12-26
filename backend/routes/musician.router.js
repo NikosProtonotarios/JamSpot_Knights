@@ -13,12 +13,12 @@ const {
 router.get("/musicians", getAllMusicians);
 
 // Get a specific musician by ID
-router.get("/musician/:id", getMusicianById);
+router.get("/musician/:id", authenticate, getMusicianById);
 
 // Add musician to a jam night (musician chooses a role)
-router.put("/musician/:id/jamnight", addMusicianToJamNight);
+router.put("/musician/:id/jamnight", authenticate, authorize(["musician"]), addMusicianToJamNight);
 
 // Remove musician from a jam night (musician chooses to leave)
-router.put("/musician/:id/jamnight/remove", removeMusicianFromJamNight);
+router.put("/musician/:id/jamnight/remove", authenticate, authorize(["musician", "showRunner"]), removeMusicianFromJamNight);
 
 module.exports = router;

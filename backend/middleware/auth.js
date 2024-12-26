@@ -19,7 +19,7 @@ const authenticate = (req, res, next) => {
     req.user = decoded;
     next();
   } catch (error) {
-    console.error("Error verifying token:", error);  // Log error for debugging
+    console.error("Error verifying token:", error);
     if (error.name === "TokenExpiredError") {
       return res.status(401).json({ message: "Token expired" });
     }
