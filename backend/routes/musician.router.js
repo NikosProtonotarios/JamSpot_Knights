@@ -1,5 +1,13 @@
 const express = require("express");
 const router = express.Router();
+const { authenticate, authorize } = require("../middleware/auth");
+
+const {
+   getAllMusicians,
+   getMusicianById,
+   addMusicianToJamNight,
+   removeMusicianFromJamNight,
+} = require("../controller/musician.controller");
 
 // Get all musicians
 router.get("/musicians", getAllMusicians);

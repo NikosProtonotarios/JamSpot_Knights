@@ -5,6 +5,7 @@ const cors = require("cors");
 const connection = require("./config/connection");
 const userRoutes = require("./routes/user.router");
 const jamNightsRoutes = require("./routes/jamKnight.router");
+// const musicianRoutes = require("./routes/musician.router");
 const jwt = require("jsonwebtoken");
 
 // Initialize the app
@@ -18,6 +19,7 @@ app.use(cors());
 // Routes
 app.use("/users", userRoutes);
 app.use("/jamNights", jamNightsRoutes);
+// app.use("/musicians", musicianRoutes);
 
 app.get("/", (req, res) => {
   res.send("Hello World");
