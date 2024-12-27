@@ -7,7 +7,13 @@ const {
   userRegister,
   userLogin,
   updateProfile,
+  getAllMusicians,
+   getMusicianById,
+   addMusicianToJamNight,
+   removeMusicianFromJamNight,
 } = require("../controller/user.controller");
+
+// ShowRunners
 
 // Get user profile (only authenticated users)
 router.get("/profile", authenticate, userProfile);
@@ -20,5 +26,19 @@ router.post("/login", userLogin);
 
 // Update user profile (only authenticated users, possibly musicians only)
 router.put("/profile/:id", authenticate, authorize(), updateProfile);
+
+// Musicians
+
+// Get all musicians
+router.get("/musicians", getAllMusicians);
+
+// Get a specific musician by ID
+router.get("/musician/:id", authenticate, getMusicianById);
+
+// Add musician to a jam night (musician chooses a role)
+router.put("/musician/:musicianId/:jamNightId", authenticate, authorize(["musician"]), addMusicianToJamNight);
+
+// Remove musician from a jam night (musician chooses to leave)
+router.put("/musician/:id/jamNight/remove", authenticate, authorize(["musician", "showRunner"]), removeMusicianFromJamNight);
 
 module.exports = router;

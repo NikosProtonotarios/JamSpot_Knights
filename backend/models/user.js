@@ -9,7 +9,14 @@ const userSchema = new mongoose.Schema(
       type: String,
       enum: ["showRunner", "musician"],
       required: true,
-    }, // User can either be a showRunner or musician
+    }, // User can either be showRunner or musician
+    photo: { type: String }, // Path to the user's profile picture (optional)
+    bio: { type: String }, // Short biography (optional)
+    instruments: [{ type: String }], // Instruments the user plays (musicians only)
+    jamNightsParticipated: [
+      { type: mongoose.Schema.Types.ObjectId, ref: "JamKnight" },
+    ], // Jam nights the user participated in (musicians only)
+    roles: [{ type: String }], // Roles played in different events (musicians only)
   },
   { timestamps: true }
 );
