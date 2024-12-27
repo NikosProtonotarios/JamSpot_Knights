@@ -16,9 +16,9 @@ router.get("/musicians", getAllMusicians);
 router.get("/musician/:id", authenticate, getMusicianById);
 
 // Add musician to a jam night (musician chooses a role)
-router.put("/musician/:id/jamnight", authenticate, authorize(["musician"]), addMusicianToJamNight);
+router.put("/musician/:musicianId/:jamNightId", authenticate, authorize(["musician"]), addMusicianToJamNight);
 
 // Remove musician from a jam night (musician chooses to leave)
-router.put("/musician/:id/jamnight/remove", authenticate, authorize(["musician", "showRunner"]), removeMusicianFromJamNight);
+router.put("/musician/:id/jamNight/remove", authenticate, authorize(["musician", "showRunner"]), removeMusicianFromJamNight);
 
 module.exports = router;

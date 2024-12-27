@@ -2,17 +2,17 @@ const mongoose = require("mongoose");
 
 const jamKnightSchema = new mongoose.Schema(
   {
-    title: { type: String, required: true }, // Title of the jam night (e.g., 80s Night)
-    location: { type: String, required: true }, // Location of the jam night
-    date: { type: Date, required: true }, // Date and time of the jam night
-    summary: { type: String }, // Short description of the event
+    title: { type: String, required: true },
+    location: { type: String, required: true },
+    date: { type: Date, required: true },
+    summary: { type: String },
     songs: [
       {
-        title: { type: String, required: true }, // Title of the song
+        title: { type: String, required: true },
         roles: [
           {
-            instrument: { type: String, required: true }, // e.g., Guitar, Drums
-            musician: { type: mongoose.Schema.Types.ObjectId, ref: "User" }, // Musician taking the role
+            instrument: { type: String, required: true },
+            musician: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
           },
         ],
       },
@@ -22,8 +22,8 @@ const jamKnightSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     }, // Reference to the showRunner (owner)
-    isConfirmed: { type: Boolean, default: false }, // If the event is confirmed by the owner
-    confirmedMusicians: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }], // Musicians confirmed for the jam
+    isConfirmed: { type: Boolean, default: false },
+    confirmedMusicians: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   },
   { timestamps: true }
 );
