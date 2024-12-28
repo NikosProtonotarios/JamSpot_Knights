@@ -39,6 +39,6 @@ router.get("/musician/:id", authenticate, getMusicianById);
 router.put("/musician/:musicianId/:jamNightId", authenticate, authorize(["musician"]), addMusicianToJamNight);
 
 // Remove musician from a jam night (musician chooses to leave)
-router.put("/musician/:id/jamNight/remove", authenticate, authorize(["musician", "showRunner"]), removeMusicianFromJamNight);
+router.put("/jamNight/:jamNightId/remove/:musicianId", authenticate, authorize(["musician", "showRunner"]), removeMusicianFromJamNight);
 
 module.exports = router;

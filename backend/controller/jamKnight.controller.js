@@ -1,6 +1,7 @@
 require("dotenv").config();
 const JamKnight = require("../models/jamKnight");
-const Musician = require("../models/musician");
+// const Musician = require("../models/musician");
+const User = require("../models/user");
 const { authenticate, authorize } = require("../middleware/auth");
 
 const createJamNight = async (req, res) => {
@@ -51,7 +52,9 @@ const getAllJamNights = async (req, res) => {
 const getJamNightById = async (req, res) => {
   try {
     const { id } = req.params;
-    const jamNight = await JamKnight.findById(id);
+
+    // Find the jam night by ID and populate the owner field
+    const jamNight = await JamKnight.findById(id).populate('owner', 'name email'); // Populates the owner's name and email
 
     if (!jamNight) {
       return res.status(404).json({ message: "Jam night not found" });
@@ -142,16 +145,20 @@ const confirmMusicianForJamNight = async (req, res) => {
     const { musicianId } = req.body; // Musician ID to confirm
 
     // Check if the musician exists
-    const musician = await Musician.findById(musicianId);
+    const musician = await User.findById(musicianId);
     if (!musician) {
       return res.status(404).json({ message: "Musician not found" });
     }
 
     // Find the jam night by ID
     const jamNight = await JamKnight.findById(id);
-
     if (!jamNight) {
       return res.status(404).json({ message: "Jam night not found" });
+    }
+
+    // Check if the current user is the owner of the jam night
+    if (jamNight.owner.toString() !== req.user.id) {
+      return res.status(403).json({ message: "Access denied, you are not the owner of this jam night" });
     }
 
     // Check if the musician is already confirmed
@@ -168,9 +175,7 @@ const confirmMusicianForJamNight = async (req, res) => {
     return res.status(200).json(updatedJamNight);
   } catch (error) {
     console.error(error);
-    res
-      .status(500)
-      .json({ message: "Error confirming musician for jam night" });
+    res.status(500).json({ message: "Error confirming musician for jam night" });
   }
 };
 

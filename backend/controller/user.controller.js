@@ -198,9 +198,9 @@ const addMusicianToJamNight = async (req, res) => {
 
 const removeMusicianFromJamNight = async (req, res) => {
   try {
-    const { jamNightId, userId } = req.params; // Change musicianId to userId
+    const { jamNightId, musicianId } = req.params;
     const jamNight = await JamKnight.findById(jamNightId);
-    const user = await User.findById(userId);
+    const user = await User.findById(musicianId);
 
     if (!jamNight) {
       return res.status(404).json({ message: "JamNight not found" });
@@ -210,8 +210,13 @@ const removeMusicianFromJamNight = async (req, res) => {
       return res.status(404).json({ message: "Musician not found" });
     }
 
-    // If you have an array of confirmed musicians in the JamNight model, remove the user from it
-    jamNight.confirmedMusicians.pull(userId);
+    // ShowRunner can remove any musician, but a musician can only remove themselves
+    if (req.user.id !== jamNight.owner.toString() && req.user.id !== musicianId) {
+      return res.status(403).json({ message: "You are not authorized to remove this musician" });
+    }
+
+    // Remove the musician from the confirmedMusicians array
+    jamNight.confirmedMusicians.pull(musicianId);
     await jamNight.save();
 
     res.status(200).json({ message: "Musician removed from the jam night" });
