@@ -1,31 +1,41 @@
 require("dotenv").config();
-const JamNight = require("../models/jamKnight");
+const JamKnight = require("../models/jamKnight");
 const Musician = require("../models/musician");
 const { authenticate, authorize } = require("../middleware/auth");
 
 const createJamNight = async (req, res) => {
   try {
-    // Create a new JamNight object
-    const newJamNight = new JamNight({
-      ...req.body, // Spread the request body
-      owner: req.user.userId, // Set the authenticated user's ID as the owner
+    const { title, date, songs, location } = req.body;
+
+    // Ensure that the owner is set to the authenticated user
+    const owner = req.user.userId; // Assuming you're using JWT for authentication
+
+    // Create the JamNight with roles where 'musician' is initially null
+    const jamNight = new JamKnight({
+      title,
+      location, // Add the location here
+      date,
+      songs: songs.map((song) => ({
+        title: song.title,
+        roles: song.roles.map((role) => ({
+          instrument: role.instrument,
+          musician: null, // Initially no musician assigned
+        })),
+      })),
+      owner, // Set the owner as the authenticated user
     });
 
-    // Save the new jam night to the database
-    const savedJamNight = await newJamNight.save();
-
-    // Send the saved jam night as a response
-    res.status(201).json(savedJamNight);
+    await jamNight.save();
+    res.status(201).json({ message: "JamNight created successfully", jamNight });
   } catch (error) {
     console.error(error);
-    res.status(400).json({ message: "Error creating jam night", error: error.message });
+    res.status(500).json({ message: "Error creating jam night", error });
   }
 };
 
-
 const getAllJamNights = async (req, res) => {
   try {
-    const jamNights = await JamNight.find();
+    const jamNights = await JamKnight.find();
 
     if (!jamNights || jamNights.length === 0) {
       return res.status(404).json({ message: "No jam nights found" });
@@ -41,7 +51,7 @@ const getAllJamNights = async (req, res) => {
 const getJamNightById = async (req, res) => {
   try {
     const { id } = req.params;
-    const jamNight = await JamNight.findById(id);
+    const jamNight = await JamKnight.findById(id);
 
     if (!jamNight) {
       return res.status(404).json({ message: "Jam night not found" });
@@ -57,7 +67,7 @@ const getJamNightById = async (req, res) => {
 const updateJamNight = async (req, res) => {
   try {
     const { id } = req.params;
-    const jamNight = await JamNight.findById(id);
+    const jamNight = await JamKnight.findById(id);
 
     if (!jamNight) {
       return res.status(404).json({ message: "Jam night not found" });
@@ -71,7 +81,7 @@ const updateJamNight = async (req, res) => {
     }
 
     // Proceed with the update
-    const updatedJamNight = await JamNight.findByIdAndUpdate(id, req.body, {
+    const updatedJamNight = await JamKnight.findByIdAndUpdate(id, req.body, {
       new: true,
     });
     return res.status(200).json(updatedJamNight);
@@ -84,7 +94,7 @@ const updateJamNight = async (req, res) => {
 const deleteJamNight = async (req, res) => {
   try {
     const { id } = req.params;
-    const jamNight = await JamNight.findById(id);
+    const jamNight = await JamKnight.findById(id);
 
     if (!jamNight) {
       return res.status(404).json({ message: "Jam night not found" });
@@ -97,7 +107,7 @@ const deleteJamNight = async (req, res) => {
         .json({ message: "You do not have permission to delete this event" });
     }
 
-    await JamNight.findByIdAndDelete(id);
+    await JamKnight.findByIdAndDelete(id);
     return res.status(200).json({ message: "Jam night deleted" });
   } catch (error) {
     console.error(error);
@@ -109,7 +119,7 @@ const confirmJamNight = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const updatedJamNight = await JamNight.findByIdAndUpdate(
+    const updatedJamNight = await JamKnight.findByIdAndUpdate(
       id,
       { isConfirmed: true }, // explicitly setting isConfirmed to true
       { new: true }
@@ -138,7 +148,7 @@ const confirmMusicianForJamNight = async (req, res) => {
     }
 
     // Find the jam night by ID
-    const jamNight = await JamNight.findById(id);
+    const jamNight = await JamKnight.findById(id);
 
     if (!jamNight) {
       return res.status(404).json({ message: "Jam night not found" });

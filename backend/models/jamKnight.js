@@ -12,7 +12,7 @@ const jamKnightSchema = new mongoose.Schema(
         roles: [
           {
             instrument: { type: String, required: true },
-            musician: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+            musician: { type: mongoose.Schema.Types.ObjectId, ref: "User", default: null },
           },
         ],
       },

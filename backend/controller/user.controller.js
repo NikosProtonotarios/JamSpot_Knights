@@ -2,6 +2,7 @@ require("dotenv").config();
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const JamKnight = require("../models/jamKnight")
 
 // Get user profile
 const userProfile = async (req, res) => {
@@ -23,6 +24,18 @@ const userRegister = async (req, res) => {
   try {
     const { username, email, password, userType } = req.body;
 
+    // Check if userType is valid
+    const validUserTypes = ["showRunner", "musician"];
+    if (!validUserTypes.includes(userType)) {
+      return res.status(400).send({ message: "Invalid userType. Must be 'showRunner' or 'musician'" });
+    }
+
+    // Check if the email already exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).send({ message: "Email already in use" });
+    }
+
     // Hash the password before saving
     const saltRounds = parseInt(process.env.SALT);
     const hashedPassword = await bcrypt.hash(password, saltRounds);
@@ -34,6 +47,7 @@ const userRegister = async (req, res) => {
       userType,
     });
     await user.save();
+    
     return res.status(201).send({ message: "User created successfully" });
   } catch (error) {
     console.error(error);
@@ -139,16 +153,13 @@ const getMusicianById = async (req, res) => {
 
 const addMusicianToJamNight = async (req, res) => {
   try {
-    const { jamNightId, userId } = req.params; // Now using userId instead of musicianId
+    const { jamNightId, musicianId } = req.params; // Using musicianId as userId
     const { title, instrument } = req.body;
 
-    // Find the user by their userId and check if the userType is "musician"
-    const user = await User.findById(userId);
-
+    // Find the user by their musicianId and check if the userType is "musician"
+    const user = await User.findById(musicianId);
     if (!user || user.userType !== "musician") {
-      return res
-        .status(404)
-        .json({ message: "Musician not found or user is not a musician" });
+      return res.status(404).json({ message: "Musician not found or user is not a musician" });
     }
 
     // Find the JamNight by its ID
@@ -174,16 +185,14 @@ const addMusicianToJamNight = async (req, res) => {
       return res.status(400).json({ message: "This role is already taken" });
     }
 
-    // Assign the user (musician) to the role (not confirmed yet)
-    role.musician = userId; // Now using userId here
+    // Assign the musician (user) to the role
+    role.musician = musicianId; // Set musicianId to the role
     await jamNight.save();
 
-    res
-      .status(200)
-      .json({ message: "Musician assigned to role, awaiting confirmation" });
+    res.status(200).json({ message: "Musician assigned to role, awaiting confirmation" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Error adding musician to jam night" });
+    res.status(500).json({ message: "Error adding musician to jam night", error });
   }
 };
 
