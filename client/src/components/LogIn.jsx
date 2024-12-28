@@ -1,15 +1,37 @@
 import "./LogIn.css";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function Login() {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log("Username:", username);
-    console.log("Password:", password);
+    const loginData = {
+      email,
+      password
+    };
+
+    try {
+      const response = await axios.post("http://localhost:2000/users/login", loginData);
+
+      if (response.status === 200) {
+        const {token} = response.data;
+
+        localStorage.setItem("authToken", token);
+
+        navigate("/");
+        alert("Login successful!");
+      }
+    } catch (error) {
+      console.log("Error during registration", error);
+      setErrorMessage("Invalid email or password. Please try again.");
+    }
   };
   return (
     <div className="login-container">
@@ -17,22 +39,22 @@ function Login() {
       <form onSubmit={handleSubmit}>
         <div className="input-group">
           <label className="labellogin" htmlFor="username">
-            Username
+            Email:
           </label>
           <input
             className="inputlogin"
-            type="text"
-            id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            placeholder="Enter your username"
+            type="email"
+            id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Enter your email"
             required
           />
         </div>
 
         <div className="input-group">
           <label className="labellogin" htmlFor="password">
-            Password
+            Password:
           </label>
           <input
             className="inputlogin"

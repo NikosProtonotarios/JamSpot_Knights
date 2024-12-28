@@ -33,7 +33,7 @@ function RegisterShowRunner() {
       const response = await axios.post("http://localhost:2000/users/register", registrationData);
 
       if (response.status === 201) {
-        navigate("/events");
+        navigate("/");
         alert("You are registered as a showRunner!");
       }
 
