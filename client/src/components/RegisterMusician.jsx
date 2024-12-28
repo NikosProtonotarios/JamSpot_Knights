@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./RegisterMusician.css";
+import axios from "axios";
 
 function RegisterMusician() {
   // State for form data
   const [formData, setFormData] = useState({
-    name: "",
+    username: "",
     email: "",
     password: "",
     instruments: "",
@@ -30,10 +32,10 @@ function RegisterMusician() {
   };
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const formDataToSend = new FormData();
-    formDataToSend.append("name", formData.name);
+    formDataToSend.append("username", formData.username); // Changed from formData.name
     formDataToSend.append("email", formData.email);
     formDataToSend.append("password", formData.password);
     formDataToSend.append("instruments", formData.instruments);
@@ -42,6 +44,21 @@ function RegisterMusician() {
 
     // Log the data
     console.log("Musician Registration Data:", formData);
+
+    try {
+      const response = await axios.post("http://localhost:2000/users/register/musician", formDataToSend, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      if (response.status === 201) {
+        alert("Musician registered successfully!");
+      }
+    } catch (error) {
+      console.log("Error during registration", error);
+      alert("Error during registration");
+    }
   };
 
   return (
@@ -50,12 +67,12 @@ function RegisterMusician() {
       <form onSubmit={handleSubmit} className="registerMusicianForm">
         {/* Name Input */}
         <div className="formGroup">
-          <label htmlFor="name">Name:</label>
+          <label htmlFor="username">Name:</label>
           <input
             type="text"
-            id="name"
-            name="name"
-            value={formData.name}
+            id="username"
+            name="username" // Changed from 'name' to 'username'
+            value={formData.username} // Changed from 'formData.name'
             onChange={handleChange}
             required
           />
@@ -89,9 +106,9 @@ function RegisterMusician() {
 
         {/* Instruments Input */}
         <div className="formGroup">
-          <label htmlFor="instruments">Intruments:</label>
+          <label htmlFor="instruments">Instruments:</label> {/* Fixed typo from 'Intruments' to 'Instruments' */}
           <input
-            type="instruments"
+            type="text" // Changed from 'instruments' to 'text'
             id="instruments"
             name="instruments"
             value={formData.instruments}
@@ -106,7 +123,6 @@ function RegisterMusician() {
             Bio:
           </label>
           <textarea
-            type="bio"
             id="bio"
             name="bio"
             value={formData.bio}
