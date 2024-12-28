@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const { authenticate, authorize } = require("../middleware/auth");
+const multer = require('multer');
+const upload = multer({ dest: 'temp/' });
 
 const {
   userProfile,
@@ -12,6 +14,7 @@ const {
    addMusicianToJamNight,
    removeMusicianFromJamNight,
    updateProfileMusician,
+   registerMusician,
 } = require("../controller/user.controller");
 
 // ShowRunners
@@ -32,6 +35,8 @@ router.put("/profile/:id", authenticate, authorize(), updateProfile);
 
 // Get all musicians
 router.get("/musicians", getAllMusicians);
+
+router.post("/register/musician", upload.single('photo'), registerMusician);
 
 // Get a specific musician by ID
 router.get("/musician/:id", authenticate, getMusicianById);

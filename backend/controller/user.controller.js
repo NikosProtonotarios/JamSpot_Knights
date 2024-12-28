@@ -1,8 +1,10 @@
 require("dotenv").config();
+const path = require('path');
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const JamKnight = require("../models/jamKnight")
+const JamKnight = require("../models/jamKnight");
+const fs = require('fs');
 
 // Get user profile
 const userProfile = async (req, res) => {
@@ -53,6 +55,63 @@ const userRegister = async (req, res) => {
   } catch (error) {
     console.error(error);
     return res.status(500).send({ message: "Error registering user" });
+  }
+};
+
+const registerMusician = async (req, res) => {
+  try {
+    const { username, email, password, bio, instruments } = req.body;
+
+    // Ensure the user type is 'musician'
+    const userType = 'musician';
+
+    // Check if the email already exists in the database
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).send({ message: "Email already in use" });
+    }
+
+    // Hash the password before saving
+    const saltRounds = parseInt(process.env.SALT);
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+    // Handle the photo upload (if provided)
+    let photoPath = null;
+    if (req.file) {
+      // Define the uploads directory
+      const uploadDir = path.join(__dirname, "../uploads");
+
+      // Ensure the upload directory exists, create if it doesn't
+      if (!fs.existsSync(uploadDir)) {
+        fs.mkdirSync(uploadDir, { recursive: true }); // Create directories recursively
+      }
+
+      // Create a unique filename with a timestamp
+      const photoFilename = `${Date.now()}_${req.file.originalname}`;
+      photoPath = `/uploads/${photoFilename}`; // This is the path you can send back for frontend access
+
+      // Move the uploaded file to the final upload directory
+      fs.renameSync(req.file.path, path.join(uploadDir, photoFilename));
+    }
+
+    // Create a new user with the role 'musician'
+    const newMusician = new User({
+      username,
+      email,
+      password: hashedPassword,
+      userType, // Automatically set to 'musician'
+      bio,
+      instruments: instruments.split(",").map(inst => inst.trim()), // Convert comma-separated instruments to array
+      photo: photoPath, // Save the file path or null if no photo was uploaded
+    });
+
+    // Save the new musician user in the database
+    await newMusician.save();
+
+    return res.status(201).send({ message: "Musician registered successfully" });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send({ message: "Error registering musician" });
   }
 };
 
@@ -315,4 +374,5 @@ module.exports = {
   addMusicianToJamNight,
   removeMusicianFromJamNight,
   updateProfileMusician,
+  registerMusician,
 };
