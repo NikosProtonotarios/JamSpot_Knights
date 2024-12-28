@@ -211,9 +211,9 @@ const removeMusicianFromJamNight = async (req, res) => {
     }
 
     // ShowRunner can remove any musician, but a musician can only remove themselves
-    if (req.user.id !== jamNight.owner.toString() && req.user.id !== musicianId) {
+    if (req.user.userId !== jamNight.owner.toString() && req.user.userId !== musicianId) {
       return res.status(403).json({ message: "You are not authorized to remove this musician" });
-    }
+    }    
 
     // Remove the musician from the confirmedMusicians array
     jamNight.confirmedMusicians.pull(musicianId);
