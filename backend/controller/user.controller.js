@@ -87,15 +87,23 @@ const userLogin = async (req, res) => {
 const updateProfile = async (req, res) => {
   try {
     const { id } = req.params;
+
     // Check if the user is updating their own profile
     if (req.user.userId !== id) {
-      return res
-        .status(403)
-        .json({ message: "You can only update your own profile" });
+      return res.status(403).json({ message: "You can only update your own profile" });
     }
 
-    const { username, email, password } = req.body;
-    const updatedData = { username, email, password };
+    const { username, password } = req.body;
+
+    // Prepare the updated data
+    const updatedData = {};
+
+    if (username) updatedData.username = username;
+    if (password) {
+      // Hash the password before updating
+      const hashedPassword = await bcrypt.hash(password, 10);
+      updatedData.password = hashedPassword;
+    }
 
     const user = await User.findByIdAndUpdate(id, updatedData, {
       new: true,
@@ -106,7 +114,77 @@ const updateProfile = async (req, res) => {
       return res.status(404).send({ message: "User not found" });
     }
 
-    return res.status(200).send(user);
+    // If password is updated, generate a new token
+    if (password) {
+      const token = jwt.sign(
+        { userId: user._id, userType: user.userType },
+        process.env.SECRET_KEY
+      );
+      return res.status(200).json({ message: "Profile updated successfully", token });
+    }
+
+    return res.status(200).json({ message: "Profile updated successfully", user });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send({ message: "Error updating user profile" });
+  }
+};
+
+const updateProfileMusician = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // Ensure the user is updating their own profile
+    if (req.user.userId !== id) {
+      return res.status(403).json({ message: "You can only update your own profile" });
+    }
+
+    const { username, bio, photo, instruments, roles, password } = req.body;
+    const updatedData = {};
+
+    if (username) updatedData.username = username;
+    if (bio) updatedData.bio = bio;
+    if (photo) updatedData.photo = photo;
+    if (instruments) updatedData.instruments = instruments;
+    if (roles) updatedData.roles = roles;
+
+    // If password is updated, hash it before saving
+    if (password) {
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(password, salt);
+      updatedData.password = hashedPassword;  // Update password with hashed value
+    }
+
+    // Check if there is any field to update
+    if (Object.keys(updatedData).length === 0) {
+      return res.status(400).json({ message: "No valid fields to update" });
+    }
+
+    // Update the musician's profile
+    const user = await User.findByIdAndUpdate(id, updatedData, {
+      new: true,
+      runValidators: true,
+    });
+
+    if (!user) {
+      return res.status(404).send({ message: "User not found" });
+    }
+
+    // If password is updated, generate a new JWT token
+    if (password) {
+      const token = jwt.sign(
+        { userId: user._id, userType: user.userType },
+        process.env.SECRET_KEY,
+        { expiresIn: "1h" }  // Token expiration (adjust as needed)
+      );
+      return res.status(200).json({
+        message: "Profile updated successfully",
+        user,
+        token,  // Send the new token to the user
+      });
+    }
+
+    return res.status(200).json({ message: "Profile updated successfully", user });
   } catch (error) {
     console.error(error);
     return res.status(500).send({ message: "Error updating user profile" });
@@ -235,4 +313,5 @@ module.exports = {
   getMusicianById,
   addMusicianToJamNight,
   removeMusicianFromJamNight,
+  updateProfileMusician,
 };

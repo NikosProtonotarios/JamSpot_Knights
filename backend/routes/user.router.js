@@ -11,6 +11,7 @@ const {
    getMusicianById,
    addMusicianToJamNight,
    removeMusicianFromJamNight,
+   updateProfileMusician,
 } = require("../controller/user.controller");
 
 // ShowRunners
@@ -34,6 +35,9 @@ router.get("/musicians", getAllMusicians);
 
 // Get a specific musician by ID
 router.get("/musician/:id", authenticate, getMusicianById);
+
+// Route for updating musician's profile
+router.put("/profile/musician/:id", authenticate, authorize(['musician']), updateProfileMusician);
 
 // Add musician to a jam night (musician chooses a role)
 router.put("/musician/:musicianId/:jamNightId", authenticate, authorize(["musician"]), addMusicianToJamNight);
