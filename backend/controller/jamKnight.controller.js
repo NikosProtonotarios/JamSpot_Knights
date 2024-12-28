@@ -155,9 +155,10 @@ const confirmMusicianForJamNight = async (req, res) => {
     if (!jamNight) {
       return res.status(404).json({ message: "Jam night not found" });
     }
-
+    console.log("JamNight owner:", jamNight.owner.toString());
+    console.log("Logged in user:", req.user.userId);
     // Check if the current user is the owner of the jam night
-    if (jamNight.owner.toString() !== req.user.id) {
+    if (jamNight.owner.toString() !== req.user.userId) {
       return res.status(403).json({ message: "Access denied, you are not the owner of this jam night" });
     }
 
