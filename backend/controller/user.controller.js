@@ -22,6 +22,7 @@ const userProfile = async (req, res) => {
 // Register a new user
 const userRegister = async (req, res) => {
   try {
+    // console.log("Request body:", req.body);
     const { username, email, password, userType } = req.body;
 
     // Check if userType is valid

@@ -1,15 +1,19 @@
 import React, { useState } from "react";
 import "./RegisterShowRunner.css";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function RegisterShowRunner() {
  
   const [formData, setFormData] = useState({
-    name: "",
+    username: "",
     email: "",
     password: "",
+    userType: "showRunner",
   });
 
+  const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate();
  
   const handleChange = (e) => {
     setFormData({
@@ -19,10 +23,24 @@ function RegisterShowRunner() {
   };
 
   
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("ShowRunner Registration Data:", formData);
-   
+    const registrationData = {
+      ...formData,
+      userType: 'showRunner',  // Explicitly set userType to 'showRunner'
+    };
+    try {
+      const response = await axios.post("http://localhost:2000/users/register", registrationData);
+
+      if (response.status === 201) {
+        navigate("/events");
+        alert("You are registered as a showRunner!");
+      }
+
+    } catch (error) {
+      console.log("Error during registration", error);
+      setErrorMessage("Registration failed. Please try again.");
+    }
   };
 
   return (
@@ -35,7 +53,7 @@ function RegisterShowRunner() {
           <input
             type="text"
             id="name"
-            name="name"
+            name="username"
             value={formData.name}
             onChange={handleChange}
             required
