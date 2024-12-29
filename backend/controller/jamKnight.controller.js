@@ -6,7 +6,7 @@ const { authenticate, authorize } = require("../middleware/auth");
 
 const createJamNight = async (req, res) => {
   try {
-    const { title, date, songs, location } = req.body;
+    const { title, date, songs, location, summary } = req.body;  // Include summary here
 
     // Ensure that the owner is set to the authenticated user
     const owner = req.user.userId; // Assuming you're using JWT for authentication
@@ -16,6 +16,7 @@ const createJamNight = async (req, res) => {
       title,
       location, // Add the location here
       date,
+      summary, // Add the summary here
       songs: songs.map((song) => ({
         title: song.title,
         roles: song.roles.map((role) => ({
