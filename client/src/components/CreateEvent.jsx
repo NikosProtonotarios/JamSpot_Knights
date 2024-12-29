@@ -1,5 +1,6 @@
-import React, { useState, useCallback } from "react";
-import "./CreateEvent.css"; // Optional: Add styling for the form
+import React, { useState, useCallback, useEffect } from "react";
+import "./CreateEvent.css";
+import { useNavigate, useParams } from "react-router-dom";
 
 function CreateEvent() {
   const [songs, setSongs] = useState([{ name: "", artist: "", roles: [""] }]);

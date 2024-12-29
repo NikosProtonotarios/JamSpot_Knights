@@ -34,7 +34,7 @@ function RegisterShowRunner() {
 
       if (response.status === 201) {
         navigate("/");
-        alert("You are registered as a showRunner!");
+        alert("Welcome, mighty ShowRunner! 🎩✨ Your event creation powers are unmatched. Let the jam sessions begin and the stage be yours to command! 🎤🎸⚔️");
       }
 
     } catch (error) {

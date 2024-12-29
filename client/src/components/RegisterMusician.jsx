@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import "./RegisterMusician.css";
 import axios from "axios";
 
@@ -13,6 +13,8 @@ function RegisterMusician() {
     bio: "",
     photo: null,
   });
+
+  const navigate = useNavigate();
 
   // Handle input change
   const handleChange = (e) => {
@@ -53,7 +55,8 @@ function RegisterMusician() {
       });
 
       if (response.status === 201) {
-        alert("Musician registered successfully!");
+        navigate("/");
+        alert(`Welcome, Brave Musician! 🎶 🛡️ You've joined the JamSpot Knights and are ready to make your mark in the jam nights!`);
       }
     } catch (error) {
       console.log("Error during registration", error);
