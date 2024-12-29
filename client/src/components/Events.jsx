@@ -22,5 +22,3 @@ function Events({user}) {
 }
 
 export default Events;
-
-// Whoa there, Jam Knight! 🎸 Only the mighty ShowRunners hold the power to create events. Rally the team and let them lead the way! ⚔️

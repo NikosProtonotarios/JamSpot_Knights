@@ -1,120 +1,217 @@
 import React, { useState, useCallback, useEffect } from "react";
 import "./CreateEvent.css";
 import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
 
 function CreateEvent() {
-  const [songs, setSongs] = useState([{ name: "", artist: "", roles: [""] }]);
+  const [eventDetails, setEventDetails] = useState({
+    title: "",
+    date: "",
+    location: "",
+    summary: "",
+    songs: [{ title: "", roles: [{ instrument: "", musician: "null" }] }],
+  });
+
+  const navigate = useNavigate();
 
   const handleAddSong = useCallback(() => {
-    setSongs([...songs, { name: "", artist: "", roles: [""] }]);
-  }, [songs]);  
+    setEventDetails({
+      ...eventDetails,
+      songs: [
+        ...eventDetails.songs,
+        { title: "", roles: [{ instrument: "", musician: "null" }] },
+      ],
+    });
+  }, [eventDetails]);
 
   const handleRemoveSong = (index) => {
-    const updatedSongs = songs.filter((_, i) => i !== index);
-    setSongs(updatedSongs);
+    const updatedSongs = eventDetails.songs.filter((_, i) => i !== index);
+    setEventDetails({ ...eventDetails, songs: updatedSongs });
   };
 
   const handleSongChange = (index, field, value) => {
-    const updatedSongs = [...songs];
+    const updatedSongs = [...eventDetails.songs];
     updatedSongs[index][field] = value;
-    setSongs(updatedSongs);
+    setEventDetails({ ...eventDetails, songs: updatedSongs });
   };
 
-  const handleRoleChange = (songIndex, roleIndex, value) => {
-    const updatedSongs = [...songs];
-    updatedSongs[songIndex].roles[roleIndex] = value;
-    setSongs(updatedSongs);
+  const handleRoleChange = (songIndex, roleIndex, field, value) => {
+    const updatedSongs = [...eventDetails.songs];
+    updatedSongs[songIndex].roles[roleIndex][field] = value;
+    setEventDetails({ ...eventDetails, songs: updatedSongs });
   };
 
-  const handleAddRole = (index) => {
-    const updatedSongs = [...songs];
-    updatedSongs[index].roles.push("");
-    setSongs(updatedSongs);
+  const handleAddRole = (songIndex) => {
+    const updatedSongs = [...eventDetails.songs];
+    updatedSongs[songIndex].roles.push({ instrument: "", musician: "null" });
+    setEventDetails({ ...eventDetails, songs: updatedSongs });
   };
 
   const handleRemoveRole = (songIndex, roleIndex) => {
-    const updatedSongs = [...songs];
+    const updatedSongs = [...eventDetails.songs];
     updatedSongs[songIndex].roles = updatedSongs[songIndex].roles.filter(
       (_, i) => i !== roleIndex
     );
-    setSongs(updatedSongs);
+    setEventDetails({ ...eventDetails, songs: updatedSongs });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle form submission
-    console.log("Event Submitted", { songs });
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setEventDetails({ ...eventDetails, [name]: value });
   };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const token = localStorage.getItem("authToken"); // Or sessionStorage or any other method you are using to store the token
+
+    if (!token) {
+      alert("Please log in first!");
+      return;
+    }
+
+    const data = {
+      title: eventDetails.title,
+      location: eventDetails.location,
+      date: eventDetails.date,
+      summary: eventDetails.summary,
+      songs: eventDetails.songs.map((song) => ({
+        title: song.title,
+        roles: song.roles.map((role) => ({
+          instrument: role.instrument,
+          musician: role.musician,
+        })),
+      })),
+    };
+
+    try {
+      const response = await axios.post(
+        "http://localhost:2000/jamNights/jamNight",
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Include the token in the headers
+          },
+        }
+      );
+
+      if (response.status === 201) {
+        navigate("/events");
+        alert(
+          `Congrats! Your Jam Night event is now live. Musicians can join soon!`
+        );
+      }
+
+      console.log("Jam Night Created:", response.data);
+    } catch (error) {
+      console.error("Error creating event:", error);
+      if (error.response && error.response.status === 401) {
+        alert("Unauthorized. Please log in again.");
+      } else if (error.response && error.response.status === 403) {
+      navigate("/events");
+      alert(
+        "Oops! 🚫🎸 It seems like you’re not a ShowRunner! But no worries, brave JamSpot Knight! ⚔️ You can still join epic Jam Nights and claim your role! 🥁🎤 Choose your next battle and shine like the hero you are! 💫"
+      );
+    }
+  }
+};
 
   return (
     <div className="createEventContainer">
-      <h2>Create a New Event</h2>
+      <h2>Create a New Jam Night Event</h2>
       <form onSubmit={handleSubmit}>
+        {/* Event Title */}
         <div className="form-group">
-          <label htmlFor="eventName">Event Name:</label>
-          <input type="text" id="eventName" required />
+          <label htmlFor="title">Event Title:</label>
+          <input
+            type="text"
+            id="title"
+            name="title"
+            value={eventDetails.title}
+            onChange={handleInputChange}
+            required
+          />
         </div>
 
+        {/* Event Date */}
         <div className="form-group">
-          <label htmlFor="eventDate">Event Date:</label>
-          <input type="date" id="eventDate" required />
+          <label htmlFor="date">Event Date:</label>
+          <input
+            type="date"
+            id="date"
+            name="date"
+            value={eventDetails.date}
+            onChange={handleInputChange}
+            required
+          />
         </div>
 
+        {/* Event Location */}
         <div className="form-group">
-          <label htmlFor="eventPlace">Event Place:</label>
-          <input type="text" id="eventPlace" required />
+          <label htmlFor="location">Event Location:</label>
+          <input
+            type="text"
+            id="location"
+            name="location"
+            value={eventDetails.location}
+            onChange={handleInputChange}
+            required
+          />
         </div>
 
+        {/* Event Summary */}
         <div className="form-group">
-          <label htmlFor="eventDescription">Description:</label>
-          <textarea id="eventDescription" required></textarea>
+          <label htmlFor="summary">Event Summary:</label>
+          <textarea
+            id="summary"
+            name="summary"
+            value={eventDetails.summary}
+            onChange={handleInputChange}
+            required
+          ></textarea>
         </div>
 
+        {/* Songs Section */}
         <div className="form-group">
-          <label>Number of Songs: {songs.length}</label>
+          <label>Number of Songs: {eventDetails.songs.length}</label>
           <button type="button" onClick={handleAddSong}>
             Add Song
           </button>
         </div>
 
-        {songs.map((song, songIndex) => (
+        {eventDetails.songs.map((song, songIndex) => (
           <div key={songIndex} className="song-section">
             <h3>Song {songIndex + 1}</h3>
+            {/* Song Title */}
             <div className="form-group">
-              <label>Song Name:</label>
+              <label>Song Title:</label>
               <input
                 type="text"
-                value={song.name}
+                value={song.title}
                 onChange={(e) =>
-                  handleSongChange(songIndex, "name", e.target.value)
+                  handleSongChange(songIndex, "title", e.target.value)
                 }
                 required
               />
             </div>
 
-            <div className="form-group">
-              <label>Artist/Band:</label>
-              <input
-                type="text"
-                value={song.artist}
-                onChange={(e) =>
-                  handleSongChange(songIndex, "artist", e.target.value)
-                }
-                required
-              />
-            </div>
-
+            {/* Roles Needed */}
             <div className="form-group">
               <label>Roles Needed:</label>
               {song.roles.map((role, roleIndex) => (
                 <div key={roleIndex} className="role-group">
                   <input
                     type="text"
-                    value={role}
+                    value={role.instrument}
                     onChange={(e) =>
-                      handleRoleChange(songIndex, roleIndex, e.target.value)
+                      handleRoleChange(
+                        songIndex,
+                        roleIndex,
+                        "instrument",
+                        e.target.value
+                      )
                     }
-                    placeholder="Role (e.g. vocals, guitar)"
+                    placeholder="Instrument (e.g. guitar)"
                     required
                   />
                   <button
@@ -144,6 +241,7 @@ function CreateEvent() {
           </div>
         ))}
 
+        {/* Submit Button */}
         <button type="submit" className="create-submit-button">
           Create Event
         </button>

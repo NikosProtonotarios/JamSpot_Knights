@@ -26,7 +26,8 @@ function Login() {
         localStorage.setItem("authToken", token);
 
         navigate("/");
-        alert("Login successful!");
+        alert(`🎸 Welcome to JamSpot Knights! 🎸
+You're logged in, and it's time to make some noise 🤘 🤘`);
       }
     } catch (error) {
       console.log("Error during registration", error);
