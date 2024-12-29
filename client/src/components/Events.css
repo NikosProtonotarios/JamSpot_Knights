@@ -20,7 +20,7 @@
   border-radius: 20px;
   gap: 10px;
   margin: 20px;
-  width: 600px;
+  width: 700px;
 }
 
 .eventsList {
@@ -30,8 +30,7 @@
 }
 
 .deleteButtons {
-  position: relative;
-  left: 10%;
+  
 }
 
 .roleButtons {
@@ -40,5 +39,5 @@
 }
 
 .song {
-  text-align: center;
+  text-align: start;
 }

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./RegisterMusician.css";
 import axios from "axios";
 
@@ -14,6 +14,7 @@ function RegisterMusician() {
     photo: null,
   });
 
+  const [loading, setLoading] = useState(false); // Loading state
   const navigate = useNavigate();
 
   // Handle input change
@@ -36,52 +37,56 @@ function RegisterMusician() {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true); // Set loading state when form is submitted
+
     const formDataToSend = new FormData();
-    formDataToSend.append("username", formData.username); // Changed from formData.name
+    formDataToSend.append("username", formData.username);
     formDataToSend.append("email", formData.email);
     formDataToSend.append("password", formData.password);
     formDataToSend.append("instruments", formData.instruments);
     formDataToSend.append("bio", formData.bio);
     formDataToSend.append("photo", formData.photo);
 
-    // Log the data
-    console.log("Musician Registration Data:", formData);
-
     try {
-      const response = await axios.post("http://localhost:2000/users/register/musician", formDataToSend, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.post(
+        "http://localhost:2000/users/register/musician",
+        formDataToSend,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
       if (response.status === 201) {
-        navigate("/");
-        alert(`Welcome, Brave Musician! 🎶 🛡️ You've joined the JamSpot Knights and are ready to make your mark in the jam nights!`);
+        alert("🎶 🛡️ Welcome, Brave Musician! You've joined the JamSpot Knights and are ready to make your mark in the jam nights!");
+        navigate("/"); // Navigate to home page after success
       }
     } catch (error) {
       console.log("Error during registration", error);
       alert("Error during registration");
+    } finally {
+      setLoading(false); // Set loading state to false after request completes
     }
   };
 
   return (
     <div className="musicianContainer">
       <h1>Register as a Musician</h1>
+
       <form onSubmit={handleSubmit} className="registerMusicianForm">
-        {/* Name Input */}
         <div className="formGroup">
           <label htmlFor="username">Name:</label>
           <input
             type="text"
             id="username"
-            name="username" // Changed from 'name' to 'username'
-            value={formData.username} // Changed from 'formData.name'
+            name="username"
+            value={formData.username}
             onChange={handleChange}
             required
           />
         </div>
 
-        {/* Email Input */}
         <div className="formGroup">
           <label htmlFor="email">Email:</label>
           <input
@@ -94,7 +99,6 @@ function RegisterMusician() {
           />
         </div>
 
-        {/* Password Input */}
         <div className="formGroup">
           <label htmlFor="password">Password:</label>
           <input
@@ -107,11 +111,10 @@ function RegisterMusician() {
           />
         </div>
 
-        {/* Instruments Input */}
         <div className="formGroup">
-          <label htmlFor="instruments">Instruments:</label> {/* Fixed typo from 'Intruments' to 'Instruments' */}
+          <label htmlFor="instruments">Instruments:</label>
           <input
-            type="text" // Changed from 'instruments' to 'text'
+            type="text"
             id="instruments"
             name="instruments"
             value={formData.instruments}
@@ -120,11 +123,8 @@ function RegisterMusician() {
           />
         </div>
 
-        {/* Bio Input */}
         <div className="formGroup">
-          <label className="label-bio" htmlFor="bio">
-            Bio:
-          </label>
+          <label htmlFor="bio">Bio:</label>
           <textarea
             id="bio"
             name="bio"
@@ -134,7 +134,6 @@ function RegisterMusician() {
           />
         </div>
 
-        {/* Photo Input */}
         <div className="formGroup">
           <label htmlFor="photo">Upload your photo:</label>
           <input
@@ -147,9 +146,10 @@ function RegisterMusician() {
           />
         </div>
 
-        {/* Register Button */}
         <div className="button-register">
-          <button type="submit">Register</button>
+          <button type="submit" disabled={loading}>
+            {loading ? "Registering..." : "Register"}
+          </button>
         </div>
       </form>
     </div>

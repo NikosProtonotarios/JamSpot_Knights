@@ -27,8 +27,10 @@ function Events({ user }) {
   // Function to delete an event
   const handleDeleteEvent = async (eventId) => {
     try {
-      await axios.delete(`http://localhost:2000/jamNights/${eventId}`);
-      setEvents(events.filter(event => event._id !== eventId)); // Remove the event from the state
+      const token = localStorage.getItem("token");
+      await axios.delete(`http://localhost:2000/jamNights/jamnight/${eventId}`);
+      
+      setEvents(events.filter(event => event._id !== eventId));
     } catch (error) {
       console.error("Error deleting event:", error);
     }
@@ -37,7 +39,7 @@ function Events({ user }) {
   // Function to confirm an event
   const handleConfirmEvent = async (eventId) => {
     try {
-      await axios.patch(`http://localhost:2000/jamNights/${eventId}/confirm`);
+      await axios.patch(`http://localhost:2000/jamNights/jamnight/${eventId}/confirm`);
       // Optionally update the UI or show a confirmation message
     } catch (error) {
       console.error("Error confirming event:", error);
@@ -65,7 +67,7 @@ function Events({ user }) {
       {/* Display events if they are loaded */}
       {!loading && events.length > 0 ? (
         <div className="eventsList">
-          <h2 style={{ textAlign: "center" }}>Upcoming Jam Nights</h2>
+          <h2 style={{ textAlign: "center", marginTop: "20px" }}>Upcoming Jam Nights</h2>
           {events.map((event) => (
             <div key={event._id} className="eventCard">
               <h3>{event.title}</h3>
@@ -80,6 +82,11 @@ function Events({ user }) {
                 <strong>Summary:</strong> {event.summary}
               </p>
 
+              {/* Display the number of songs */}
+              <p>
+                <strong>Number of Songs:</strong> {event.songs ? event.songs.length : 0}
+              </p>
+
               {/* Display the songs and roles */}
               <div>
                 <h4 style={{ textAlign: "center" }}>Songs and Roles</h4>
@@ -87,7 +94,7 @@ function Events({ user }) {
                   <div>
                     {event.songs.map((song, songIndex) => (
                       <div key={songIndex} className="song">
-                        <h5>{song.title}</h5>
+                        <h5 style={{textAlign: "center", fontSize: "1.3rem"}}>{song.title}</h5>
                         <ul>
                           {song.roles.map((role, roleIndex) => (
                             <li key={roleIndex}>
@@ -103,7 +110,10 @@ function Events({ user }) {
                                   ? role.musician.name
                                   : "Not yet assigned"}
                                 <button className="deleteButtons">
-                                  Delete Musician from the Role
+                                  Delete Musician
+                                </button>
+                                <button className="deleteButtons">
+                                  Confirm Musician
                                 </button>
                                 <br />
                                 <br />

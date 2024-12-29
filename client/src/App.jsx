@@ -8,6 +8,7 @@ import RegisterShowRunner from "./components/RegisterShowRunner";
 import RegisterMusician from "./components/RegisterMusician";
 import Events from "./components/Events";
 import CreateEvent from "./components/CreateEvent";
+import Musicians from "./components/Musicians";
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
           <Route path="/registermusician" element={<RegisterMusician />} />
           <Route path="/events" element={<Events />} />
           <Route path="/createEvent" element={<CreateEvent />} />
+          <Route path="/musicians" element={<Musicians />} />
         </Routes>
       </div>
     </Router>
