@@ -9,7 +9,7 @@
   flex-direction: column;
   align-items: center;
   margin: 20px;
-  padding: 20px; /* Add padding for spacing inside the container */
+  padding: 40px; Add padding for spacing inside the container
 }
 
 .musiciansGrid {
@@ -23,17 +23,23 @@
 }
 
 .musicianCard {
+  border: 1px solid rgb(207, 207, 207);
   background-color: #f0f0f0;
   padding: 20px;
   border-radius: 10px;
   text-align: center;
-  width: 30%; /* Each musician card will take about 30% of the width */
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  width: 30%;
+  box-shadow: 3px 4px 10px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .musicianCard h3 {
   font-size: 1.5rem;
-  margin-bottom: 10px; /* Adds space between the heading and the paragraph */
+  margin-bottom: 10px;
+  text-shadow: 2px 3px 6px rgba(0, 0, 0, 0.3);
 }
 
 .musicianCard p {
@@ -45,5 +51,31 @@
   height: 150px;
   object-fit: cover;
   border-radius: 50%;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+}
+
+.deleteButton {
+  background-color: #ffb5b5;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  margin-top: 20px; /* Ensure there is space above the button */
+  align-self: center;
+}
+
+.musicianInfoContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 20px;
+  border: 1px solid rgb(190, 190, 190);
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow:inset 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+.bio {
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.4);
+  border-radius: 10px;
+  padding: 5px;
 }

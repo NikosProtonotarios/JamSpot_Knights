@@ -33,39 +33,44 @@ function Musicians() {
             musicians.map((musician) => (
               <div key={musician._id} className="musicianCard">
                 <h3>{musician.username}</h3>
-                <p>Email: {musician.email}</p>
-                <p>
-                  Instruments:{" "}
-                  {musician.instruments.length
-                    ? musician.instruments.join(", ")
-                    : "None"}
-                </p>
-                <p>
-                  Roles:{" "}
-                  {musician.roles.length ? musician.roles.join(", ") : "None"}
-                </p>
-                <p>
-                  Jam Nights Participated:{" "}
-                  {musician.jamNightsParticipated.length
-                    ? musician.jamNightsParticipated.length
-                    : 0}
-                </p>
-
-                {/* Display musician's bio */}
-                {musician.bio && (
-                  <p>
-                    <strong>Bio:</strong> {musician.bio}
-                  </p>
-                )}
 
                 {/* Display musician's photo */}
                 {musician.photo && (
                   <img
-                    src={`http://localhost:2000/uploads/${musician.photo}`}
+                    src={`http://localhost:2000${musician.photo}`}
                     alt={`${musician.username}'s photo`}
                     className="musicianPhoto"
                   />
                 )}
+                <div className="musicianInfoContainer">
+                  <p>
+                    <strong>Email</strong>: {musician.email}
+                  </p>
+                  <p>
+                    <strong>Instruments</strong>:{" "}
+                    {musician.instruments.length
+                      ? musician.instruments.join(", ")
+                      : "None"}
+                  </p>
+                  <p>
+                    <strong>Current Roles</strong>:{" "}
+                    {musician.roles.length ? musician.roles.join(", ") : "None"}
+                  </p>
+                  <p>
+                    <strong>Jam Nights Participated</strong>:{" "}
+                    {musician.jamNightsParticipated.length
+                      ? musician.jamNightsParticipated.length
+                      : 0}
+                  </p>
+
+                  {/* Display musician's bio */}
+                  {musician.bio && (
+                    <p className="bio">
+                      <strong>Bio:</strong> {musician.bio}
+                    </p>
+                  )}
+                </div>
+                <button className="deleteButton">Delete Profile</button>
               </div>
             ))
           ) : (
