@@ -9,7 +9,9 @@ function Musicians() {
   useEffect(() => {
     const fetchMusicians = async () => {
       try {
-        const response = await axios.get("http://localhost:2000/users/musicians");
+        const response = await axios.get(
+          "http://localhost:2000/users/musicians"
+        );
         setMusicians(response.data);
         setLoading(false);
       } catch (error) {
@@ -32,16 +34,38 @@ function Musicians() {
               <div key={musician._id} className="musicianCard">
                 <h3>{musician.username}</h3>
                 <p>Email: {musician.email}</p>
-                <p>Instruments: {musician.instruments.length ? musician.instruments.join(", ") : "None"}</p>
-                {/* Displaying Bio */}
-                <p><strong>Bio:</strong> {musician.bio ? musician.bio : "No bio available"}</p>
-                {/* Displaying Jam Nights Participated */}
                 <p>
-                  <strong>Jam Nights Participated:</strong> 
-                  {musician.jamNightsParticipated.length > 0 
-                    ? musician.jamNightsParticipated.join(", ") 
+                  Instruments:{" "}
+                  {musician.instruments.length
+                    ? musician.instruments.join(", ")
                     : "None"}
                 </p>
+                <p>
+                  Roles:{" "}
+                  {musician.roles.length ? musician.roles.join(", ") : "None"}
+                </p>
+                <p>
+                  Jam Nights Participated:{" "}
+                  {musician.jamNightsParticipated.length
+                    ? musician.jamNightsParticipated.length
+                    : 0}
+                </p>
+
+                {/* Display musician's bio */}
+                {musician.bio && (
+                  <p>
+                    <strong>Bio:</strong> {musician.bio}
+                  </p>
+                )}
+
+                {/* Display musician's photo */}
+                {musician.photo && (
+                  <img
+                    src={`http://localhost:2000/uploads/${musician.photo}`}
+                    alt={`${musician.username}'s photo`}
+                    className="musicianPhoto"
+                  />
+                )}
               </div>
             ))
           ) : (
