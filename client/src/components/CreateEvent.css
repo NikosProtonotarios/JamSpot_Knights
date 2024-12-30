@@ -24,3 +24,12 @@
 .form-group {
   
 }
+
+.jamspotLetters {
+  color: black;
+}
+
+.jamspotnav-title {
+  display: flex;
+  justify-content: center;
+}

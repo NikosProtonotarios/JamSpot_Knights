@@ -1,7 +1,16 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import React from "react";
 
 function Frontpage() {
+
+  // Logout handler
+  const handleLogout = () => {
+    // Remove the token from localStorage
+    localStorage.removeItem("token");
+    alert("You have left the JamSpot Knights! 🎸🎤 Come back when you're ready to rock again!");
+  };
+
   return (
     <div className="mainContainer">
       <div className="navContainer">
@@ -16,7 +25,7 @@ function Frontpage() {
           <Link to="/login">
             <button>Login</button>
           </Link>
-          <button>Logout</button>
+          <button onClick={handleLogout}>Logout</button>
         </div>
       </div>
 
@@ -31,16 +40,16 @@ function Frontpage() {
           </Link>
         </div>
         <div className="middle-check-fonts">
-          <Link to="musicians">
+          <Link to="/musicians">
             <h3>Check the musicians</h3>
           </Link>
         </div>
       </div>
       <div className="mainDescription">
         <h3>
-          Find your spot in the next jam night, brave musician! <br></br>Whether
-          you're a jam night warrior or a jam night hero,<br></br> JamSpot
-          Knights is your stage to shine!
+          Find your spot in the next jam night, brave musician! <br />
+          Whether you're a jam night warrior or a jam night hero,<br />
+          JamSpot Knights is your stage to shine!
         </h3>
       </div>
 

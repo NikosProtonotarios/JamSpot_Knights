@@ -48,6 +48,11 @@ function Events({ user }) {
 
   return (
     <div>
+      <div className="jamspotnav-title">
+        <Link to="/">
+          <h4 className="jamspotLetters">JamSpot Knights</h4>
+          </Link>
+        </div>
       <div className="EventContainer">
         <div>
           <Link to="/createEvent">

@@ -5,6 +5,11 @@ import React from "react";
 function SignUp() {
   return (
     <div className="signContainer">
+      <div className="jamspotnav-title">
+        <Link to="/">
+          <h4 className="jamspotLetters">JamSpot Knights</h4>
+          </Link>
+        </div>
       <h2 className="signTitle">Are you a ShowRunner or a Musician?</h2>
       <div className="signUp">
         <Link to={"/registershowrunner"}>

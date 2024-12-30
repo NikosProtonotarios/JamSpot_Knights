@@ -41,3 +41,12 @@
 .song {
   text-align: start;
 }
+
+.jamspotLetters {
+  color: black;
+}
+
+.jamspotnav-title {
+  display: flex;
+  justify-content: center;
+}
