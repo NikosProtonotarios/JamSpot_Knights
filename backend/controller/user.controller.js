@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken");
 const JamKnight = require("../models/jamKnight");
 const fs = require('fs');
 
+
 // Get user profile
 const userProfile = async (req, res) => {
   try {
