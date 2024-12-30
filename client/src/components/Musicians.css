@@ -60,7 +60,16 @@
   padding: 10px;
   cursor: pointer;
   margin-top: 20px; /* Ensure there is space above the button */
-  align-self: center;
+  margin-right: 10px;
+}
+
+.updateButton {
+  background-color: #ffb5b5;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  margin-top: 20px; /* Ensure there is space above the button */
+  margin-left: 10px;
 }
 
 .musicianInfoContainer {

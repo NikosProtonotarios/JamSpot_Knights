@@ -15,6 +15,7 @@ const {
    removeMusicianFromJamNight,
    updateProfileMusician,
    registerMusician,
+   deleteMusicianProfile,
 } = require("../controller/user.controller");
 
 // ShowRunners
@@ -40,6 +41,8 @@ router.post("/register/musician", upload.single('photo'), registerMusician);
 
 // Get a specific musician by ID
 router.get("/musician/:id", authenticate, getMusicianById);
+
+router.delete("/musician/:id", authenticate, authorize(["musician"]), deleteMusicianProfile);
 
 // Route for updating musician's profile
 router.put("/profile/musician/:id", authenticate, authorize(['musician']), updateProfileMusician);

@@ -22,6 +22,39 @@ function Musicians() {
     fetchMusicians();
   }, []);
 
+  const deleteProfile = async (musicianId, musicianUserId) => {
+    if (loggedInUserId !== musicianUserId) {
+      
+      alert(
+        "Hold your horses, fellow Knight! Only the true owner of this mighty profile can erase it."
+      );
+      return;
+    }
+
+    // Cool confirmation popup for the profile owner
+    const confirmed = window.confirm(
+      "Are you sure you want to erase your Mighty Profile, brave Knight?"
+    );
+
+    if (confirmed) {
+      try {
+        // Send DELETE request to the backend
+        await axios.delete(
+          `http://localhost:2000/users/musicians/${musicianId}`
+        );
+
+        // Remove the musician from the frontend state
+        setMusicians((prevMusicians) =>
+          prevMusicians.filter((musician) => musician._id !== musicianId)
+        );
+        alert("Your Mighty Profile has been erased, brave Knight!");
+      } catch (error) {
+        console.error("Error deleting profile:", error);
+        alert("Failed to erase the profile. Please try again.");
+      }
+    }
+  };
+
   return (
     <div className="musiciansContainer">
       <h2>List of Jam Knights</h2>
@@ -70,7 +103,10 @@ function Musicians() {
                     </p>
                   )}
                 </div>
-                <button className="deleteButton">Delete Profile</button>
+                <div>
+                  <button className="deleteButton" onClick={() => deleteProfile(musician._id, musician.userId)}>Delete Profile</button>
+                  <button className="updateButton">Update Profile</button>
+                </div>
               </div>
             ))
           ) : (

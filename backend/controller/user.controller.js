@@ -364,6 +364,24 @@ const removeMusicianFromJamNight = async (req, res) => {
   }
 };
 
+const deleteMusicianProfile = async (req, res) => {
+  try {
+    const musicianId = req.params.id;
+    console.log("User ID:", req.user.id);
+    console.log("Musician ID:", musicianId);
+
+    if (req.user.id !== musicianId) {
+      return res.status(403).json({ message: "You can only delete your own profile!" });
+    }
+
+    await User.findByIdAndDelete(musicianId);
+
+    return res.json({ message: "Profile deleted successfully." });
+  } catch (error) {
+    return res.status(500).json({ message: "Error deleting profile.", error });
+  }
+};
+
 module.exports = {
   userProfile,
   userRegister,
@@ -375,4 +393,5 @@ module.exports = {
   removeMusicianFromJamNight,
   updateProfileMusician,
   registerMusician,
+  deleteMusicianProfile,
 };
