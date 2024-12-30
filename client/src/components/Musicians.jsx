@@ -92,6 +92,7 @@ function Musicians() {
   const handleUpdateProfile = async (musicianId, updatedInfo) => {
     try {
       const formData = new FormData();
+      formData.append("name", updatedInfo.name); // Only the name field is updated
       formData.append("bio", updatedInfo.bio);
       formData.append("instruments", updatedInfo.instruments);
       if (updatedInfo.photo) formData.append("photo", updatedInfo.photo);
@@ -175,9 +176,17 @@ function Musicians() {
                   </button>
                 </div>
 
-                {/* Display input fields to update photo, bio, and instruments in the same card */}
+                {/* Display input fields to update name, bio, and instruments in the same card */}
                 {musician.isUpdating && (
                   <div className="updateFields">
+                    <div>
+                      <label>Name</label>
+                      <input
+                        type="text"
+                        value={musician.name || ""}
+                        onChange={(e) => handleProfileUpdateChange(e, musician._id, "name")}
+                      />
+                    </div>
                     <div>
                       <label>Bio</label>
                       <input
