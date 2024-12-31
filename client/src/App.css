@@ -97,3 +97,51 @@
 .copyright p {
   margin-top: 20px;
 }
+
+.signUpButton {
+  border: none;
+  background: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+}
+
+.signUpButton:hover {
+  color: #FF4500; /* Change text color on hover */
+  transform: scale(1.2); /* More dramatic scale effect */
+  text-shadow: 4px 4px 10px rgba(255, 69, 0, 0.8), 0 0 25px rgba(255, 69, 0, 0.6);
+  letter-spacing: 1px;
+}
+
+.loginButton {
+  border: none;
+  background-color: none;
+  color: white;
+  background: none;
+  font-size: 20px;
+  transition: all 0.4s ease;
+}
+
+.loginButton:hover {
+  color: #FF4500; /* Change text color on hover */
+  transform: scale(1.2); /* More dramatic scale effect */
+  text-shadow: 4px 4px 10px rgba(255, 69, 0, 0.8), 0 0 25px rgba(255, 69, 0, 0.6);
+  letter-spacing: 1px;
+}
+
+.logoutButton {
+  border: none;
+  background-color: none;
+  color: white;
+  background: none;
+  font-size: 20px;
+  transition: all 0.4s ease;
+}
+
+.logoutButton:hover {
+  color: #FF4500; /* Change text color on hover */
+  transform: scale(1.2); /* More dramatic scale effect */
+  text-shadow: 4px 4px 10px rgba(255, 69, 0, 0.8), 0 0 25px rgba(255, 69, 0, 0.6);
+  letter-spacing: 1px;
+}

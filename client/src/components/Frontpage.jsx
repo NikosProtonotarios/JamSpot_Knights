@@ -4,44 +4,44 @@ import React from "react";
 
 function Frontpage() {
 
-  // Logout handler
   const handleLogout = () => {
-    // Remove the token from localStorage
-    localStorage.removeItem("token");
-    alert("You have left the JamSpot Knights! 🎸🎤 Come back when you're ready to rock again!");
+    if(localStorage.getItem("authToken")){
+      localStorage.removeItem("authToken")
+      alert("You have left the JamSpot Knights! 🎸🎤 Come back when you're ready to rock again!");
+      }
   };
 
   return (
     <div className="mainContainer">
       <div className="navContainer">
         <div className="jamspotnav-title">
-          <h4>JamSpot Knights</h4>
+          <h4 style={{ fontFamily: "'Cinzel Decorative', serif" }}>JamSpot Knights</h4>
         </div>
 
         <div className="buttons-nav">
           <Link to="/signup">
-            <button>Sign Up</button>
+            <button className="signUpButton" style={{fontFamily: "'Pirata One', serif"}}>Sign Up</button>
           </Link>
           <Link to="/login">
-            <button>Login</button>
+            <button className="loginButton" style={{fontFamily: "'Pirata One', serif"}}>Login</button>
           </Link>
-          <button onClick={handleLogout}>Logout</button>
+          <button className="logoutButton" style={{fontFamily: "'Pirata One', serif"}} onClick={handleLogout}>Logout</button>
         </div>
       </div>
 
       <div className="mainTitle">
-        <h1>JamSpot Knights</h1>
+        <h1 style={{fontFamily: "'Pirata One', serif"}}>JamSpot Knights</h1>
       </div>
 
       <div className="middleContainer">
         <div>
           <Link to="/events">
-            <h3 className="middle-check-fonts">Check the Events</h3>
+            <h3 style={{fontFamily: "'Pirata One', serif"}} className="middle-check-fonts">Check the Events</h3>
           </Link>
         </div>
         <div className="middle-check-fonts">
           <Link to="/musicians">
-            <h3>Check the musicians</h3>
+            <h3 style={{fontFamily: "'Pirata One', serif"}}>Check the musicians</h3>
           </Link>
         </div>
       </div>
