@@ -43,10 +43,14 @@
 }
 
 .jamspotLetters {
-  color: black;
+  color: white !important;
+  font-size: 30px;
 }
 
 .jamspotnav-title {
   display: flex;
   justify-content: center;
+  background-color: rgb(77, 0, 150);
+  color: white;
+  padding: 10px;
 }

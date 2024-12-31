@@ -121,7 +121,7 @@ function CreateEvent() {
     <div>
       <div className="jamspotnav-title">
           <Link to="/">
-            <h4 className="jamspotLetters">JamSpot Knights</h4>
+            <h4 style={{fontFamily: "'Pirata One', serif", fontSize: "30px"}} className="jamspotLetters">JamSpot Knights</h4>
           </Link>
         </div>
       <div  className="createEventContainer">

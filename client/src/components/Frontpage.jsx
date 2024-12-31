@@ -15,7 +15,7 @@ function Frontpage() {
     <div className="mainContainer">
       <div className="navContainer">
         <div className="jamspotnav-title">
-          <h4 style={{ fontFamily: "'Cinzel Decorative', serif" }}>JamSpot Knights</h4>
+          <h4 style={{fontFamily: "'Pirata One', serif", fontSize: "30px"}}>JamSpot Knights</h4>
         </div>
 
         <div className="buttons-nav">

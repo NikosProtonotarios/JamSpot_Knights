@@ -50,7 +50,7 @@ function Events({ user }) {
     <div>
       <div className="jamspotnav-title">
         <Link to="/">
-          <h4 className="jamspotLetters">JamSpot Knights</h4>
+          <h4 style={{fontFamily: "'Pirata One', serif"}} className="jamspotLetters">JamSpot Knights</h4>
           </Link>
         </div>
       <div className="EventContainer">

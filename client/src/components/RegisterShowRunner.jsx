@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./RegisterShowRunner.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function RegisterShowRunner() {
  
@@ -45,6 +46,11 @@ function RegisterShowRunner() {
 
   return (
     <div className="showrunnerContainer">
+      <div className="jamspotnav-title">
+          <Link to="/">
+            <h4 style={{fontFamily: "'Pirata One', serif", fontSize: "30px"}} className="jamspotLetters">JamSpot Knights</h4>
+          </Link>
+        </div>
       <h1>Register as a ShowRunner</h1>
       <form onSubmit={handleSubmit} className="registerShowRunnerForm">
         {/* Name Input */}

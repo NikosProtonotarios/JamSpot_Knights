@@ -52,6 +52,9 @@
 .mainDescription {
   text-align: center;
   padding: 70px;
+  font-family: Pirata One, serif;
+  font-size: 25px;
+  padding: 50px;
 }
 
 .footerContainer {
