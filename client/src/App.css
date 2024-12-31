@@ -4,26 +4,15 @@
   box-sizing: border-box;
 }
 
-/* .mainContainer {
-  max-width: 1100px;
-  margin: 0 auto;
-} */
-
-.jamspotnav-title {
-  display: flex;
-  gap: 20px;
-  color: white;
-}
-
 .mainTitle {
   text-align: center;
   padding: 70px;
   font-size: 24px;
-}
-
-.middleContainer {
-  display: flex;
-  justify-content: space-evenly;
+  text-shadow: 
+  1px 1px 0px black,    /* Thin shadow for top-left */
+  -1px -1px 0px black,  /* Thin shadow for bottom-right */
+  1px -1px 0px black,   /* Thin shadow for top-right */
+  -1px 1px 0px black;   /* Thin shadow for bottom-left */
 }
 
 .middle-check-fonts {
@@ -31,13 +20,13 @@
   padding: 20px;
   border-radius: 10px;
   cursor: pointer;
+  background-color: rgba(38, 0, 59, 0.5);
 }
 
 .navContainer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px;
   background-color: rgb(77, 0, 150);
   padding-left: 40px;
   padding-right: 40px;
@@ -53,8 +42,15 @@
   text-align: center;
   padding: 70px;
   font-family: Pirata One, serif;
-  font-size: 25px;
+  font-size: 30px;
   padding: 50px;
+  color: rgb(255, 255, 255);
+  font-weight: bold; /* Makes the text bold */
+  text-shadow: 
+  1px 1px 0px black,    /* Thin shadow for top-left */
+  -1px -1px 0px black,  /* Thin shadow for bottom-right */
+  1px -1px 0px black,   /* Thin shadow for top-right */
+  -1px 1px 0px black;   /* Thin shadow for bottom-left */
 }
 
 .footerContainer {
@@ -147,4 +143,43 @@
   transform: scale(1.2); /* More dramatic scale effect */
   text-shadow: 4px 4px 10px rgba(255, 69, 0, 0.8), 0 0 25px rgba(255, 69, 0, 0.6);
   letter-spacing: 1px;
+}
+
+.middleContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.checkButtonsContainer {
+  display: flex;
+  justify-content: space-evenly;
+  font-size: 25px;
+  transition: all 0.3s ease;
+  text-shadow: 
+  1px 1px 0px black,    /* Thin shadow for top-left */
+  -1px -1px 0px black,  /* Thin shadow for bottom-right */
+  1px -1px 0px black,   /* Thin shadow for top-right */
+  -1px 1px 0px black;   /* Thin shadow for bottom-left */
+}
+
+.checkButtonsContainer a:hover {
+  color: #FF4500; /* Aggressive orange color */
+  transform: scale(1.2); /* Scale up the text */
+  text-shadow: 0 0 10px #FF4500, 0 0 30px #FF4500, 0 0 60px #FF4500; /* Glowing effect */
+  letter-spacing: 1px;
+  text-shadow: 
+  1px 1px 0px black,    /* Thin shadow for top-left */
+  -1px -1px 0px black,  /* Thin shadow for bottom-right */
+  1px -1px 0px black,   /* Thin shadow for top-right */
+  -1px 1px 0px black;   /* Thin shadow for bottom-left */
+}
+
+.middleContainer {
+  background-image: url('/images/1735514539298.jpg') !important;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center the content vertically */
 }

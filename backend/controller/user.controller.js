@@ -200,14 +200,20 @@ const updateProfileMusician = async (req, res) => {
       return res.status(403).json({ message: "You can only update your own profile" });
     }
 
+    // Log the request body to see what data is being sent
+    console.log('Request Body:', req.body);
+
     const { username, bio, photo, instruments, roles, password } = req.body;
     const updatedData = {};
 
+    // Check if fields are present and assign them to the updatedData object
     if (username) updatedData.username = username;
     if (bio) updatedData.bio = bio;
     if (photo) updatedData.photo = photo;
-    if (instruments) updatedData.instruments = instruments;
-    if (roles) updatedData.roles = roles;
+    
+    // Validate instruments and roles arrays
+    if (instruments && instruments.length > 0) updatedData.instruments = instruments;
+    if (roles && roles.length > 0) updatedData.roles = roles;
 
     // If password is updated, hash it before saving
     if (password) {
@@ -221,12 +227,16 @@ const updateProfileMusician = async (req, res) => {
       return res.status(400).json({ message: "No valid fields to update" });
     }
 
+    // Log the updatedData object before updating the user
+    console.log('Updated Data:', updatedData);
+
     // Update the musician's profile
     const user = await User.findByIdAndUpdate(id, updatedData, {
       new: true,
       runValidators: true,
     });
 
+    // Check if the user was found and updated
     if (!user) {
       return res.status(404).send({ message: "User not found" });
     }
@@ -245,12 +255,14 @@ const updateProfileMusician = async (req, res) => {
       });
     }
 
+    // Return the updated user data without generating a new token
     return res.status(200).json({ message: "Profile updated successfully", user });
   } catch (error) {
     console.error(error);
     return res.status(500).send({ message: "Error updating user profile" });
   }
 };
+
 
 // Musician controllers
 

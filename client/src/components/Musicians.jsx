@@ -118,18 +118,24 @@ function Musicians() {
 
   const handleUpdateProfile = async (musicianId, updatedInfo) => {
     try {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("authToken");
 
       if (!token) {
         alert("Please log in to update your profile.");
         return;
       }
 
+      console.log("Updated Info:", updatedInfo);
+
       const formData = new FormData();
       formData.append("name", updatedInfo.name);
       formData.append("bio", updatedInfo.bio);
       formData.append("instruments", updatedInfo.instruments);
       if (updatedInfo.photo) formData.append("photo", updatedInfo.photo);
+
+      for (let pair of formData.entries()) {
+        console.log(pair[0], pair[1]);
+      }
 
       const response = await axios.put(
         `http://localhost:2000/users/profile/musician/${musicianId}`,
@@ -176,6 +182,8 @@ function Musicians() {
     }
   };
 
+  // font-family: "IM Fell DW Pica", serif;
+
   return (
     <div>
       <div className="jamspotnav-title">
@@ -184,7 +192,7 @@ function Musicians() {
         </Link>
       </div>
       <div className="musiciansContainer">
-        <h2>List of Jam Knights</h2>
+        <h2 style={{ fontFamily: "UnifrakturMaguntia", fontSize: "50px" }}>List of Jam Knights</h2>
         {loading ? (
           <p>Loading musicians...</p>
         ) : (
@@ -192,7 +200,7 @@ function Musicians() {
             {musicians.length > 0 ? (
               musicians.map((musician) => (
                 <div key={musician._id} className="musicianCard">
-                  <h3>{musician.username}</h3>
+                  <h3 style={{color: "black", fontFamily: "Titan One"}}>{musician.username}</h3>
                   {musician.photo && (
                     <img
                       src={`http://localhost:2000${musician.photo}`}
@@ -201,7 +209,7 @@ function Musicians() {
                     />
                   )}
 
-                  <div className="musicianInfoContainer">
+                  <div style={{fontFamily: "Pirata One"}} className="musicianInfoContainer">
                     <p>
                       <strong>Email</strong>: {musician.email}
                     </p>
@@ -230,7 +238,7 @@ function Musicians() {
 
                   {/* Update Profile Button */}
                   <div>
-                    <button
+                    <button style={{ fontFamily: "Pirata One", fontSize: "19px" }}
                       className="deleteButton"
                       onClick={() =>
                         deleteProfile(musician._id)
@@ -238,7 +246,7 @@ function Musicians() {
                     >
                       Delete Profile
                     </button>
-                    <button
+                    <button style={{ fontFamily: "Pirata One", fontSize: "19px" }}
                       className="updateButton"
                       onClick={() => handleUpdateButtonClick(musician)}
                     >

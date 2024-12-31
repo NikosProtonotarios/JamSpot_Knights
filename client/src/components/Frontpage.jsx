@@ -3,56 +3,85 @@ import { Link } from "react-router-dom";
 import React from "react";
 
 function Frontpage() {
-
   const handleLogout = () => {
-    if(localStorage.getItem("authToken")){
-      localStorage.removeItem("authToken")
-      alert("You have left the JamSpot Knights! 🎸🎤 Come back when you're ready to rock again!");
-      }
+    if (localStorage.getItem("authToken")) {
+      localStorage.removeItem("authToken");
+      alert(
+        "You have left the JamSpot Knights! 🎸🎤 Come back when you're ready to rock again!"
+      );
+    }
   };
 
   return (
     <div className="mainContainer">
       <div className="navContainer">
         <div className="jamspotnav-title">
-          <h4 style={{fontFamily: "'Pirata One', serif", fontSize: "30px"}}>JamSpot Knights</h4>
+          <h4 className="JamSpotLogo" style={{ fontFamily: "'Pirata One', serif", fontSize: "30px" }}>
+            JamSpot Knights
+          </h4>
         </div>
 
         <div className="buttons-nav">
           <Link to="/signup">
-            <button className="signUpButton" style={{fontFamily: "'Pirata One', serif"}}>Sign Up</button>
+            <button
+              className="signUpButton"
+              style={{ fontFamily: "'Pirata One', serif" }}
+            >
+              Sign Up
+            </button>
           </Link>
           <Link to="/login">
-            <button className="loginButton" style={{fontFamily: "'Pirata One', serif"}}>Login</button>
+            <button
+              className="loginButton"
+              style={{ fontFamily: "'Pirata One', serif" }}
+            >
+              Login
+            </button>
           </Link>
-          <button className="logoutButton" style={{fontFamily: "'Pirata One', serif"}} onClick={handleLogout}>Logout</button>
+          <button
+            className="logoutButton"
+            style={{ fontFamily: "'Pirata One', serif" }}
+            onClick={handleLogout}
+          >
+            Logout
+          </button>
         </div>
       </div>
-
-      <div className="mainTitle">
-        <h1 style={{fontFamily: "'Pirata One', serif"}}>JamSpot Knights</h1>
-      </div>
-
       <div className="middleContainer">
-        <div>
-          <Link to="/events">
-            <h3 style={{fontFamily: "'Pirata One', serif"}} className="middle-check-fonts">Check the Events</h3>
-          </Link>
+        <div className="mainTitle">
+          <h1 style={{ fontFamily: "'Pirata One', serif" }}>JamSpot Knights</h1>
         </div>
-        <div className="middle-check-fonts">
-          <Link to="/musicians">
-            <h3 style={{fontFamily: "'Pirata One', serif"}}>Check the musicians</h3>
-          </Link>
-        </div>
-      </div>
-      <div className="mainDescription">
-        <h3>
-          Find your spot in the next jam night, brave musician! <br />
-          Whether you're a jam night warrior or a jam night hero,<br />
-          JamSpot Knights is your stage to shine!
-        </h3>
-      </div>
 
+        <div className="middleContainer">
+          <div className="checkButtonsContainer">
+            <div className="middle-check-fonts">
+              <Link to="/events">
+                <h3
+                  style={{ fontFamily: "'Pirata One', serif" }}
+                  
+                >
+                  Check the Events
+                </h3>
+              </Link>
+            </div>
+            <div className="middle-check-fonts">
+              <Link to="/musicians">
+                <h3 style={{ fontFamily: "'Pirata One', serif" }}>
+                  Check the musicians
+                </h3>
+              </Link>
+            </div>
+          </div>
+        </div>
+        <div className="mainDescription">
+          <h3>
+            Find your spot in the next jam night, brave musician! <br />
+            Whether you're a jam night warrior or a jam night hero,
+            <br />
+            JamSpot Knights is your stage to shine!
+          </h3>
+        </div>
+      </div>
       <footer>
         <div className="footerContainer">
           <div className="footerLinks">
