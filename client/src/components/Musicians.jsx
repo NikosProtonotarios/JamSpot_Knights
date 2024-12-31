@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 function Musicians() {
   const [musicians, setMusicians] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [loggedInUserId, setLoggedInUserId] = useState(null); // Assume you set logged-in user's ID
   const [originalMusicianData, setOriginalMusicianData] = useState(null); // Store original musician data for cancellation
 
   useEffect(() => {
@@ -25,23 +24,28 @@ function Musicians() {
     fetchMusicians();
   }, []);
 
-  const deleteProfile = async (musicianId, musicianUserId) => {
-    if (loggedInUserId !== musicianUserId) {
-      alert(
-        "Hold your horses, fellow Knight🛡️! Only the true owner of this mighty profile can erase it."
-      );
-      return;
-    }
+  const deleteProfile = async (musicianId) => {
 
-    // Cool confirmation popup for the profile owner
     const confirmed = window.confirm(
       "Are you sure you want to erase your Mighty Profile, brave Knight?"
     );
     if (confirmed) {
       try {
+        // Retrieve the token from localStorage (or wherever you store it)
+        const token = localStorage.getItem("authToken");
+
+        if (!token) {
+          alert("No authentication token found. Please log in again.");
+          return;
+        }
         // Send DELETE request to the backend
         await axios.delete(
-          `http://localhost:2000/users/musicians/${musicianId}`
+          `http://localhost:2000/users/musician/${musicianId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
 
         // Remove the musician from the frontend state
@@ -51,7 +55,7 @@ function Musicians() {
         alert("Your Mighty Profile has been erased, brave Knight!");
       } catch (error) {
         console.error("Error deleting profile:", error);
-        alert("Failed to erase the profile. Please try again.");
+        alert("Hold your horses, fellow Knight🛡️! Only the true owner of this mighty profile can erase it.");
       }
     }
   };
@@ -179,7 +183,7 @@ function Musicians() {
           <h4 className="jamspotLetters">JamSpot Knights</h4>
         </Link>
       </div>
-      <div  className="musiciansContainer">
+      <div className="musiciansContainer">
         <h2>List of Jam Knights</h2>
         {loading ? (
           <p>Loading musicians...</p>
@@ -229,7 +233,7 @@ function Musicians() {
                     <button
                       className="deleteButton"
                       onClick={() =>
-                        deleteProfile(musician._id, musician.userId)
+                        deleteProfile(musician._id)
                       }
                     >
                       Delete Profile

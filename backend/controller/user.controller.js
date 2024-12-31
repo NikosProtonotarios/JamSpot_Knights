@@ -368,10 +368,8 @@ const removeMusicianFromJamNight = async (req, res) => {
 const deleteMusicianProfile = async (req, res) => {
   try {
     const musicianId = req.params.id;
-    console.log("User ID:", req.user.id);
-    console.log("Musician ID:", musicianId);
 
-    if (req.user.id !== musicianId) {
+    if (req.user.userId !== musicianId) {
       return res.status(403).json({ message: "You can only delete your own profile!" });
     }
 

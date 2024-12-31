@@ -38,6 +38,7 @@ You're logged in, and it's time to make some noise 🤘 🤘`);
       setErrorMessage("Invalid email or password. Please try again.");
     }
   };
+  
   return (
     <div>
       <div className="jamspotnav-title">
