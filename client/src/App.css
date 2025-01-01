@@ -176,6 +176,7 @@
 
 .middleContainer {
   background-image: url('/images/1735514539298.jpg') !important;
+  background-attachment: fixed;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;

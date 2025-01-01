@@ -209,7 +209,9 @@ function CreateEvent() {
 
             {eventDetails.songs.map((song, songIndex) => (
               <div key={songIndex} className="song-section">
+                <div className="songsContainer">
                 <h3>Song {songIndex + 1}</h3>
+                </div>
                 {/* Song Title */}
                 <div className="form-group">
                   <label>Song Title:</label>
@@ -242,6 +244,7 @@ function CreateEvent() {
                         placeholder="Instrument (e.g. guitar)"
                         required
                       />
+
                       <button
                         className="createEventButton"
                         type="button"
@@ -251,6 +254,7 @@ function CreateEvent() {
                       </button>
                     </div>
                   ))}
+
                   <button
                     className="createEventButton"
                     type="button"
@@ -259,21 +263,24 @@ function CreateEvent() {
                     Add Role
                   </button>
                 </div>
-
-                <button
-                  className="createEventButton"
-                  type="button"
-                  onClick={() => handleRemoveSong(songIndex)}
-                >
-                  Remove Song
-                </button>
+                <div className="removeSongButton">
+                  <button
+                    className="createEventButton"
+                    type="button"
+                    onClick={() => handleRemoveSong(songIndex)}
+                  >
+                    Remove Song
+                  </button>
+                </div>
               </div>
             ))}
 
             {/* Submit Button */}
-            <button type="submit" className="createEventButton">
-              Create Event
-            </button>
+            <div className="createEventButtonContainer">
+              <button type="submit" className="createEventButton3">
+                Create Event
+              </button>
+            </div>
           </form>
         </div>
       </div>

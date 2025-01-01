@@ -13,7 +13,7 @@
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 8px;
-  background-color: #f9f9f9;
+  background-color: rgba(255, 255, 255, 0.5);
 }
 
 .jamspotLetters {
@@ -27,9 +27,9 @@
 
 .createEventButton {
   color: white;
-  background-color: purple;
-  padding: 10px;
+  background-color: rgb(107, 0, 107);
   transition: 0.3s;
+  font-family: Cinzel Decorative;
 }
 
 .createEventButton:hover {
@@ -38,8 +38,43 @@
 }
 
 .createEventContainer2 {
-  background-image: url('images/1735728540881.jpg');
   background-size: cover;
   background-position: center;
-  height: 100vh;
+  background-attachment: fixed;
+  background-image: url('/images/1735728029662.jpg');
+}
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.removeSongButton {
+  display: flex;
+  justify-content: center;
+  margin: 30px;
+}
+
+.createEventButtonContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.createEventButton3 {
+  color: white;
+  background-color: rgb(107, 0, 107);
+  transition: 0.3s;
+  font-family: Cinzel Decorative;
+  width: 500px;
+  background-color: rgb(71, 13, 13);
+}
+
+.createEventButton3:hover {
+  background-color: rgb(128, 1, 1);
+  transform: scale(1.1);
+}
+
+.songsContainer {
+  display: flex;
+  justify-content: center;
 }

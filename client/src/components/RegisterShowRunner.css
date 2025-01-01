@@ -10,7 +10,7 @@
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 8px;
-  background-color: #f9f9f9;
+  background-color: rgba(249, 249, 249, 0.5);
 }
 
 .registerShowRunnerForm {
@@ -37,9 +37,10 @@
 }
 
 .registerShowRunnerImage {
-  background-image: url('images/1735728277208.jpg');
+  background-image: url('images/1735728146923.jpg');
   height: 100vh;
   background-repeat: no-repeat;
   background-size: cover;
+  background-attachment: fixed;
   background-position: center;
 }

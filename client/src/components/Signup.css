@@ -24,7 +24,6 @@
     font-size: 30px;
     gap: 150px;
     height: 150px;
-    /* background-image: url("/images/1734540793599.jpg"); */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -49,6 +48,7 @@
 
 .signContainer {
   background-image: url('/images/1735728296511.jpg');
+  background-attachment: fixed;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
