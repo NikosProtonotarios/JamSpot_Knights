@@ -10,13 +10,13 @@ function SignUp() {
           <h4 style={{fontFamily: "'Pirata One', serif", fontSize: "30px"}} className="jamspotLetters">JamSpot Knights</h4>
           </Link>
         </div>
-      <h2 className="signTitle">Are you a ShowRunner or a Musician?</h2>
+      <h2 style={{ fontFamily: "'Pirata One', serif" }} className="signTitle">Are you a ShowRunner or a Musician?</h2>
       <div className="signUp">
         <Link to={"/registershowrunner"}>
-          <button>ShowRunner</button>
+          <button className="showRunnerButton" style={{ fontFamily: "'Pirata One', serif", color: "white" }}>ShowRunner</button>
         </Link>
         <Link to={"/registermusician"}>
-          <button>Musician</button>
+          <button className="musicianButton" style={{ fontFamily: "'Pirata One', serif", color: "white" }}>Musician</button>
         </Link>
       </div>
       <footer>

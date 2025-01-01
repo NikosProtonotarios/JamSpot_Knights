@@ -5,10 +5,33 @@
 }
 
 .showrunnerContainer {
-  width: 400px;
+  width: 500px;
   margin: 50px auto;
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 8px;
   background-color: #f9f9f9;
+}
+
+.registerShowRunnerForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  gap: 10px;
+}
+
+.registerShowRunnerButton {
+  color: white;
+  background-color: #4a0068;
+  transition: 0.2s;
+}
+
+.registerShowRunnerButton:hover {
+  background-color: #5a0000;
+  transform: scale(1.1);
+}
+
+.registerSho {
+  width: 500px;
 }
