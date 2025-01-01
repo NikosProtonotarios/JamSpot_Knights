@@ -40,52 +40,111 @@ You're logged in, and it's time to make some noise 🤘 🤘`);
   };
   
   return (
-    <div>
-      <div className="jamspotnav-title">
-        <Link to="/">
-          <h4 style={{fontFamily: "'Pirata One', serif", fontSize: "30px"}} className="jamspotLetters">JamSpot Knights</h4>
-        </Link>
+    <div className="page-container">
+      <div className="content-wrap">
+        <div className="jamspotnav-title">
+          <Link to="/">
+            <h4 style={{ fontFamily: "'Pirata One', serif", fontSize: "30px" }} className="jamspotLetters">JamSpot Knights</h4>
+          </Link>
+        </div>
+  
+        <div className="login-container">
+          <h2 className="h2login">Login</h2>
+          <form onSubmit={handleSubmit}>
+            <div className="input-group">
+              <label className="labellogin" htmlFor="username">
+                Email:
+              </label>
+              <input
+                className="inputlogin"
+                type="email"
+                id="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email"
+                required
+              />
+            </div>
+  
+            <div className="input-group">
+              <label className="labellogin" htmlFor="password">
+                Password:
+              </label>
+              <input
+                className="inputlogin"
+                type="password"
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Enter your password"
+                required
+              />
+            </div>
+  
+            <button className="buttonlogin" type="submit">
+              Login
+            </button>
+          </form>
+        </div>
       </div>
-      <div  className="login-container">
-        <h2 className="h2login">Login</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="input-group">
-            <label className="labellogin" htmlFor="username">
-              Email:
-            </label>
-            <input
-              className="inputlogin"
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email"
-              required
-            />
+  
+      <footer>
+        <div className="footerContainer">
+        <footer>
+        <div className="footerContainer">
+          <div className="footerLinks">
+            <ul>
+              <li>
+                <a href="#about">About</a>
+              </li>
+              <li>
+                <a href="#contact">Contact</a>
+              </li>
+              <li>
+                <a href="#privacy">Privacy Policy</a>
+              </li>
+              <li>
+                <a href="#terms">Terms & Conditions</a>
+              </li>
+            </ul>
           </div>
-
-          <div className="input-group">
-            <label className="labellogin" htmlFor="password">
-              Password:
-            </label>
-            <input
-              className="inputlogin"
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter your password"
-              required
-            />
+          <div className="socialMedia">
+            <a
+              href="https://facebook.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Facebook
+            </a>
+            <a
+              href="https://twitter.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Twitter
+            </a>
+            <a
+              href="https://instagram.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Instagram
+            </a>
           </div>
-
-          <button className="buttonlogin" type="submit">
-            Login
-          </button>
-        </form>
-      </div>
+          <div className="contactInfo">
+            <p>Email: info@jamspotknights.com</p>
+            <p>Phone: +123 456 7890</p>
+          </div>
+          <div className="copyright">
+            <p>&copy; 2024 JamSpot Knights. All rights reserved.</p>
+          </div>
+        </div>
+      </footer>
+        </div>
+      </footer>
     </div>
   );
+  
 }
 
 export default Login;

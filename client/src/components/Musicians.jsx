@@ -25,7 +25,6 @@ function Musicians() {
   }, []);
 
   const deleteProfile = async (musicianId) => {
-
     const confirmed = window.confirm(
       "Are you sure you want to erase your Mighty Profile, brave Knight?"
     );
@@ -55,7 +54,9 @@ function Musicians() {
         alert("Your Mighty Profile has been erased, brave Knight!");
       } catch (error) {
         console.error("Error deleting profile:", error);
-        alert("Hold your horses, fellow Knight🛡️! Only the true owner of this mighty profile can erase it.");
+        alert(
+          "Hold your horses, fellow Knight🛡️! Only the true owner of this mighty profile can erase it."
+        );
       }
     }
   };
@@ -188,11 +189,18 @@ function Musicians() {
     <div>
       <div className="jamspotnav-title">
         <Link to="/">
-          <h4 style={{fontFamily: "'Pirata One', serif", fontSize: "30px"}} className="jamspotLetters">JamSpot Knights</h4>
+          <h4
+            style={{ fontFamily: "'Pirata One', serif", fontSize: "30px" }}
+            className="jamspotLetters"
+          >
+            JamSpot Knights
+          </h4>
         </Link>
       </div>
       <div className="musiciansContainer">
-        <h2 style={{ fontFamily: "UnifrakturMaguntia", fontSize: "50px" }}>List of Jam Knights</h2>
+        <h2 style={{ fontFamily: "UnifrakturMaguntia", fontSize: "50px" }}>
+          List of Jam Knights
+        </h2>
         {loading ? (
           <p>Loading musicians...</p>
         ) : (
@@ -200,7 +208,9 @@ function Musicians() {
             {musicians.length > 0 ? (
               musicians.map((musician) => (
                 <div key={musician._id} className="musicianCard">
-                  <h3 style={{color: "black", fontFamily: "Titan One"}}>{musician.username}</h3>
+                  <h3 style={{ color: "black", fontFamily: "Titan One" }}>
+                    {musician.username}
+                  </h3>
                   {musician.photo && (
                     <img
                       src={`http://localhost:2000${musician.photo}`}
@@ -209,7 +219,10 @@ function Musicians() {
                     />
                   )}
 
-                  <div style={{fontFamily: "Pirata One"}} className="musicianInfoContainer">
+                  <div
+                    style={{ fontFamily: "Pirata One" }}
+                    className="musicianInfoContainer"
+                  >
                     <p>
                       <strong>Email</strong>: {musician.email}
                     </p>
@@ -238,15 +251,15 @@ function Musicians() {
 
                   {/* Update Profile Button */}
                   <div>
-                    <button style={{ fontFamily: "Pirata One", fontSize: "19px" }}
+                    <button
+                      style={{ fontFamily: "Pirata One", fontSize: "19px" }}
                       className="deleteButton"
-                      onClick={() =>
-                        deleteProfile(musician._id)
-                      }
+                      onClick={() => deleteProfile(musician._id)}
                     >
                       Delete Profile
                     </button>
-                    <button style={{ fontFamily: "Pirata One", fontSize: "19px" }}
+                    <button
+                      style={{ fontFamily: "Pirata One", fontSize: "19px" }}
                       className="updateButton"
                       onClick={() => handleUpdateButtonClick(musician)}
                     >
@@ -256,66 +269,85 @@ function Musicians() {
 
                   {/* Display input fields to update name, bio, and instruments in the same card */}
                   {musician.isUpdating && (
-                    <div className="updateFields">
-                      <div>
-                        <label>Name</label>
-                        <input
-                          type="text"
-                          value={musician.name || ""}
-                          onChange={(e) =>
-                            handleProfileUpdateChange(e, musician._id, "name")
-                          }
-                        />
+                    <div className="updateFieldsContainer">
+                      <div className="updateFields">
+                        <div>
+                          <label>Name:</label>
+                          <input className="inputUpdate"
+                            type="text"
+                            value={musician.name || ""}
+                            onChange={(e) =>
+                              handleProfileUpdateChange(e, musician._id, "name")
+                            }
+                          />
+                        </div>
+                        <div>
+                          <label>Bio:</label>
+                          <input className="inputUpdate"
+                            type="text"
+                            value={musician.bio || ""}
+                            onChange={(e) =>
+                              handleProfileUpdateChange(e, musician._id, "bio")
+                            }
+                          />
+                        </div>
+                        <div>
+                          <label>Instruments:</label>
+                          <input className="inputUpdate"
+                            type="text"
+                            value={
+                              musician.instruments
+                                ? musician.instruments.join(", ")
+                                : ""
+                            }
+                            onChange={(e) =>
+                              handleProfileUpdateChange(
+                                e,
+                                musician._id,
+                                "instruments"
+                              )
+                            }
+                          />
+                        </div>
+                        <div>
+                          <label>Upload New Photo</label>
+                          <input className="inputUpdate"
+                            type="file"
+                            onChange={(e) =>
+                              handleProfileUpdateFileChange(e, musician._id)
+                            }
+                          />
+                        </div>
                       </div>
-                      <div>
-                        <label>Bio</label>
-                        <input
-                          type="text"
-                          value={musician.bio || ""}
-                          onChange={(e) =>
-                            handleProfileUpdateChange(e, musician._id, "bio")
+
+                      <div className="updatedButtons">
+                        <button className="saveButton"
+                          style={{
+                            fontFamily: "Pirata One",
+                            color: "white",
+                            fontSize: "18px",
+                            backgroundColor: "#45027c",
+                          }}
+                          onClick={() =>
+                            handleUpdateProfile(musician._id, musician)
                           }
-                        />
+                        >
+                          Save Changes
+                        </button>
+                        <button className="cancelButton"
+                          style={{
+                            fontFamily: "Pirata One",
+                            color: "white",
+                            fontSize: "18px",
+                            backgroundColor: "#45027c",
+                          }}
+                          onClick={() =>
+                            handleUpdateButtonClick(musician, true)
+                          }
+                        >
+                          Cancel
+                        </button>
                       </div>
-                      <div>
-                        <label>Instruments</label>
-                        <input
-                          type="text"
-                          value={
-                            musician.instruments
-                              ? musician.instruments.join(", ")
-                              : ""
-                          }
-                          onChange={(e) =>
-                            handleProfileUpdateChange(
-                              e,
-                              musician._id,
-                              "instruments"
-                            )
-                          }
-                        />
-                      </div>
-                      <div>
-                        <label>Upload New Photo</label>
-                        <input
-                          type="file"
-                          onChange={(e) =>
-                            handleProfileUpdateFileChange(e, musician._id)
-                          }
-                        />
-                      </div>
-                      <button
-                        onClick={() =>
-                          handleUpdateProfile(musician._id, musician)
-                        }
-                      >
-                        Save Changes
-                      </button>
-                      <button
-                        onClick={() => handleUpdateButtonClick(musician, true)}
-                      >
-                        Cancel
-                      </button>
                     </div>
                   )}
                 </div>
@@ -326,6 +358,56 @@ function Musicians() {
           </div>
         )}
       </div>
+      <footer>
+        <div className="footerContainer">
+          <div className="footerLinks">
+            <ul>
+              <li>
+                <a href="#about">About</a>
+              </li>
+              <li>
+                <a href="#contact">Contact</a>
+              </li>
+              <li>
+                <a href="#privacy">Privacy Policy</a>
+              </li>
+              <li>
+                <a href="#terms">Terms & Conditions</a>
+              </li>
+            </ul>
+          </div>
+          <div className="socialMedia">
+            <a
+              href="https://facebook.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Facebook
+            </a>
+            <a
+              href="https://twitter.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Twitter
+            </a>
+            <a
+              href="https://instagram.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Instagram
+            </a>
+          </div>
+          <div className="contactInfo">
+            <p>Email: info@jamspotknights.com</p>
+            <p>Phone: +123 456 7890</p>
+          </div>
+          <div className="copyright">
+            <p>&copy; 2024 JamSpot Knights. All rights reserved.</p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

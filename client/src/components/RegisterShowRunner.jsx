@@ -95,7 +95,7 @@ function RegisterShowRunner() {
         {/* Register Button */}
         <button type="submit">Register</button>
       </form>
-    </div>
+      </div>
   );
 }
 

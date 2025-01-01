@@ -16,10 +16,10 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 20px; /* Space between musician cards */
-  width: 100%; /* Take full width of the container */
-  max-width: 1200px; /* Optional: to limit the grid width */
-  margin-top: 20px; /* Add margin to give some space above the grid */
+  gap: 20px; 
+  width: 100%; 
+  max-width: 1200px; 
+  margin-top: 20px;
 }
 
 .musicianCard {
@@ -59,9 +59,16 @@
   border: none;
   padding: 10px;
   cursor: pointer;
-  margin-top: 20px; /* Ensure there is space above the button */
+  margin-top: 20px; 
   margin-right: 10px;
   color: white;
+  transition: all 0.3s ease;
+}
+
+.deleteButton:hover {
+  background-color: #ff4500; 
+  transform: scale(1.1); 
+  box-shadow: 0 0 10px rgba(255, 69, 0, 0.8), 0 0 20px rgba(255, 69, 0, 0.5); 
 }
 
 .updateButton {
@@ -69,9 +76,36 @@
   border: none;
   padding: 10px;
   cursor: pointer;
-  margin-top: 20px; /* Ensure there is space above the button */
+  margin-top: 20px; 
   margin-left: 10px;
   color: white;
+  transition: all 0.3s ease;
+}
+
+.updateButton:hover {
+  background-color: #ff4500; 
+  transform: scale(1.1);
+  box-shadow: 0 0 10px rgba(255, 69, 0, 0.8), 0 0 20px rgba(255, 69, 0, 0.5); 
+}
+
+.saveButton {
+  transition: all 0.3s ease;
+}
+
+.saveButton:hover {
+  background-color: #ff4500; 
+  transform: scale(1.1); 
+  box-shadow: 0 0 10px rgba(255, 69, 0, 0.8), 0 0 20px rgba(255, 69, 0, 0.5); 
+}
+
+.cancelButton {
+  transition: all 0.3s ease;
+}
+
+.cancelButton:hover {
+  background-color: #ff4500; 
+  transform: scale(1.1); 
+  box-shadow: 0 0 10px rgba(255, 69, 0, 0.8), 0 0 20px rgba(255, 69, 0, 0.5);
 }
 
 .musicianInfoContainer {
@@ -91,4 +125,31 @@
   border-radius: 10px;
   padding: 5px;
   color: black;
+}
+
+.updatedButtons {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.updateFieldsContainer {
+  color: black;
+  border: 1px solid rgb(185, 185, 185);
+  margin-top: 20px;
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  box-shadow:inset 0px 0px 10px rgba(0, 0, 0, 0.2);
+  font-family: Pirata One;
+  font-size: 20px;
+}
+
+.inputUpdate {
+  padding: 5px;
+  margin-bottom: 10px;
+  border: 1px solid rgb(185, 185, 185);
+  border-radius: 7px;
 }
