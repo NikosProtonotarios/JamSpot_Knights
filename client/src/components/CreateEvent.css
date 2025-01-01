@@ -16,15 +16,6 @@
   background-color: #f9f9f9;
 }
 
-.create-submit-button {
-  display: flex;
-  justify-content: center;
-}
-
-.form-group {
-  
-}
-
 .jamspotLetters {
   color: black;
 }
@@ -32,4 +23,23 @@
 .jamspotnav-title {
   display: flex;
   justify-content: center;
+}
+
+.createEventButton {
+  color: white;
+  background-color: purple;
+  padding: 10px;
+  transition: 0.3s;
+}
+
+.createEventButton:hover {
+  background-color: rgb(128, 1, 1);
+  transform: scale(1.1);
+}
+
+.createEventContainer2 {
+  background-image: url('images/1735728540881.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
 }

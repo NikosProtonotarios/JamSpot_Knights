@@ -208,7 +208,7 @@ function Musicians() {
             {musicians.length > 0 ? (
               musicians.map((musician) => (
                 <div key={musician._id} className="musicianCard">
-                  <h3 style={{ color: "black", fontFamily: "Titan One" }}>
+                  <h3 style={{ color: "black", fontFamily: "'Pirata One', serif", }}>
                     {musician.username}
                   </h3>
                   {musician.photo && (
@@ -220,7 +220,7 @@ function Musicians() {
                   )}
 
                   <div
-                    style={{ fontFamily: "Pirata One" }}
+                    style={{ fontFamily: "Cinzel Decorative" }}
                     className="musicianInfoContainer"
                   >
                     <p>

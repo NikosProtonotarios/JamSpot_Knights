@@ -120,139 +120,162 @@ function CreateEvent() {
   return (
     <div>
       <div className="jamspotnav-title">
-          <Link to="/">
-            <h4 style={{fontFamily: "'Pirata One', serif", fontSize: "30px"}} className="jamspotLetters">JamSpot Knights</h4>
-          </Link>
-        </div>
-      <div  className="createEventContainer">
-        <h2>Create a New Jam Night Event</h2>
-        <form onSubmit={handleSubmit}>
-          {/* Event Title */}
-          <div className="form-group">
-            <label htmlFor="title">Event Title:</label>
-            <input
-              type="text"
-              id="title"
-              name="title"
-              value={eventDetails.title}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
+        <Link to="/">
+          <h4
+            style={{ fontFamily: "'Pirata One', serif", fontSize: "30px" }}
+            className="jamspotLetters"
+          >
+            JamSpot Knights
+          </h4>
+        </Link>
+      </div>
+      <div className="createEventContainer2">
+        <div
+          style={{ fontFamily: "'Pirate One', serif", color: "black" }}
+          className="createEventContainer"
+        >
+          <h2
+            style={{
+              fontFamily: "'Pirata One', serif",
+              color: "black",
+              fontSize: "40px",
+            }}
+          >
+            Create a New Jam Night Event
+          </h2>
+          <form onSubmit={handleSubmit}>
+            {/* Event Title */}
+            <div className="form-group">
+              <label htmlFor="title">Event Title:</label>
+              <input
+                type="text"
+                id="title"
+                name="title"
+                value={eventDetails.title}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
 
-          {/* Event Date */}
-          <div className="form-group">
-            <label htmlFor="date">Event Date:</label>
-            <input
-              type="date"
-              id="date"
-              name="date"
-              value={eventDetails.date}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
+            {/* Event Date */}
+            <div className="form-group">
+              <label htmlFor="date">Event Date:</label>
+              <input
+                type="date"
+                id="date"
+                name="date"
+                value={eventDetails.date}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
 
-          {/* Event Location */}
-          <div className="form-group">
-            <label htmlFor="location">Event Location:</label>
-            <input
-              type="text"
-              id="location"
-              name="location"
-              value={eventDetails.location}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
+            {/* Event Location */}
+            <div className="form-group">
+              <label htmlFor="location">Event Location:</label>
+              <input
+                type="text"
+                id="location"
+                name="location"
+                value={eventDetails.location}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
 
-          {/* Event Summary */}
-          <div className="form-group">
-            <label htmlFor="summary">Event Summary:</label>
-            <textarea
-              id="summary"
-              name="summary"
-              value={eventDetails.summary}
-              onChange={handleInputChange}
-              required
-            ></textarea>
-          </div>
+            {/* Event Summary */}
+            <div className="form-group">
+              <label htmlFor="summary">Event Summary:</label>
+              <textarea
+                id="summary"
+                name="summary"
+                value={eventDetails.summary}
+                onChange={handleInputChange}
+                required
+              ></textarea>
+            </div>
 
-          {/* Songs Section */}
-          <div className="form-group">
-            <label>Number of Songs: {eventDetails.songs.length}</label>
-            <button type="button" onClick={handleAddSong}>
-              Add Song
-            </button>
-          </div>
-
-          {eventDetails.songs.map((song, songIndex) => (
-            <div key={songIndex} className="song-section">
-              <h3>Song {songIndex + 1}</h3>
-              {/* Song Title */}
-              <div className="form-group">
-                <label>Song Title:</label>
-                <input
-                  type="text"
-                  value={song.title}
-                  onChange={(e) =>
-                    handleSongChange(songIndex, "title", e.target.value)
-                  }
-                  required
-                />
-              </div>
-
-              {/* Roles Needed */}
-              <div className="form-group">
-                <label>Roles Needed:</label>
-                {song.roles.map((role, roleIndex) => (
-                  <div key={roleIndex} className="role-group">
-                    <input
-                      type="text"
-                      value={role.instrument}
-                      onChange={(e) =>
-                        handleRoleChange(
-                          songIndex,
-                          roleIndex,
-                          "instrument",
-                          e.target.value
-                        )
-                      }
-                      placeholder="Instrument (e.g. guitar)"
-                      required
-                    />
-                    <button
-                      type="button"
-                      onClick={() => handleRemoveRole(songIndex, roleIndex)}
-                    >
-                      Remove Role
-                    </button>
-                  </div>
-                ))}
-                <button
-                  type="button"
-                  onClick={() => handleAddRole(songIndex)}
-                  className="add-role"
-                >
-                  Add Role
-                </button>
-              </div>
-
+            {/* Songs Section */}
+            <div className="form-group">
+              <label>Number of Songs: {eventDetails.songs.length}</label>
               <button
+                className="createEventButton"
                 type="button"
-                onClick={() => handleRemoveSong(songIndex)}
-                className="remove-song"
+                onClick={handleAddSong}
               >
-                Remove Song
+                Add Song
               </button>
             </div>
-          ))}
 
-          {/* Submit Button */}
-          <button type="submit" className="create-submit-button">
-            Create Event
-          </button>
-        </form>
+            {eventDetails.songs.map((song, songIndex) => (
+              <div key={songIndex} className="song-section">
+                <h3>Song {songIndex + 1}</h3>
+                {/* Song Title */}
+                <div className="form-group">
+                  <label>Song Title:</label>
+                  <input
+                    type="text"
+                    value={song.title}
+                    onChange={(e) =>
+                      handleSongChange(songIndex, "title", e.target.value)
+                    }
+                    required
+                  />
+                </div>
+
+                {/* Roles Needed */}
+                <div className="form-group">
+                  <label>Roles Needed:</label>
+                  {song.roles.map((role, roleIndex) => (
+                    <div key={roleIndex} className="role-group">
+                      <input
+                        type="text"
+                        value={role.instrument}
+                        onChange={(e) =>
+                          handleRoleChange(
+                            songIndex,
+                            roleIndex,
+                            "instrument",
+                            e.target.value
+                          )
+                        }
+                        placeholder="Instrument (e.g. guitar)"
+                        required
+                      />
+                      <button
+                        className="createEventButton"
+                        type="button"
+                        onClick={() => handleRemoveRole(songIndex, roleIndex)}
+                      >
+                        Remove Role
+                      </button>
+                    </div>
+                  ))}
+                  <button
+                    className="createEventButton"
+                    type="button"
+                    onClick={() => handleAddRole(songIndex)}
+                  >
+                    Add Role
+                  </button>
+                </div>
+
+                <button
+                  className="createEventButton"
+                  type="button"
+                  onClick={() => handleRemoveSong(songIndex)}
+                >
+                  Remove Song
+                </button>
+              </div>
+            ))}
+
+            {/* Submit Button */}
+            <button type="submit" className="createEventButton">
+              Create Event
+            </button>
+          </form>
+        </div>
       </div>
       <footer>
         <div className="footerContainer">

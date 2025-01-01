@@ -60,7 +60,9 @@ function RegisterMusician() {
       );
 
       if (response.status === 201) {
-        alert("🎶 🛡️ Welcome, Brave Musician! You've joined the JamSpot Knights and are ready to make your mark in the jam nights!");
+        alert(
+          "🎶 🛡️ Welcome, Brave Musician! You've joined the JamSpot Knights and are ready to make your mark in the jam nights!"
+        );
         navigate("/"); // Navigate to home page after success
       }
     } catch (error) {
@@ -72,92 +74,106 @@ function RegisterMusician() {
   };
 
   return (
-    <div className="musicianContainer">
-      <div className="jamspotnav-title">
+    <div className="registerMusicianContainer">
+      <div
+        style={{ fontFamily: "Pirata One", color: "black" }}
+        className="musicianContainer"
+      >
+        <div className="jamspotnav-title">
           <Link to="/">
-            <h4 style={{fontFamily: "'Pirata One', serif", fontSize: "30px"}} className="jamspotLetters">JamSpot Knights</h4>
+            <h4
+              style={{ fontFamily: "'Pirata One', serif", fontSize: "30px" }}
+              className="jamspotLetters"
+            >
+              JamSpot Knights
+            </h4>
           </Link>
         </div>
-      <h1>Register as a Musician</h1>
+        <h1>Register as a Musician</h1>
 
-      <form onSubmit={handleSubmit} className="registerMusicianForm">
-        <div className="formGroup">
-          <label htmlFor="username">Name:</label>
-          <input
-            type="text"
-            id="username"
-            name="username"
-            value={formData.username}
-            onChange={handleChange}
-            required
-          />
-        </div>
+        <form onSubmit={handleSubmit} className="registerMusicianForm">
+          <div className="formGroup">
+            <label htmlFor="username">Name:</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              value={formData.username}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-        <div className="formGroup">
-          <label htmlFor="email">Email:</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
-        </div>
+          <div className="formGroup">
+            <label htmlFor="email">Email:</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-        <div className="formGroup">
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
-        </div>
+          <div className="formGroup">
+            <label htmlFor="password">Password:</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-        <div className="formGroup">
-          <label htmlFor="instruments">Instruments:</label>
-          <input
-            type="text"
-            id="instruments"
-            name="instruments"
-            value={formData.instruments}
-            onChange={handleChange}
-            required
-          />
-        </div>
+          <div className="formGroup">
+            <label htmlFor="instruments">Instruments:</label>
+            <input
+              type="text"
+              id="instruments"
+              name="instruments"
+              value={formData.instruments}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-        <div className="formGroup">
-          <label htmlFor="bio">Bio:</label>
-          <textarea
-            id="bio"
-            name="bio"
-            value={formData.bio}
-            onChange={handleChange}
-            required
-          />
-        </div>
+          <div className="formGroup">
+            <label htmlFor="bio">Bio:</label>
+            <textarea
+              id="bio"
+              name="bio"
+              value={formData.bio}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-        <div className="formGroup">
-          <label htmlFor="photo">Upload your photo:</label>
-          <input
-            type="file"
-            id="photo"
-            name="photo"
-            accept="image/*"
-            onChange={handlePhotoChange}
-            required
-          />
-        </div>
+          <div className="formGroup">
+            <label htmlFor="photo">Upload your photo:</label>
+            <input
+              type="file"
+              id="photo"
+              name="photo"
+              accept="image/*"
+              onChange={handlePhotoChange}
+              required
+            />
+          </div>
 
-        <div className="button-register">
-          <button type="submit" disabled={loading}>
-            {loading ? "Registering..." : "Register"}
-          </button>
-        </div>
-      </form>
+          <div>
+            <button
+              className="button-register-musician"
+              type="submit"
+              disabled={loading}
+            >
+              {loading ? "Registering..." : "Register"}
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

@@ -21,3 +21,28 @@
 .button-register {
   text-align: center;
 }
+
+.registerMusicianForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.button-register-musician {
+  background-color: #4b0468;
+  color: white;
+  transition: 0.3s;
+}
+
+.button-register-musician:hover {
+  background-color: #680404;
+  transform: scale(1.1);
+}
+
+.registerMusicianContainer {
+  background-image: url('/images/1735515018171.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+}

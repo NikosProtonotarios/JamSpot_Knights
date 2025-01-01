@@ -37,17 +37,29 @@
   .buttonlogin {
     width: 100%;
     padding: 10px;
-    background-color:rgb(77, 0, 150);
+    background-color:rgb(54, 0, 105);
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    transition: 0.3s;
+    margin-top: 20px;
   }
   
   .buttonlogin:hover {
-    background-color: #0056b3;
+    background-color: #b30000;
+    transform: scale(1.1);
   }
   
   .footerContainer {
-    
+    height: 239px;
+  }
+
+  .content-wrap {
+    background-image: url('/images/1735516721232.jpg');
+    background-repeat: none;
+    background-position: top;
+    background-size: cover;
+    background-attachment: fixed;
+    height: 50vh;
   }

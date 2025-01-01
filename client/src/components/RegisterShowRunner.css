@@ -35,3 +35,11 @@
 .registerSho {
   width: 500px;
 }
+
+.registerShowRunnerImage {
+  background-image: url('images/1735728277208.jpg');
+  height: 100vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}

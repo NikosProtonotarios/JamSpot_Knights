@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 import React from "react";
 function SignUp() {
+
   return (
     <div className="signContainer">
       <div className="jamspotnav-title">
@@ -10,7 +11,7 @@ function SignUp() {
           <h4 style={{fontFamily: "'Pirata One', serif", fontSize: "30px"}} className="jamspotLetters">JamSpot Knights</h4>
           </Link>
         </div>
-      <h2 style={{ fontFamily: "'Pirata One', serif" }} className="signTitle">Are you a ShowRunner or a Musician?</h2>
+      <h2 style={{ fontFamily: "'Pirata One', serif", }} className="signTitle">Are you a ShowRunner or a Musician?</h2>
       <div className="signUp">
         <Link to={"/registershowrunner"}>
           <button className="showRunnerButton" style={{ fontFamily: "'Pirata One', serif", color: "white" }}>ShowRunner</button>
