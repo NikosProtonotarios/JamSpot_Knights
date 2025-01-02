@@ -137,6 +137,11 @@ function Events({ user }) {
           </h2>
           {events.map((event) => (
             <div key={event._id} className="eventCard">
+              {event.isConfirmed && (
+                <div className="confirmedMessage">
+                  ✅ This event is confirmed!
+                  </div>
+              )}
               <div className="eventTitleCardContainer">
                 <h3
                   style={{

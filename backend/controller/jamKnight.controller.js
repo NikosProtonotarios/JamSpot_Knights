@@ -6,25 +6,25 @@ const { authenticate, authorize } = require("../middleware/auth");
 
 const createJamNight = async (req, res) => {
   try {
-    const { title, date, songs, location, summary } = req.body;  // Include summary here
+    const { title, date, songs, location, summary } = req.body;
 
     // Ensure that the owner is set to the authenticated user
-    const owner = req.user.userId; // Assuming you're using JWT for authentication
+    const owner = req.user.userId;
 
-    // Create the JamNight with roles where 'musician' is initially null
+    
     const jamNight = new JamKnight({
       title,
-      location, // Add the location here
+      location,
       date,
-      summary, // Add the summary here
+      summary,
       songs: songs.map((song) => ({
         title: song.title,
         roles: song.roles.map((role) => ({
           instrument: role.instrument,
-          musician: null, // Initially no musician assigned
+          musician: null,
         })),
       })),
-      owner, // Set the owner as the authenticated user
+      owner,
     });
 
     await jamNight.save();
@@ -55,7 +55,7 @@ const getJamNightById = async (req, res) => {
     const { id } = req.params;
 
     // Find the jam night by ID and populate the owner field
-    const jamNight = await JamKnight.findById(id).populate('owner', 'name email'); // Populates the owner's name and email
+    const jamNight = await JamKnight.findById(id).populate('owner', 'name email');
 
     if (!jamNight) {
       return res.status(404).json({ message: "Jam night not found" });
@@ -139,7 +139,7 @@ const confirmJamNight = async (req, res) => {
     // If the user is the owner, confirm the event
     const updatedJamNight = await JamKnight.findByIdAndUpdate(
       id,
-      { isConfirmed: true }, // explicitly setting isConfirmed to true
+      { isConfirmed: true },
       { new: true }
     );
 
@@ -152,8 +152,8 @@ const confirmJamNight = async (req, res) => {
 
 const confirmMusicianForJamNight = async (req, res) => {
   try {
-    const { id } = req.params; // Jam night ID
-    const { musicianId } = req.body; // Musician ID to confirm
+    const { id } = req.params;
+    const { musicianId } = req.body;
 
     // Check if the musician exists
     const musician = await User.findById(musicianId);

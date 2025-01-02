@@ -212,3 +212,10 @@
   text-shadow: 0 2px 5px rgba(0, 0, 0, 0.7);
   color: black;
 }
+
+.confirmedMessage {
+  color: green;
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
+}
