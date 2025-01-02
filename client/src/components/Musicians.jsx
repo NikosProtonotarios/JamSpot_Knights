@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 function Musicians() {
   const [musicians, setMusicians] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [originalMusicianData, setOriginalMusicianData] = useState(null); // Store original musician data for cancellation
+  const [originalMusicianData, setOriginalMusicianData] = useState(null);
 
   useEffect(() => {
     const fetchMusicians = async () => {
@@ -183,8 +183,6 @@ function Musicians() {
     }
   };
 
-  // font-family: "IM Fell DW Pica", serif;
-
   return (
     <div>
       <div className="jamspotnav-title">
@@ -208,7 +206,7 @@ function Musicians() {
             {musicians.length > 0 ? (
               musicians.map((musician) => (
                 <div key={musician._id} className="musicianCard">
-                  <h3 style={{ color: "black", fontFamily: "'Pirata One', serif", }}>
+                  <h3 style={{ color: "black", fontFamily: "'Pirata One', serif", fontSize: "40px" }}>
                     {musician.username}
                   </h3>
                   {musician.photo && (
