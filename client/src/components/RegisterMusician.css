@@ -43,7 +43,8 @@
 .registerMusicianContainer {
   background-image: url('/images/1735515018171.jpg');
   background-size: cover;
-  background-position: center;
+  background-position: 0px -240px;
+  background-repeat: no-repeat;
   height: 100vh;
   background-attachment: fixed;
 }

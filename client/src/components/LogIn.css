@@ -57,7 +57,7 @@
   .content-wrap {
     background-image: url('/images/1735516721232.jpg');
     background-repeat: none;
-    background-position: top;
+    background-position: 0px -200px;
     background-size: cover;
     background-attachment: fixed;
     height: 50vh;

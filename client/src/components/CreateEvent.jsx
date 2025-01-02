@@ -210,7 +210,7 @@ function CreateEvent() {
             {eventDetails.songs.map((song, songIndex) => (
               <div key={songIndex} className="song-section">
                 <div className="songsContainer">
-                <h3>Song {songIndex + 1}</h3>
+                  <h3>Song {songIndex + 1}</h3>
                 </div>
                 {/* Song Title */}
                 <div className="form-group">

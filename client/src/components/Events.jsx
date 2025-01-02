@@ -29,8 +29,8 @@ function Events({ user }) {
     try {
       const token = localStorage.getItem("token");
       await axios.delete(`http://localhost:2000/jamNights/jamnight/${eventId}`);
-      
-      setEvents(events.filter(event => event._id !== eventId));
+
+      setEvents(events.filter((event) => event._id !== eventId));
     } catch (error) {
       console.error("Error deleting event:", error);
     }
@@ -39,7 +39,9 @@ function Events({ user }) {
   // Function to confirm an event
   const handleConfirmEvent = async (eventId) => {
     try {
-      await axios.patch(`http://localhost:2000/jamNights/jamnight/${eventId}/confirm`);
+      await axios.patch(
+        `http://localhost:2000/jamNights/jamnight/${eventId}/confirm`
+      );
       // Optionally update the UI or show a confirmation message
     } catch (error) {
       console.error("Error confirming event:", error);
@@ -50,80 +52,129 @@ function Events({ user }) {
     <div>
       <div className="jamspotnav-title">
         <Link to="/">
-          <h4 style={{fontFamily: "'Pirata One', serif"}} className="jamspotLetters">JamSpot Knights</h4>
-          </Link>
-        </div>
+          <h4
+            style={{ fontFamily: "'Pirata One', serif" }}
+            className="jamspotLetters"
+          >
+            JamSpot Knights
+          </h4>
+        </Link>
+      </div>
       <div className="EventContainer">
         <div>
           <Link to="/createEvent">
-            <button>Create Event</button>
+            <button className="eventsButtons">Create Event</button>
           </Link>
         </div>
         <div>
           <Link to="/checkOlderEvents">
-            <button>Check Older Events</button>
+            <button className="eventsButtons">Check Older Events</button>
           </Link>
         </div>
       </div>
 
       {/* Display loading message if events are still being fetched */}
       {loading && <p>Loading events...</p>}
-
       {/* Display events if they are loaded */}
       {!loading && events.length > 0 ? (
         <div className="eventsList">
-          <h2 style={{ textAlign: "center", marginTop: "20px" }}>Upcoming Jam Nights</h2>
+          <h2
+            style={{
+              fontFamily: "UnifrakturMaguntia",
+              fontSize: "60px",
+              textAlign: "center",
+              marginTop: "20px",
+              textShadow:
+                "1px 1px 0px black, -1px -1px 0px black, 1px -1px 0px black, -1px 1px 0px black",
+            }}
+          >
+            Upcoming Jam Nights
+          </h2>
           {events.map((event) => (
             <div key={event._id} className="eventCard">
-              <h3>{event.title}</h3>
-              <p>
-                <strong>Date:</strong>{" "}
-                {new Date(event.date).toLocaleDateString()}
-              </p>
-              <p>
-                <strong>Location:</strong> {event.location}
-              </p>
-              <p>
-                <strong>Summary:</strong> {event.summary}
-              </p>
+              <div className="eventTitleCardContainer">
+                <h3
+                  style={{
+                    fontFamily: "Pirata One",
+                    fontSize: "50px",
+                    textShadow:
+                      "1px 1px 0px black, -1px -1px 0px black, 1px -1px 0px black, -1px 1px 0px black",
+                  }}
+                >
+                  {event.title}
+                </h3>
+              </div>
+              <div className="infoEventContainer">
+                <p>
+                  <strong>Date:</strong>{" "}
+                  {new Date(event.date).toLocaleDateString()}
+                </p>
+                <p>
+                  <strong>Location:</strong> {event.location}
+                </p>
+                <p>
+                  <strong>Summary:</strong> {event.summary}
+                </p>
 
-              {/* Display the number of songs */}
-              <p>
-                <strong>Number of Songs:</strong> {event.songs ? event.songs.length : 0}
-              </p>
-
+                {/* Display the number of songs */}
+                <p>
+                  <strong>Number of Songs:</strong>{" "}
+                  {event.songs ? event.songs.length : 0}
+                </p>
+              </div>
               {/* Display the songs and roles */}
               <div>
-                <h4 style={{ textAlign: "center" }}>Songs and Roles</h4>
+                <h4
+                  style={{
+                    textAlign: "center",
+                    textShadow: "0 2px 5px rgba(0, 0, 0, 0.7)",
+                    color: "black",
+                    fontFamily: "Pirata One",
+                    fontSize: "25px",
+                    marginTop: "40px",
+                  }}
+                >
+                  Songs and Roles
+                </h4>
                 {event.songs && event.songs.length > 0 ? (
                   <div>
                     {event.songs.map((song, songIndex) => (
-                      <div key={songIndex} className="song">
-                        <h5 style={{textAlign: "center", fontSize: "1.3rem"}}>{song.title}</h5>
+                      <div>
+                        <div key={songIndex} className="song">
+                          <h5 style={{ textAlign: "center", fontSize: "3rem" }}>
+                            {song.title}
+                          </h5>
+                        </div>
                         <ul>
                           {song.roles.map((role, roleIndex) => (
-                            <li key={roleIndex}>
-                              <div>
-                                <strong>Instrument:</strong> {role.instrument}
-                                <button className="roleButtons">
-                                  Take the role
-                                </button>
-                              </div>
-                              <div>
-                                <strong>Musician:</strong>{" "}
-                                {role.musician
-                                  ? role.musician.name
-                                  : "Not yet assigned"}
-                                <button className="deleteButtons">
-                                  Delete Musician
-                                </button>
-                                <button className="deleteButtons">
-                                  Confirm Musician
-                                </button>
-                                <br />
-                                <br />
-                              </div>
-                            </li>
+                            <div className="songsInfoContainer">
+                              <li key={roleIndex}>
+                                <div className="instrumentsContainer">
+                                  <strong className="instrumentMusician">
+                                    Instrument:
+                                  </strong>{" "}
+                                  {role.instrument}
+                                  <button className="deleteButtons">
+                                    Take the role
+                                  </button>
+                                </div>
+                                <div className="rolesSongsContainer">
+                                  <strong className="instrumentMusician">
+                                    Musician:
+                                  </strong>{" "}
+                                  {role.musician
+                                    ? role.musician.name
+                                    : "Not yet assigned"}
+                                  <button className="deleteButtons">
+                                    Delete Musician
+                                  </button>
+                                  <button className="deleteButtons">
+                                    Confirm Musician
+                                  </button>
+                                  <br />
+                                </div>
+                              </li>
+                            </div>
                           ))}
                         </ul>
                       </div>
