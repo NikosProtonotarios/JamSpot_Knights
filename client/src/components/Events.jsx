@@ -136,7 +136,7 @@ function Events({ user }) {
             Upcoming Jam Nights
           </h2>
           {events.map((event) => (
-            <div key={event._id} className="eventCard">
+            <div key={event._id} className={`eventCard ${event.isConfirmed ? "confirmedEvent" : ""}`}>
               {event.isConfirmed && (
                 <div className="confirmedMessage">
                   ✅ This event is confirmed!

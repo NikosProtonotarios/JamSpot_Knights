@@ -219,3 +219,8 @@
   font-weight: bold;
   text-align: center;
 }
+
+.confirmedEvent {
+  border: 5px solid green; /* Green border */
+  box-shadow: 0 0 10px rgba(0, 255, 0, 0.7); /* Optional, adds a glowing effect */
+}
