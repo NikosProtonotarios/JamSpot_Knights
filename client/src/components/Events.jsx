@@ -59,13 +59,37 @@ function Events({ user }) {
 
   // Function to confirm an event
   const handleConfirmEvent = async (eventId) => {
+    const userConfirmed = confirm("⚔️ Are you sure you want to confirm this event and summon the knights to the stage? 🎶👑 This action can’t be undone!");
+
+    if (!userConfirmed) {
+      return;
+    }
+
     try {
-      await axios.patch(
-        `http://localhost:2000/jamNights/jamnight/${eventId}/confirm`
+      const token = localStorage.getItem("authToken");
+      if (!token) {
+        alert("You must be logged in to confirm an event.");
+        return;
+      }
+  
+      await axios.put(
+        `http://localhost:2000/jamNights/jamnight/${eventId}/confirm`,
+        {}, // You can pass any required data here, if needed (e.g., empty body or confirmation data)
+        {
+          headers: { Authorization: `Bearer ${token}` }, // Headers should be passed as the third argument
+        }
       );
+  
+      alert("🎉 The event has been confirmed, mighty ShowRunner! Let the music begin! 🎶");
+  
       // Optionally update the UI or show a confirmation message
     } catch (error) {
-      console.error("Error confirming event:", error);
+      if (error.response && error.response.status === 403) {
+        alert("🚫 Only the ShowRunner of this event has the power to confirm it. 🎸⚔️");
+      } else {
+        console.error("Error confirming event:", error);
+        alert("An unexpected error occurred. Please try again later.");
+      }
     }
   };
 

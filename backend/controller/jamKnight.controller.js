@@ -122,16 +122,26 @@ const deleteJamNight = async (req, res) => {
 const confirmJamNight = async (req, res) => {
   try {
     const { id } = req.params;
+    const userId = req.user.userId;
 
+    // Find the jam night
+    const jamNight = await JamKnight.findById(id);
+
+    if (!jamNight) {
+      return res.status(404).json({ message: "Jam night not found" });
+    }
+
+    // Check if the user is the owner of the event (ShowRunner)
+    if (jamNight.owner.toString() !== userId) {
+      return res.status(403).json({ message: "You are not the owner of this event" });
+    }
+
+    // If the user is the owner, confirm the event
     const updatedJamNight = await JamKnight.findByIdAndUpdate(
       id,
       { isConfirmed: true }, // explicitly setting isConfirmed to true
       { new: true }
     );
-
-    if (!updatedJamNight) {
-      return res.status(404).json({ message: "Jam night not found" });
-    }
 
     return res.status(200).json(updatedJamNight);
   } catch (error) {
