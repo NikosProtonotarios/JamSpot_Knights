@@ -189,16 +189,16 @@ function Events({ user }) {
                 {event.songs && event.songs.length > 0 ? (
                   <div>
                     {event.songs.map((song, songIndex) => (
-                      <div>
-                        <div key={songIndex} className="song">
+                      <div key={songIndex}>
+                        <div className="song">
                           <h5 style={{ textAlign: "center", fontSize: "3rem" }}>
                             {song.title}
                           </h5>
                         </div>
                         <ul>
                           {song.roles.map((role, roleIndex) => (
-                            <div className="songsInfoContainer">
-                              <li key={roleIndex}>
+                            <div key={roleIndex} className="songsInfoContainer">
+                              <li>
                                 <div className="instrumentsContainer">
                                   <strong className="instrumentMusician">
                                     Instrument:

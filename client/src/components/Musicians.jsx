@@ -128,31 +128,38 @@ function Musicians() {
 
       console.log("Updated Info:", updatedInfo);
 
+      // const formData = new FormData();
+      // formData.append("name", updatedInfo.name);
+      // formData.append("bio", updatedInfo.bio);
+      // formData.append("instruments", updatedInfo.instruments);
+      // if (updatedInfo.photo) formData.append("photo", updatedInfo.photo);
+
       const formData = new FormData();
-      formData.append("name", updatedInfo.name);
-      formData.append("bio", updatedInfo.bio);
-      formData.append("instruments", updatedInfo.instruments);
-      if (updatedInfo.photo) formData.append("photo", updatedInfo.photo);
+      if (updatedInfo.name) formData.append("username", updatedInfo.username);
+      if (updatedInfo.bio) formData.append("bio", updatedInfo.bio);
+      if (updatedInfo.instruments) formData.append("instruments", updatedInfo.instruments);
+      // if (updatedInfo.photo) formData.append("photo", updatedInfo.photo);
+      console.log(formData);
 
       for (let pair of formData.entries()) {
         console.log(pair[0], pair[1]);
       }
-
+        
       const response = await axios.put(
         `http://localhost:2000/users/profile/musician/${musicianId}`,
-        formData,
+        {username: updatedInfo.username, bio: updatedInfo.bio, instruments: updatedInfo.instruments},
         {
           headers: {
             Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
+            // "Content-Type": "multipart/form-data",
           },
         }
       );
 
-      if (response.data.token) {
-        localStorage.setItem("token", response.data.token);
-      }
-
+      // if (response.data.token) {
+      //   localStorage.setItem("token", response.data.token);
+      // }
+      console.log(response.data);
       setMusicians((prevMusicians) =>
         prevMusicians.map((musician) =>
           musician._id === musicianId

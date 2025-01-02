@@ -203,24 +203,26 @@ const updateProfileMusician = async (req, res) => {
     // Log the request body to see what data is being sent
     console.log('Request Body:', req.body);
 
-    const { username, bio, photo, instruments, roles, password } = req.body;
+    const { username, bio, instruments } = req.body;
+        // const { username, bio, photo, instruments, roles, password } = req.body;
+
     const updatedData = {};
 
     // Check if fields are present and assign them to the updatedData object
     if (username) updatedData.username = username;
     if (bio) updatedData.bio = bio;
-    if (photo) updatedData.photo = photo;
+    // if (photo) updatedData.photo = photo;
     
     // Validate instruments and roles arrays
     if (instruments && instruments.length > 0) updatedData.instruments = instruments;
-    if (roles && roles.length > 0) updatedData.roles = roles;
+    // if (roles && roles.length > 0) updatedData.roles = roles;
 
     // If password is updated, hash it before saving
-    if (password) {
-      const salt = await bcrypt.genSalt(10);
-      const hashedPassword = await bcrypt.hash(password, salt);
-      updatedData.password = hashedPassword;  // Update password with hashed value
-    }
+    // if (password) {
+    //   const salt = await bcrypt.genSalt(10);
+    //   const hashedPassword = await bcrypt.hash(password, salt);
+    //   updatedData.password = hashedPassword;  // Update password with hashed value
+    // }
 
     // Check if there is any field to update
     if (Object.keys(updatedData).length === 0) {
@@ -235,6 +237,7 @@ const updateProfileMusician = async (req, res) => {
       new: true,
       runValidators: true,
     });
+    console.log(user);
 
     // Check if the user was found and updated
     if (!user) {
@@ -242,18 +245,18 @@ const updateProfileMusician = async (req, res) => {
     }
 
     // If password is updated, generate a new JWT token
-    if (password) {
-      const token = jwt.sign(
-        { userId: user._id, userType: user.userType },
-        process.env.SECRET_KEY,
-        { expiresIn: "1h" }  // Token expiration (adjust as needed)
-      );
-      return res.status(200).json({
-        message: "Profile updated successfully",
-        user,
-        token,  // Send the new token to the user
-      });
-    }
+    // if (password) {
+    //   const token = jwt.sign(
+    //     { userId: user._id, userType: user.userType },
+    //     process.env.SECRET_KEY,
+    //     { expiresIn: "1h" }  // Token expiration (adjust as needed)
+    //   );
+    //   return res.status(200).json({
+    //     message: "Profile updated successfully",
+    //     user,
+    //     token,  // Send the new token to the user
+    //   });
+    // }
 
     // Return the updated user data without generating a new token
     return res.status(200).json({ message: "Profile updated successfully", user });
