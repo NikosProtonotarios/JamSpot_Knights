@@ -26,13 +26,34 @@ function Events({ user }) {
 
   // Function to delete an event
   const handleDeleteEvent = async (eventId) => {
+    const userConfirmed = confirm("⚔️ Are you sure, mighty ShowRunner? Once vanquished, this event will be lost to the sands of time! 🕰️");
+
+    if (!userConfirmed) {
+      return;
+    }
+
     try {
-      const token = localStorage.getItem("token");
-      await axios.delete(`http://localhost:2000/jamNights/jamnight/${eventId}`);
+      const token = localStorage.getItem("authToken");
+      if (!token) {
+        alert("You must be logged in to delete an event.");
+        return
+      }
+
+      await axios.delete(`http://localhost:2000/jamNights/jamnight/${eventId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      alert("🎉 You have successfully vanquished this event, mighty ShowRunner! 🛡️ Your majesty reigns supreme! 👑");
 
       setEvents(events.filter((event) => event._id !== eventId));
     } catch (error) {
-      console.error("Error deleting event:", error);
+      if (error.response && error.response.status === 403) {
+        // Forbidden error message (user is not the ShowRunner)
+        alert("🚫 Hold your horses! You don't have the power to delete this jam night. Only the mighty ShowRunner who created it can do that. 🎸⚔️");
+      } else {
+        console.error("Error deleting event:", error);
+        alert("An unexpected error occurred. Please try again later.");
+      }
     }
   };
 
