@@ -44,7 +44,7 @@ function Events({ user }) {
       console.log("Song at index:", songIndex, song);
   
       // Access the song's roles from the songs array
-      const role = song.songs[roleIndex].roles;
+      const role = song.songs[roleIndex].roles[roleIndex].instrument;
       console.log("Role at index:", roleIndex, role);
       if (!role) {
         console.error("Invalid role index:", roleIndex);
