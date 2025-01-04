@@ -25,9 +25,12 @@ function Login() {
       );
 
       if (response.status === 200) {
-        const { token } = response.data;
+        const { token, userId } = response.data;
+
+        console.log("User ID from the response:", userId);
 
         localStorage.setItem("authToken", token);
+        localStorage.setItem("userId", userId);
 
         navigate("/");
         alert(`🎸 Welcome to JamSpot Knights! 🎸

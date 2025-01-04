@@ -141,8 +141,8 @@ const userLogin = async (req, res) => {
       { userId: user._id, userType: user.userType },
       process.env.SECRET_KEY
     );
-
-    return res.send({ message: "User logged in successfully", token });
+    console.log("User ID:", user._id);
+    return res.send({ message: "User logged in successfully", token, userId: user._id });
   } catch (error) {
     console.error(error);
     return res.status(500).send({ message: "Error logging in user" });
@@ -322,7 +322,7 @@ const getMusicianById = async (req, res) => {
 
 const addMusicianToJamNight = async (req, res) => {
   try {
-    const { jamNightId, musicianId } = req.params; // Using musicianId as userId
+    const { jamNightId, musicianId } = req.params;
     const { title, instrument } = req.body;
 
     // Find the user by their musicianId and check if the userType is "musician"

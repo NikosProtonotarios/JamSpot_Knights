@@ -24,9 +24,75 @@ function Events({ user }) {
     fetchEvents();
   }, []);
 
+  const handleTaketheRole = async (jamNightId, songIndex, roleIndex) => {
+    try {
+
+      const userTakeRole = confirm("Are you sure that you want to take this role music warrior?");
+
+      if (!userTakeRole) {
+        return;
+      }
+
+      // Retrieve musicianId and token from localStorage
+      const musicianId = localStorage.getItem("userId");
+      console.log("Musician ID from localStorage:", musicianId);
+
+      if (!musicianId) {
+        alert("You must be logged in to take a role.");
+        return;
+      }
+  
+      // Check if the songIndex and roleIndex are valid
+      const song = events[songIndex];
+      console.log("Song at index:", songIndex, song);
+      if (!song) {
+        console.error("Invalid song index:", songIndex);
+        return;
+      }
+  
+      const role = song.roles[roleIndex];
+      console.log("Role at index:", roleIndex, role);
+      if (!role) {
+        console.error("Invalid role index:", roleIndex);
+        return;
+      }
+  
+      const title = song.title;
+      const instrument = role.instrument;
+  
+      // Retrieve token from localStorage for authorization
+      const token = localStorage.getItem("authToken");
+      console.log("Token from local Storage:", token);
+      if (!token) {
+        alert("You must be logged in to take a role.");
+        return;
+      }
+  
+      // Send the request to the backend
+      const response = await axios.put(
+        `http://localhost:2000/users/musician/${musicianId}/${jamNightId}`,
+        { title, instrument },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      console.log("Response data:", response.data);
+  
+      // Update the UI after successfully taking the role
+      alert("🎉 You have successfully claimed your role! Awaiting confirmation!");
+      const updatedEvents = [...events];
+      updatedEvents[songIndex].roles[roleIndex].musician = response.data.musician;
+      setEvents(updatedEvents);
+    } catch (error) {
+      console.error("Error taking role:", error);
+      alert("An error occurred while taking the role. Please try again.");
+    }
+  };
+
   // Function to delete an event
   const handleDeleteEvent = async (eventId) => {
-    const userConfirmed = confirm("⚔️ Are you sure, mighty ShowRunner? Once vanquished, this event will be lost to the sands of time! 🕰️");
+    const userConfirmed = confirm(
+      "⚔️ Are you sure, mighty ShowRunner? Once vanquished, this event will be lost to the sands of time! 🕰️"
+    );
 
     if (!userConfirmed) {
       return;
@@ -36,20 +102,27 @@ function Events({ user }) {
       const token = localStorage.getItem("authToken");
       if (!token) {
         alert("You must be logged in to delete an event.");
-        return
+        return;
       }
 
-      await axios.delete(`http://localhost:2000/jamNights/jamnight/${eventId}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await axios.delete(
+        `http://localhost:2000/jamNights/jamnight/${eventId}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
 
-      alert("🎉 You have successfully vanquished this event, mighty ShowRunner! 🛡️ Your majesty reigns supreme! 👑");
+      alert(
+        "🎉 You have successfully vanquished this event, mighty ShowRunner! 🛡️ Your majesty reigns supreme! 👑"
+      );
 
       setEvents(events.filter((event) => event._id !== eventId));
     } catch (error) {
       if (error.response && error.response.status === 403) {
         // Forbidden error message (user is not the ShowRunner)
-        alert("🚫 Hold your horses! You don't have the power to delete this jam night. Only the mighty ShowRunner who created it can do that. 🎸⚔️");
+        alert(
+          "🚫 Hold your horses! You don't have the power to delete this jam night. Only the mighty ShowRunner who created it can do that. 🎸⚔️"
+        );
       } else {
         console.error("Error deleting event:", error);
         alert("An unexpected error occurred. Please try again later.");
@@ -59,7 +132,9 @@ function Events({ user }) {
 
   // Function to confirm an event
   const handleConfirmEvent = async (eventId) => {
-    const userConfirmed = confirm("⚔️ Are you sure you want to confirm this event and summon the knights to the stage? 🎶👑 This action can’t be undone!");
+    const userConfirmed = confirm(
+      "⚔️ Are you sure you want to confirm this event and summon the knights to the stage? 🎶👑 This action can’t be undone!"
+    );
 
     if (!userConfirmed) {
       return;
@@ -71,7 +146,7 @@ function Events({ user }) {
         alert("You must be logged in to confirm an event.");
         return;
       }
-  
+
       await axios.put(
         `http://localhost:2000/jamNights/jamnight/${eventId}/confirm`,
         {}, // You can pass any required data here, if needed (e.g., empty body or confirmation data)
@@ -79,13 +154,17 @@ function Events({ user }) {
           headers: { Authorization: `Bearer ${token}` }, // Headers should be passed as the third argument
         }
       );
-  
-      alert("🎉 The event has been confirmed, mighty ShowRunner! Let the music begin! 🎶");
-  
+
+      alert(
+        "🎉 The event has been confirmed, mighty ShowRunner! Let the music begin! 🎶"
+      );
+
       // Optionally update the UI or show a confirmation message
     } catch (error) {
       if (error.response && error.response.status === 403) {
-        alert("🚫 Only the ShowRunner of this event has the power to confirm it. 🎸⚔️");
+        alert(
+          "🚫 Only the ShowRunner of this event has the power to confirm it. 🎸⚔️"
+        );
       } else {
         console.error("Error confirming event:", error);
         alert("An unexpected error occurred. Please try again later.");
@@ -136,11 +215,16 @@ function Events({ user }) {
             Upcoming Jam Nights
           </h2>
           {events.map((event) => (
-            <div key={event._id} className={`eventCard ${event.isConfirmed ? "confirmedEvent" : ""}`}>
+            <div
+              key={event._id}
+              className={`eventCard ${
+                event.isConfirmed ? "confirmedEvent" : ""
+              }`}
+            >
               {event.isConfirmed && (
                 <div className="confirmedMessage">
                   ✅ This event is confirmed!
-                  </div>
+                </div>
               )}
               <div className="eventTitleCardContainer">
                 <h3
@@ -204,7 +288,19 @@ function Events({ user }) {
                                     Instrument:
                                   </strong>{" "}
                                   {role.instrument}
-                                  <button className="deleteButtons">
+                                  <button
+                                    className="deleteButtons"
+                                    onClick={() => {
+                                      console.log("Event ID:", event._id);
+                                      console.log("Song ID:", song._id);
+                                      console.log("Role ID:", role._id);
+                                      handleTaketheRole(
+                                        event._id,
+                                        songIndex,
+                                        roleIndex
+                                      );
+                                    }}
+                                  >
                                     Take the role
                                   </button>
                                 </div>
