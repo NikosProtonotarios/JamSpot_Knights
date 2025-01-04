@@ -117,8 +117,10 @@ function Musicians() {
     );
   };
 
-  const handleUpdateProfile = async (musicianId, updatedInfo) => {
+  const handleUpdateProfile = async (musicianId, updatedInfo, index) => {
     try {
+      console.log(musicians);
+      console.log(musicians[index].username);
       const token = localStorage.getItem("authToken");
 
       if (!token) {
@@ -134,20 +136,32 @@ function Musicians() {
       // formData.append("instruments", updatedInfo.instruments);
       // if (updatedInfo.photo) formData.append("photo", updatedInfo.photo);
 
-      const formData = new FormData();
-      if (updatedInfo.name) formData.append("username", updatedInfo.username);
-      if (updatedInfo.bio) formData.append("bio", updatedInfo.bio);
-      if (updatedInfo.instruments) formData.append("instruments", updatedInfo.instruments);
-      // if (updatedInfo.photo) formData.append("photo", updatedInfo.photo);
-      console.log(formData);
+      // const formData = new FormData();
+      // if (musicians[index].username)
+      //   formData.append("username", musicians[index].username);
+      // if (musicians[index].bio) formData.append("bio", musicians[index].bio);
+      // if (musicians[index].instruments)
+      //   // formData.append("instruments", musicians[index].instruments);
+      //   formData.append(
+      //     "instruments",
+      //     JSON.stringify(musicians[index].instruments)
+      //   );
 
-      for (let pair of formData.entries()) {
-        console.log(pair[0], pair[1]);
-      }
-        
+      // if (musicians[index].photo)
+      // formData.append("photo", musicians[index].photo);
+      // console.log(formData);
+
+      // for (let pair of formData.entries()) {
+      //   console.log(pair[0], pair[1]);
+      // }
+
       const response = await axios.put(
         `http://localhost:2000/users/profile/musician/${musicianId}`,
-        {username: updatedInfo.username, bio: updatedInfo.bio, instruments: updatedInfo.instruments},
+        {
+          username: musicians[index].username,
+          bio: musicians[index].bio,
+          instruments: musicians[index].instruments,
+        },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -211,9 +225,15 @@ function Musicians() {
         ) : (
           <div className="musiciansGrid">
             {musicians.length > 0 ? (
-              musicians.map((musician) => (
+              musicians.map((musician, index) => (
                 <div key={musician._id} className="musicianCard">
-                  <h3 style={{ color: "black", fontFamily: "'Pirata One', serif", fontSize: "40px" }}>
+                  <h3
+                    style={{
+                      color: "black",
+                      fontFamily: "'Pirata One', serif",
+                      fontSize: "40px",
+                    }}
+                  >
                     {musician.username}
                   </h3>
                   {musician.photo && (
@@ -278,17 +298,23 @@ function Musicians() {
                       <div className="updateFields">
                         <div>
                           <label>Name:</label>
-                          <input className="inputUpdate"
+                          <input
+                            className="inputUpdate"
                             type="text"
-                            value={musician.name || ""}
+                            value={musician.username || ""}
                             onChange={(e) =>
-                              handleProfileUpdateChange(e, musician._id, "name")
+                              handleProfileUpdateChange(
+                                e,
+                                musician._id,
+                                "username"
+                              )
                             }
                           />
                         </div>
                         <div>
                           <label>Bio:</label>
-                          <input className="inputUpdate"
+                          <input
+                            className="inputUpdate"
                             type="text"
                             value={musician.bio || ""}
                             onChange={(e) =>
@@ -298,7 +324,8 @@ function Musicians() {
                         </div>
                         <div>
                           <label>Instruments:</label>
-                          <input className="inputUpdate"
+                          <input
+                            className="inputUpdate"
                             type="text"
                             value={
                               musician.instruments
@@ -316,7 +343,8 @@ function Musicians() {
                         </div>
                         <div>
                           <label>Upload New Photo</label>
-                          <input className="inputUpdate"
+                          <input
+                            className="inputUpdate"
                             type="file"
                             onChange={(e) =>
                               handleProfileUpdateFileChange(e, musician._id)
@@ -326,7 +354,8 @@ function Musicians() {
                       </div>
 
                       <div className="updatedButtons">
-                        <button className="saveButton"
+                        <button
+                          className="saveButton"
                           style={{
                             fontFamily: "Pirata One",
                             color: "white",
@@ -334,12 +363,13 @@ function Musicians() {
                             backgroundColor: "#45027c",
                           }}
                           onClick={() =>
-                            handleUpdateProfile(musician._id, musician)
+                            handleUpdateProfile(musician._id, musician, index)
                           }
                         >
                           Save Changes
                         </button>
-                        <button className="cancelButton"
+                        <button
+                          className="cancelButton"
                           style={{
                             fontFamily: "Pirata One",
                             color: "white",

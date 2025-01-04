@@ -1,11 +1,10 @@
 require("dotenv").config();
-const path = require('path');
+const path = require("path");
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const JamKnight = require("../models/jamKnight");
-const fs = require('fs');
-
+const fs = require("fs");
 
 // Get user profile
 const userProfile = async (req, res) => {
@@ -31,7 +30,11 @@ const userRegister = async (req, res) => {
     // Check if userType is valid
     const validUserTypes = ["showRunner", "musician"];
     if (!validUserTypes.includes(userType)) {
-      return res.status(400).send({ message: "Invalid userType. Must be 'showRunner' or 'musician'" });
+      return res
+        .status(400)
+        .send({
+          message: "Invalid userType. Must be 'showRunner' or 'musician'",
+        });
     }
 
     // Check if the email already exists
@@ -51,7 +54,7 @@ const userRegister = async (req, res) => {
       userType,
     });
     await user.save();
-    
+
     return res.status(201).send({ message: "User created successfully" });
   } catch (error) {
     console.error(error);
@@ -64,7 +67,7 @@ const registerMusician = async (req, res) => {
     const { username, email, password, bio, instruments } = req.body;
 
     // Ensure the user type is 'musician'
-    const userType = 'musician';
+    const userType = "musician";
 
     // Check if the email already exists in the database
     const existingUser = await User.findOne({ email });
@@ -102,14 +105,16 @@ const registerMusician = async (req, res) => {
       password: hashedPassword,
       userType, // Automatically set to 'musician'
       bio,
-      instruments: instruments.split(",").map(inst => inst.trim()), // Convert comma-separated instruments to array
+      instruments: instruments.split(",").map((inst) => inst.trim()), // Convert comma-separated instruments to array
       photo: photoPath, // Save the file path or null if no photo was uploaded
     });
 
     // Save the new musician user in the database
     await newMusician.save();
 
-    return res.status(201).send({ message: "Musician registered successfully" });
+    return res
+      .status(201)
+      .send({ message: "Musician registered successfully" });
   } catch (error) {
     console.error(error);
     return res.status(500).send({ message: "Error registering musician" });
@@ -151,7 +156,9 @@ const updateProfile = async (req, res) => {
 
     // Check if the user is updating their own profile
     if (req.user.userId !== id) {
-      return res.status(403).json({ message: "You can only update your own profile" });
+      return res
+        .status(403)
+        .json({ message: "You can only update your own profile" });
     }
 
     const { username, password } = req.body;
@@ -181,10 +188,14 @@ const updateProfile = async (req, res) => {
         { userId: user._id, userType: user.userType },
         process.env.SECRET_KEY
       );
-      return res.status(200).json({ message: "Profile updated successfully", token });
+      return res
+        .status(200)
+        .json({ message: "Profile updated successfully", token });
     }
 
-    return res.status(200).json({ message: "Profile updated successfully", user });
+    return res
+      .status(200)
+      .json({ message: "Profile updated successfully", user });
   } catch (error) {
     console.error(error);
     return res.status(500).send({ message: "Error updating user profile" });
@@ -197,14 +208,16 @@ const updateProfileMusician = async (req, res) => {
 
     // Ensure the user is updating their own profile
     if (req.user.userId !== id) {
-      return res.status(403).json({ message: "You can only update your own profile" });
+      return res
+        .status(403)
+        .json({ message: "You can only update your own profile" });
     }
 
     // Log the request body to see what data is being sent
-    console.log('Request Body:', req.body);
+    console.log("Request Body:", req.body);
 
     const { username, bio, instruments } = req.body;
-        // const { username, bio, photo, instruments, roles, password } = req.body;
+    // const { username, bio, photo, instruments, roles, password } = req.body;
 
     const updatedData = {};
 
@@ -212,9 +225,10 @@ const updateProfileMusician = async (req, res) => {
     if (username) updatedData.username = username;
     if (bio) updatedData.bio = bio;
     // if (photo) updatedData.photo = photo;
-    
+
     // Validate instruments and roles arrays
-    if (instruments && instruments.length > 0) updatedData.instruments = instruments;
+    if (instruments && instruments.length > 0)
+      updatedData.instruments = instruments;
     // if (roles && roles.length > 0) updatedData.roles = roles;
 
     // If password is updated, hash it before saving
@@ -230,7 +244,7 @@ const updateProfileMusician = async (req, res) => {
     }
 
     // Log the updatedData object before updating the user
-    console.log('Updated Data:', updatedData);
+    console.log("Updated Data:", updatedData);
 
     // Update the musician's profile
     const user = await User.findByIdAndUpdate(id, updatedData, {
@@ -259,13 +273,14 @@ const updateProfileMusician = async (req, res) => {
     // }
 
     // Return the updated user data without generating a new token
-    return res.status(200).json({ message: "Profile updated successfully", user });
+    return res
+      .status(200)
+      .json({ message: "Profile updated successfully", user });
   } catch (error) {
     console.error(error);
     return res.status(500).send({ message: "Error updating user profile" });
   }
 };
-
 
 // Musician controllers
 
@@ -313,7 +328,9 @@ const addMusicianToJamNight = async (req, res) => {
     // Find the user by their musicianId and check if the userType is "musician"
     const user = await User.findById(musicianId);
     if (!user || user.userType !== "musician") {
-      return res.status(404).json({ message: "Musician not found or user is not a musician" });
+      return res
+        .status(404)
+        .json({ message: "Musician not found or user is not a musician" });
     }
 
     // Find the JamNight by its ID
@@ -343,10 +360,14 @@ const addMusicianToJamNight = async (req, res) => {
     role.musician = musicianId; // Set musicianId to the role
     await jamNight.save();
 
-    res.status(200).json({ message: "Musician assigned to role, awaiting confirmation" });
+    res
+      .status(200)
+      .json({ message: "Musician assigned to role, awaiting confirmation" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Error adding musician to jam night", error });
+    res
+      .status(500)
+      .json({ message: "Error adding musician to jam night", error });
   }
 };
 
@@ -365,9 +386,14 @@ const removeMusicianFromJamNight = async (req, res) => {
     }
 
     // ShowRunner can remove any musician, but a musician can only remove themselves
-    if (req.user.userId !== jamNight.owner.toString() && req.user.userId !== musicianId) {
-      return res.status(403).json({ message: "You are not authorized to remove this musician" });
-    }    
+    if (
+      req.user.userId !== jamNight.owner.toString() &&
+      req.user.userId !== musicianId
+    ) {
+      return res
+        .status(403)
+        .json({ message: "You are not authorized to remove this musician" });
+    }
 
     // Remove the musician from the confirmedMusicians array
     jamNight.confirmedMusicians.pull(musicianId);
@@ -385,7 +411,9 @@ const deleteMusicianProfile = async (req, res) => {
     const musicianId = req.params.id;
 
     if (req.user.userId !== musicianId) {
-      return res.status(403).json({ message: "You can only delete your own profile!" });
+      return res
+        .status(403)
+        .json({ message: "You can only delete your own profile!" });
     }
 
     await User.findByIdAndDelete(musicianId);
