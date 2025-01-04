@@ -6,6 +6,7 @@ function Frontpage() {
   const handleLogout = () => {
     if (localStorage.getItem("authToken")) {
       localStorage.removeItem("authToken");
+      localStorage.removeItem("userId");
       alert(
         "You have left the JamSpot Knights! 🎸🎤 Come back when you're ready to rock again!"
       );

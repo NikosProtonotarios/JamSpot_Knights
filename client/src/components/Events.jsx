@@ -26,17 +26,10 @@ function Events({ user }) {
 
   const handleTaketheRole = async (jamNightId, songIndex, roleIndex) => {
     try {
-
-      const userTakeRole = confirm("Are you sure that you want to take this role music warrior?");
-
-      if (!userTakeRole) {
-        return;
-      }
-
-      // Retrieve musicianId and token from localStorage
+      // Retrieve musicianId from localStorage
       const musicianId = localStorage.getItem("userId");
-      console.log("Musician ID from localStorage:", musicianId);
-
+      console.log(musicianId);
+  
       if (!musicianId) {
         alert("You must be logged in to take a role.");
         return;
@@ -44,13 +37,14 @@ function Events({ user }) {
   
       // Check if the songIndex and roleIndex are valid
       const song = events[songIndex];
-      console.log("Song at index:", songIndex, song);
       if (!song) {
         console.error("Invalid song index:", songIndex);
         return;
       }
+      console.log("Song at index:", songIndex, song);
   
-      const role = song.roles[roleIndex];
+      // Access the song's roles from the songs array
+      const role = song.songs[roleIndex].roles;
       console.log("Role at index:", roleIndex, role);
       if (!role) {
         console.error("Invalid role index:", roleIndex);
@@ -60,9 +54,7 @@ function Events({ user }) {
       const title = song.title;
       const instrument = role.instrument;
   
-      // Retrieve token from localStorage for authorization
       const token = localStorage.getItem("authToken");
-      console.log("Token from local Storage:", token);
       if (!token) {
         alert("You must be logged in to take a role.");
         return;
@@ -74,19 +66,24 @@ function Events({ user }) {
         { title, instrument },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-
+  
       console.log("Response data:", response.data);
   
-      // Update the UI after successfully taking the role
       alert("🎉 You have successfully claimed your role! Awaiting confirmation!");
+  
+      // Update events array with new musician info
       const updatedEvents = [...events];
-      updatedEvents[songIndex].roles[roleIndex].musician = response.data.musician;
+      updatedEvents[songIndex].songs[roleIndex].roles = response.data.musician;
+  
+      console.log("Updated musician in event:", updatedEvents[songIndex].songs[roleIndex]);
+  
       setEvents(updatedEvents);
     } catch (error) {
       console.error("Error taking role:", error);
       alert("An error occurred while taking the role. Please try again.");
     }
   };
+  
 
   // Function to delete an event
   const handleDeleteEvent = async (eventId) => {
