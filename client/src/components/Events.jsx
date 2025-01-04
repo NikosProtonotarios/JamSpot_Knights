@@ -34,7 +34,7 @@ function Events({ user }) {
         alert("You must be logged in to take a role.");
         return;
       }
-  
+
       // Check if the songIndex and roleIndex are valid
       const song = events[songIndex];
       if (!song) {
@@ -59,7 +59,7 @@ function Events({ user }) {
         alert("You must be logged in to take a role.");
         return;
       }
-  
+
       // Send the request to the backend
       const response = await axios.put(
         `http://localhost:2000/users/musician/${musicianId}/${jamNightId}`,
