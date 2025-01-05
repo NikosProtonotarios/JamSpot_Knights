@@ -28,14 +28,14 @@ function Events({ user }) {
     try {
       // Retrieve musicianId from localStorage
       const musicianId = localStorage.getItem("userId");
-      console.log(musicianId);
+      console.log("Musician ID:", musicianId);
   
       if (!musicianId) {
         alert("You must be logged in to take a role.");
         return;
       }
-
-      // Check if the songIndex and roleIndex are valid
+  
+      // Check if the songIndex is valid
       const song = events[songIndex];
       if (!song) {
         console.error("Invalid song index:", songIndex);
@@ -43,11 +43,18 @@ function Events({ user }) {
       }
       console.log("Song at index:", songIndex, song);
   
-      // Access the song's roles from the songs array
-      const role = song.songs[roleIndex].roles[roleIndex].instrument;
+      // Check if the song has roles
+      if (!song.roles || !Array.isArray(song.roles)) {
+        console.error("No roles found in the song or roles is not an array", song.roles);
+        return;
+      }
+  
+      // Access the correct role from the song's roles array
+      const role = song.songs[roleIndex].roles;
       console.log("Role at index:", roleIndex, role);
+  
       if (!role) {
-        console.error("Invalid role index:", roleIndex);
+        console.error("Invalid role index or role does not exist:", roleIndex);
         return;
       }
   
@@ -59,7 +66,7 @@ function Events({ user }) {
         alert("You must be logged in to take a role.");
         return;
       }
-
+  
       // Send the request to the backend
       const response = await axios.put(
         `http://localhost:2000/users/musician/${musicianId}/${jamNightId}`,
@@ -73,17 +80,17 @@ function Events({ user }) {
   
       // Update events array with new musician info
       const updatedEvents = [...events];
-      updatedEvents[songIndex].songs[roleIndex].roles = response.data.musician;
+      updatedEvents[songIndex].roles[roleIndex].musician = musicianId;
   
-      console.log("Updated musician in event:", updatedEvents[songIndex].songs[roleIndex]);
+      console.log("Updated musician in event:", updatedEvents[songIndex]);
   
+      // Set the updated events in state
       setEvents(updatedEvents);
     } catch (error) {
       console.error("Error taking role:", error);
       alert("An error occurred while taking the role. Please try again.");
     }
   };
-  
 
   // Function to delete an event
   const handleDeleteEvent = async (eventId) => {

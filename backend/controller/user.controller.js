@@ -357,7 +357,7 @@ const addMusicianToJamNight = async (req, res) => {
     }
 
     // Assign the musician (user) to the role
-    role.musician = musicianId; // Set musicianId to the role
+    role.musician = musicianId;
     await jamNight.save();
 
     res
