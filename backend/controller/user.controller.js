@@ -30,11 +30,9 @@ const userRegister = async (req, res) => {
     // Check if userType is valid
     const validUserTypes = ["showRunner", "musician"];
     if (!validUserTypes.includes(userType)) {
-      return res
-        .status(400)
-        .send({
-          message: "Invalid userType. Must be 'showRunner' or 'musician'",
-        });
+      return res.status(400).send({
+        message: "Invalid userType. Must be 'showRunner' or 'musician'",
+      });
     }
 
     // Check if the email already exists
@@ -142,7 +140,11 @@ const userLogin = async (req, res) => {
       process.env.SECRET_KEY
     );
     console.log("User ID:", user._id);
-    return res.send({ message: "User logged in successfully", token, userId: user._id });
+    return res.send({
+      message: "User logged in successfully",
+      token,
+      userId: user._id,
+    });
   } catch (error) {
     console.error(error);
     return res.status(500).send({ message: "Error logging in user" });
@@ -323,8 +325,9 @@ const getMusicianById = async (req, res) => {
 const addMusicianToJamNight = async (req, res) => {
   try {
     const { jamNightId, musicianId } = req.params;
+    console.log(jamNightId);
     const { title, instrument } = req.body;
-
+    console.log("title", title);
     // Find the user by their musicianId and check if the userType is "musician"
     const user = await User.findById(musicianId);
     if (!user || user.userType !== "musician") {
@@ -338,9 +341,12 @@ const addMusicianToJamNight = async (req, res) => {
     if (!jamNight) {
       return res.status(404).json({ message: "JamNight not found" });
     }
-
+    console.log(jamNight.songs);
     // Find the song in the jam night by its title
-    const song = jamNight.songs.find((song) => song.title === title);
+    const song = jamNight.songs.find(
+      (song) => song.title.toLowerCase() === title.toLowerCase()
+    );
+
     if (!song) {
       return res.status(404).json({ message: "Song not found" });
     }
@@ -357,12 +363,13 @@ const addMusicianToJamNight = async (req, res) => {
     }
 
     // Assign the musician (user) to the role
-    role.musician = musicianId;
+    role.musician = musicianId; // Set musicianId to the role
     await jamNight.save();
-
-    res
-      .status(200)
-      .json({ message: "Musician assigned to role, awaiting confirmation" });
+    console.log(role.musician);
+    res.status(200).json({
+      message: "Musician assigned to role, awaiting confirmation",
+      musician: role.musician,
+    });
   } catch (error) {
     console.error(error);
     res

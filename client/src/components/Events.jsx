@@ -24,68 +24,70 @@ function Events({ user }) {
     fetchEvents();
   }, []);
 
-  const handleTaketheRole = async (jamNightId, songIndex, roleIndex) => {
+  const handleTaketheRole = async (
+    jamNightId,
+    eventIndex,
+    songIndex,
+    roleIndex
+  ) => {
+
+    console.log("Event Index:", eventIndex);
+
     try {
-      // Retrieve musicianId from localStorage
+      const userTakeRole = confirm(
+        "Are you sure that you want to take this role music warrior?"
+      );
+
+      if (!userTakeRole) {
+        return;
+      }
+
+      // Retrieve musicianId and token from localStorage
       const musicianId = localStorage.getItem("userId");
-  
+      console.log("Musician ID from localStorage:", musicianId);
+
       if (!musicianId) {
         alert("You must be logged in to take a role.");
         return;
       }
-  
-      // Check if the songIndex is valid
-      const song = events[songIndex];
-      console.log(song.songs[roleIndex].roles[roleIndex].musician);
-
+      const song = events[eventIndex];
       if (!song) {
         console.error("Invalid song index:", songIndex);
         return;
       }
-
-      console.log("Song at index:", songIndex, song);
-
-      // Check if the song has roles
-      if (!song.songs[songIndex].roles || !Array.isArray(song.songs[songIndex].roles)) {
-        console.error("No roles found in the song or roles is not an array", song.roles);
-        return;
-      }
-  
-      // Access the correct role from the song's roles array
       const role = song.songs[songIndex].roles[roleIndex];
-      
-      console.log("Role at index:", roleIndex, role);
-      
-  
-      const title = song.title;
+      const title = song.songs[songIndex].title;
       const instrument = role.instrument;
       const musician = role.musician;
-  
+
+      // Retrieve token from localStorage for authorization
       const token = localStorage.getItem("authToken");
       if (!token) {
         alert("You must be logged in to take a role.");
         return;
       }
-  
-      // Send the request to the backend
-      const response = await axios.put(
-        `http://localhost:2000/users/musician/${musicianId}/${jamNightId}`,
-        { title, instrument },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-  
-      console.log("Response data:", response.data);
-  
-      alert("🎉 You have successfully claimed your role! Awaiting confirmation!");
-  
-      // Update events array with new musician info
-      const updatedEvents = [...events];
-      updatedEvents[songIndex].roles[roleIndex].musician = musicianId;
-  
-      console.log("Updated musician in event:", updatedEvents[songIndex]);
-  
-      // Set the updated events in state
-      setEvents(updatedEvents);
+
+      if (!musician) {
+        // Send the request to the backend
+        const response = await axios.put(
+          `http://localhost:2000/users/musician/${musicianId}/${jamNightId}`,
+          { title, instrument },
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+
+        alert(
+          "🎉 You have successfully claimed your role! Awaiting confirmation!"
+        );
+
+        const updatedEvents = [...events];
+        console.log("updatedEvents", updatedEvents);
+        console.log(updatedEvents.songs[songIndex].roles[roleIndex].musician);
+        updatedEvents.songs[songIndex].roles[roleIndex].musician =
+          response.data.musician;
+        setEvents(updatedEvents);
+      } else {
+        alert("role is already taken");
+      }
     } catch (error) {
       console.error("Error taking role:", error);
       alert("An error occurred while taking the role. Please try again.");
@@ -218,7 +220,7 @@ function Events({ user }) {
           >
             Upcoming Jam Nights
           </h2>
-          {events.map((event) => (
+          {events.map((event, eventIndex) => (
             <div
               key={event._id}
               className={`eventCard ${
@@ -295,8 +297,12 @@ function Events({ user }) {
                                   <button
                                     className="deleteButtons"
                                     onClick={() => {
+                                      console.log("Event ID:", event._id);
+                                      console.log("Song ID:", song._id);
+                                      console.log("Role ID:", role._id);
                                       handleTaketheRole(
                                         event._id,
+                                        eventIndex,
                                         songIndex,
                                         roleIndex
                                       );
