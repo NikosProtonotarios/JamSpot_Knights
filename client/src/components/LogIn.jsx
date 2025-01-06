@@ -31,6 +31,7 @@ function Login() {
 
         localStorage.setItem("authToken", token);
         localStorage.setItem("userId", userId);
+        // localStorage.setItem("username");
 
         navigate("/");
         alert(`🎸 Welcome to JamSpot Knights! 🎸

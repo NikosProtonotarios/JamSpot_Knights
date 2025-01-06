@@ -30,22 +30,21 @@ function Events({ user }) {
     songIndex,
     roleIndex
   ) => {
-
     console.log("Event Index:", eventIndex);
-
+  
     try {
       const userTakeRole = confirm(
         "Are you sure that you want to take this role music warrior?"
       );
-
+  
       if (!userTakeRole) {
         return;
       }
-
+  
       // Retrieve musicianId and token from localStorage
       const musicianId = localStorage.getItem("userId");
       console.log("Musician ID from localStorage:", musicianId);
-
+  
       if (!musicianId) {
         alert("You must be logged in to take a role.");
         return;
@@ -58,41 +57,47 @@ function Events({ user }) {
       const role = song.songs[songIndex].roles[roleIndex];
       const title = song.songs[songIndex].title;
       const instrument = role.instrument;
-      const musician = role.musician;
-
-      // Retrieve token from localStorage for authorization
+  
+      // Check if the role already has a musician
+      if (role.musician) {
+        alert("This role is already taken!");
+        return;
+      }
+  
+      // Simulate the action by optimistically updating the frontend state
+      const updatedEvents = [...events];
+      updatedEvents[eventIndex].songs[songIndex].roles[roleIndex].musician = {
+        name: "Your Name", // Here you can use the actual musician's name if you have it
+      };
+      setEvents(updatedEvents);
+  
+      // Now, make the backend call to confirm the role
       const token = localStorage.getItem("authToken");
       if (!token) {
         alert("You must be logged in to take a role.");
         return;
       }
-
-      if (!musician) {
-        // Send the request to the backend
-        const response = await axios.put(
-          `http://localhost:2000/users/musician/${musicianId}/${jamNightId}`,
-          { title, instrument },
-          { headers: { Authorization: `Bearer ${token}` } }
-        );
-
-        alert(
-          "🎉 You have successfully claimed your role! Awaiting confirmation!"
-        );
-
-        const updatedEvents = [...events];
-        console.log("updatedEvents", updatedEvents);
-        console.log(updatedEvents.songs[songIndex].roles[roleIndex].musician);
-        updatedEvents.songs[songIndex].roles[roleIndex].musician =
-          response.data.musician;
-        setEvents(updatedEvents);
-      } else {
-        alert("role is already taken");
-      }
+  
+      const response = await axios.put(
+        `http://localhost:2000/users/musician/${musicianId}/${jamNightId}`,
+        { title, instrument },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+  
+      alert(
+        "🎉 You have successfully claimed your role! Awaiting confirmation!"
+      );
+  
+      // Optionally, update the role with the actual musician from the backend
+      updatedEvents[eventIndex].songs[songIndex].roles[roleIndex].musician = response.data.musician;
+      setEvents(updatedEvents);
+  
     } catch (error) {
       console.error("Error taking role:", error);
       alert("An error occurred while taking the role. Please try again.");
     }
   };
+  
 
   // Function to delete an event
   const handleDeleteEvent = async (eventId) => {
