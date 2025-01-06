@@ -28,7 +28,6 @@ function Events({ user }) {
     try {
       // Retrieve musicianId from localStorage
       const musicianId = localStorage.getItem("userId");
-      console.log("Musician ID:", musicianId);
   
       if (!musicianId) {
         alert("You must be logged in to take a role.");
@@ -37,29 +36,30 @@ function Events({ user }) {
   
       // Check if the songIndex is valid
       const song = events[songIndex];
+      console.log(song.songs[roleIndex].roles[roleIndex].musician);
+
       if (!song) {
         console.error("Invalid song index:", songIndex);
         return;
       }
+
       console.log("Song at index:", songIndex, song);
-  
+
       // Check if the song has roles
-      if (!song.roles || !Array.isArray(song.roles)) {
+      if (!song.songs[songIndex].roles || !Array.isArray(song.songs[songIndex].roles)) {
         console.error("No roles found in the song or roles is not an array", song.roles);
         return;
       }
   
       // Access the correct role from the song's roles array
-      const role = song.songs[roleIndex].roles;
+      const role = song.songs[songIndex].roles[roleIndex];
+      
       console.log("Role at index:", roleIndex, role);
-  
-      if (!role) {
-        console.error("Invalid role index or role does not exist:", roleIndex);
-        return;
-      }
+      
   
       const title = song.title;
       const instrument = role.instrument;
+      const musician = role.musician;
   
       const token = localStorage.getItem("authToken");
       if (!token) {
@@ -295,9 +295,6 @@ function Events({ user }) {
                                   <button
                                     className="deleteButtons"
                                     onClick={() => {
-                                      console.log("Event ID:", event._id);
-                                      console.log("Song ID:", song._id);
-                                      console.log("Role ID:", role._id);
                                       handleTaketheRole(
                                         event._id,
                                         songIndex,
