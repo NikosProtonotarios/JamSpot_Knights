@@ -2,11 +2,27 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import "./Musicians.css";
 import { Link } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
+import { useNavigate } from "react-router-dom";
 
 function Musicians() {
   const [musicians, setMusicians] = useState([]);
   const [loading, setLoading] = useState(true);
   const [originalMusicianData, setOriginalMusicianData] = useState(null);
+  const navigate = useNavigate();
+  
+  let token = null;
+    let decoded = null;
+  
+    try {
+      if (localStorage.getItem("authToken")) {
+        token = localStorage.getItem("authToken");
+        decoded = jwtDecode(token);
+        console.log(decoded.userId);
+      }
+    } catch (error) {
+      console.log(error);
+    }
 
   useEffect(() => {
     const fetchMusicians = async () => {
@@ -47,11 +63,15 @@ function Musicians() {
           }
         );
 
+        
+
         // Remove the musician from the frontend state
         setMusicians((prevMusicians) =>
           prevMusicians.filter((musician) => musician._id !== musicianId)
         );
         alert("Your Mighty Profile has been erased, brave Knight!");
+        localStorage.removeItem("authToken");
+          navigate("/login");
       } catch (error) {
         console.error("Error deleting profile:", error);
         alert(
@@ -275,7 +295,7 @@ function Musicians() {
                   </div>
 
                   {/* Update Profile Button */}
-                  <div>
+                  {token && musician._id === decoded.userId ? <div>
                     <button
                       style={{ fontFamily: "Pirata One", fontSize: "19px" }}
                       className="deleteButton"
@@ -290,7 +310,8 @@ function Musicians() {
                     >
                       Update Profile
                     </button>
-                  </div>
+                  </div> : null}
+                  
 
                   {/* Display input fields to update name, bio, and instruments in the same card */}
                   {musician.isUpdating && (

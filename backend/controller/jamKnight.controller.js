@@ -37,7 +37,10 @@ const createJamNight = async (req, res) => {
 
 const getAllJamNights = async (req, res) => {
   try {
-    const jamNights = await JamKnight.find();
+    const jamNights = await JamKnight.find().populate({
+      path: 'songs.roles.musician', // Path to populate
+      
+  })
 
     if (!jamNights || jamNights.length === 0) {
       return res.status(404).json({ message: "No jam nights found" });

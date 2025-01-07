@@ -1,12 +1,29 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import React from "react";
+import { jwtDecode } from "jwt-decode";
+import { useNavigate } from "react-router-dom";
 
 function Frontpage() {
+  const navigate = useNavigate();
+  let token = null;
+    let decoded = null;
+  
+    try {
+      if (localStorage.getItem("authToken")) {
+        token = localStorage.getItem("authToken");
+        decoded = jwtDecode(token);
+        console.log(decoded.userId);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+
   const handleLogout = () => {
     if (localStorage.getItem("authToken")) {
       localStorage.removeItem("authToken");
       localStorage.removeItem("userId");
+      navigate("/login");
       alert(
         "You have left the JamSpot Knights! 🎸🎤 Come back when you're ready to rock again!"
       );
@@ -22,9 +39,15 @@ function Frontpage() {
           </h4>
         </div>
 
-        <div className="buttons-nav">
-          <Link to="/signup">
-            <button
+        <div className="buttons-nav"> 
+          {token ? <><button
+            className="logoutButton"
+            style={{ fontFamily: "'Pirata One', serif" }}
+            onClick={handleLogout}
+          >
+            Logout
+          </button></> : <><Link to="/signup">
+            <button 
               className="signUpButton"
               style={{ fontFamily: "'Pirata One', serif" }}
             >
@@ -38,14 +61,9 @@ function Frontpage() {
             >
               Login
             </button>
-          </Link>
-          <button
-            className="logoutButton"
-            style={{ fontFamily: "'Pirata One', serif" }}
-            onClick={handleLogout}
-          >
-            Logout
-          </button>
+          </Link></>}
+          
+          
         </div>
       </div>
       <div className="middleContainer">

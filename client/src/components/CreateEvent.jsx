@@ -3,6 +3,7 @@ import "./CreateEvent.css";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
 function CreateEvent() {
   const [eventDetails, setEventDetails] = useState({
@@ -15,6 +16,19 @@ function CreateEvent() {
 
   const navigate = useNavigate();
 
+  let token = null;
+      let decoded = null;
+    
+      try {
+        if (localStorage.getItem("authToken")) {
+          token = localStorage.getItem("authToken");
+          decoded = jwtDecode(token);
+          console.log(decoded.userId);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+      console.log(decoded);
   const handleAddSong = useCallback(() => {
     setEventDetails({
       ...eventDetails,
