@@ -228,7 +228,48 @@ function Events({ user }) {
       }
     }
   };
+
+  const handleDeleteEvent = async (jamNightId) => {
+    const token = localStorage.getItem('authToken');
+    
+    if (!token) {
+      alert('No valid token found. Please log in again. 🔐');
+      return;
+    }
+
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this jam night? ⚔️ The stage will be empty without it! This action cannot be undone! 🔥"
+    );
   
+    try {
+      const response = await axios.delete(
+        `http://localhost:2000/jamNights/jamnight/${jamNightId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Attach token to the request
+          },
+        }
+      );
+  
+      if (response.status === 200) {
+        alert('Event successfully deleted! 🎉 The stage is yours once again, mighty ShowRunner!');
+        // Optionally, update the UI by removing the event from the list
+      }
+    } catch (error) {
+      if (error.response?.status === 403) {
+        alert(
+          "You don't have permission to delete this jam night! ⚔️ Only the event's ShowRunner can wield this power."
+        );
+      } else if (error.response?.status === 404) {
+        alert("This jam night no longer exists. 🏰 It's already been erased.");
+      } else if (error.response?.status === 401) {
+        alert('Invalid token. Please log in again. 🔐'); // Handle invalid token error
+      } else {
+        console.error('Error deleting jam night:', error.response?.data?.message || error.message);
+        alert('An error occurred while trying to delete the jam night. 🛠️');
+      }
+    }
+  };
 
   return (
     <div>
