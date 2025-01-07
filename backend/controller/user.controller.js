@@ -394,16 +394,21 @@ const removeMusicianFromJamNight = async (req, res) => {
 
     // ShowRunner can remove any musician, but a musician can only remove themselves
     if (
-      req.user.userId !== jamNight.owner.toString() &&
-      req.user.userId !== musicianId
+      (req.user.userType !== "showRunner" && req.user.userId !== musicianId) ||
+      req.user.userId !== jamNight.owner.toString()
     ) {
       return res
         .status(403)
         .json({ message: "You are not authorized to remove this musician" });
     }
 
-    // Remove the musician from the confirmedMusicians array
-    jamNight.confirmedMusicians.pull(musicianId);
+    // Ensure confirmedMusicians is an array before pulling
+    if (Array.isArray(jamNight.confirmedMusicians)) {
+      jamNight.confirmedMusicians.pull(musicianId);
+    } else {
+      return res.status(400).json({ message: "Confirmed musicians list is invalid" });
+    }
+
     await jamNight.save();
 
     res.status(200).json({ message: "Musician removed from the jam night" });

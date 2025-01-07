@@ -31,20 +31,20 @@ function Events({ user }) {
     roleIndex
   ) => {
     console.log("Event Index:", eventIndex);
-  
+
     try {
       const userTakeRole = confirm(
         "Are you sure that you want to take this role music warrior?"
       );
-  
+
       if (!userTakeRole) {
         return;
       }
-  
+
       // Retrieve musicianId and token from localStorage
       const musicianId = localStorage.getItem("userId");
       console.log("Musician ID from localStorage:", musicianId);
-  
+
       if (!musicianId) {
         alert("You must be logged in to take a role.");
         return;
@@ -57,89 +57,93 @@ function Events({ user }) {
       const role = song.songs[songIndex].roles[roleIndex];
       const title = song.songs[songIndex].title;
       const instrument = role.instrument;
-  
+
       // Check if the role already has a musician
       if (role.musician) {
         alert("This role is already taken!");
         return;
       }
-  
+
       // Simulate the action by optimistically updating the frontend state
       const updatedEvents = [...events];
       updatedEvents[eventIndex].songs[songIndex].roles[roleIndex].musician = {
         name: "Your Name", // Here you can use the actual musician's name if you have it
       };
       setEvents(updatedEvents);
-  
+
       // Now, make the backend call to confirm the role
       const token = localStorage.getItem("authToken");
       if (!token) {
         alert("You must be logged in to take a role.");
         return;
       }
-  
+
       const response = await axios.put(
         `http://localhost:2000/users/musician/${musicianId}/${jamNightId}`,
         { title, instrument },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-  
+
       alert(
         "🎉 You have successfully claimed your role! Awaiting confirmation!"
       );
-  
+
       // Optionally, update the role with the actual musician from the backend
-      updatedEvents[eventIndex].songs[songIndex].roles[roleIndex].musician = response.data.musician;
+      updatedEvents[eventIndex].songs[songIndex].roles[roleIndex].musician =
+        response.data.musician;
       setEvents(updatedEvents);
-  
     } catch (error) {
       console.error("Error taking role:", error);
       alert("An error occurred while taking the role. Please try again.");
     }
   };
-  
 
   // Function to delete an event
-  const handleDeleteEvent = async (eventId) => {
+  const handleRemoveMusician = async (eventId, musicianId, isConfirmed) => {
+    // If the musician is confirmed, don't allow removal
+    if (isConfirmed) {
+      alert("⚔️ This musician is already confirmed for the jam night and cannot be removed. 🎸");
+      return;
+    }
+  
     const userConfirmed = confirm(
-      "⚔️ Are you sure, mighty ShowRunner? Once vanquished, this event will be lost to the sands of time! 🕰️"
+      "⚔️ Are you sure, mighty ShowRunner? Once vanquished, this musician will be lost to the sands of time! 🕰️"
     );
-
+  
     if (!userConfirmed) {
       return;
     }
-
+  
     try {
       const token = localStorage.getItem("authToken");
       if (!token) {
-        alert("You must be logged in to delete an event.");
+        alert("You must be logged in to remove a musician.");
         return;
       }
-
-      await axios.delete(
-        `http://localhost:2000/jamNights/jamnight/${eventId}`,
+  
+      await axios.put(
+        `http://localhost:2000/jamNight/${eventId}/remove/${musicianId}`,
+        {},
         {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-
+  
       alert(
-        "🎉 You have successfully vanquished this event, mighty ShowRunner! 🛡️ Your majesty reigns supreme! 👑"
+        "🎉 You have successfully removed this musician from the jam night! 🛡️"
       );
-
+  
+      // Remove the musician from the UI
       setEvents(events.filter((event) => event._id !== eventId));
     } catch (error) {
       if (error.response && error.response.status === 403) {
-        // Forbidden error message (user is not the ShowRunner)
-        alert(
-          "🚫 Hold your horses! You don't have the power to delete this jam night. Only the mighty ShowRunner who created it can do that. 🎸⚔️"
-        );
+        alert("🚫 Hold your horses! You don't have the power to remove this musician. 🎸⚔️");
       } else {
-        console.error("Error deleting event:", error);
+        console.error("Error removing musician:", error);
         alert("An unexpected error occurred. Please try again later.");
       }
     }
-  };
+  };  
 
   // Function to confirm an event
   const handleConfirmEvent = async (eventId) => {
@@ -182,6 +186,49 @@ function Events({ user }) {
       }
     }
   };
+
+  const handleConfirmMusician = async (eventId, musicianId) => {
+    const userConfirmed = confirm(
+      "⚔️ Are you sure you want to confirm this musician and solidify their place in the jam night? 🎶👑"
+    );
+  
+    if (!userConfirmed) {
+      return;
+    }
+  
+    try {
+      const token = localStorage.getItem("authToken");
+      if (!token) {
+        alert("You must be logged in to confirm a musician.");
+        return;
+      }
+  
+      const response = await axios.put(
+        `http://localhost:2000/jamNights/jamnight/${eventId}/confirmMusician`,
+        { musicianId },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+  
+      // Show success message if the musician is confirmed
+      alert(
+        "🎉 The musician has been confirmed! Let the jam begin! 🎶"
+      );
+  
+      // Optionally update the UI or show a confirmation message
+    } catch (error) {
+      if (error.response && error.response.status === 403) {
+        alert(
+          "🚫 Only the ShowRunner can confirm musicians for this jam night. 🎸⚔️"
+        );
+      } else {
+        console.error("Error confirming musician:", error);
+        alert("An unexpected error occurred. Please try again later.");
+      }
+    }
+  };
+  
 
   return (
     <div>
@@ -323,10 +370,17 @@ function Events({ user }) {
                                   {role.musician
                                     ? role.musician.name
                                     : "Not yet assigned"}
-                                  <button className="deleteButtons">
-                                    Delete Musician
+                                  <button className="deleteButtons"
+                                    onClick={() =>
+                                      handleRemoveMusician(
+                                        event._id,
+                                        musician._id
+                                      )
+                                    }
+                                  >
+                                    Remove Musician
                                   </button>
-                                  <button className="deleteButtons">
+                                  <button onClick={() => handleConfirmMusician(event._id, musician._id)} className="deleteButtons">
                                     Confirm Musician
                                   </button>
                                   <br />
