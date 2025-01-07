@@ -389,7 +389,7 @@ function Events({ user }) {
                                 </div>
                                 <div className="rolesSongsContainer">
                                   <strong className="instrumentMusician">
-                                    Musician:<span>{role.musician ? role.musician.username : ""}</span>
+                                    Musician:
                                   </strong>{" "}
                                   {role.musician
                                     ? role.musician.username
