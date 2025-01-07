@@ -45,23 +45,45 @@ function Events({ user }) {
     songIndex,
     roleIndex
   ) => {
-  
     let currentEvent = events[eventIndex];
     let currentSong = currentEvent.songs[songIndex];
     let currentSongTitle = currentSong.title;
     let currentRole = currentSong.roles[roleIndex];
     let instrument = currentRole.instrument;
     let musicianId = decoded.userId;
-
+  
     console.log(instrument);
 
+    // Check if the musician already has a role in this song
+  const musicianHasRoleInSong = currentSong.roles.some(
+    (role) => role.musician && role.musician._id === musicianId
+  );
+
+  if (musicianHasRoleInSong) {
+    alert(
+      "You already have a role in this song! You can't take another role in the same song."
+    );
+    return;
+  }
+  
     if (currentRole.musician) {
       alert("Role is already taken by another musician");
       return;
     } else {
+      // Ask for confirmation before taking the role
+      const confirmTakeRole = window.confirm(
+        `Are you sure you want to take the role of ${instrument} for the song "${currentSongTitle}"?`
+      );
+  
+      if (!confirmTakeRole) {
+        return; // Exit the function if user cancels
+      }
+  
+      // Update the role with musician ID
       currentRole.musician = decoded.userId;
       currentEvent.songs[songIndex].roles[roleIndex] = currentRole;
       console.log(events);
+  
       try {
         const response = await axios.put(
           `http://localhost:2000/users/musician/${musicianId}/${jamNightId}`,
@@ -69,6 +91,11 @@ function Events({ user }) {
           { headers: { Authorization: `Bearer ${token}` } }
         );
         console.log(response.data);
+  
+        // Show a cool message when the role is successfully taken
+        alert(
+          `🎸 You have successfully claimed the role of ${instrument} for "${currentSongTitle}"! Get ready to jam like a true Knight of the JamSpot! ⚔️`
+        );
       } catch (error) {
         console.error("Error updating role:", error);
       }
