@@ -268,7 +268,7 @@ function Events({ user }) {
         </Link>
       </div>
       <div className="EventContainer">
-      {decoded.userType === "showRunner" ? <div>
+      {token && decoded.userType? <div>
           <Link to="/createEvent">
             <button className="eventsButtons">Create Event</button>
           </Link>
