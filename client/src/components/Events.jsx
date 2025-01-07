@@ -76,7 +76,7 @@ function Events({ user }) {
       );
   
       if (!confirmTakeRole) {
-        return; // Exit the function if user cancels
+        return;
       }
   
       // Update the role with musician ID
@@ -103,53 +103,34 @@ function Events({ user }) {
   };
 
   // Function to delete an event
-  const handleRemoveMusician = async (eventId, musicianId, isConfirmed) => {
-    // If the musician is confirmed, don't allow removal
-    if (isConfirmed) {
-      alert(
-        "⚔️ This musician is already confirmed for the jam night and cannot be removed. 🎸"
-      );
-      return;
-    }
-
-    const userConfirmed = confirm(
-      "⚔️ Are you sure, mighty ShowRunner? Once vanquished, this musician will be lost to the sands of time! 🕰️"
-    );
-
-    if (!userConfirmed) {
-      return;
-    }
-
+  const handleRemoveMusician = async (eventId, musicianId) => {
     try {
+      // Retrieve the token from localStorage (or wherever you're storing it)
       const token = localStorage.getItem("authToken");
+  
       if (!token) {
         alert("You must be logged in to remove a musician.");
         return;
       }
-
-      await axios.put(
-        `http://localhost:2000/jamNight/${eventId}/remove/${musicianId}`,
+  
+      // Make PUT request to remove musician with Authorization header
+      const response = await axios.put(
+        `http://localhost:2000/users/jamNight/${eventId}/remove/${musicianId}`,
         {},
         {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
-
-      alert(
-        "🎉 You have successfully removed this musician from the jam night! 🛡️"
-      );
-
-      // Remove the musician from the UI
-      setEvents(events.filter((event) => event._id !== eventId));
+  
+      // Log response for debugging purposes
+      console.log(response.data);
+  
+      alert("Musician removed successfully!");
     } catch (error) {
-      if (error.response && error.response.status === 403) {
-        alert(
-          "🚫 Hold your horses! You don't have the power to remove this musician. 🎸⚔️"
-        );
-      } else {
-        console.error("Error removing musician:", error);
-        alert("An unexpected error occurred. Please try again later.");
-      }
+      console.error("Error removing musician:", error.response ? error.response.data : error.message);
+      alert("Error removing musician!");
     }
   };
 
@@ -422,16 +403,18 @@ function Events({ user }) {
                                     ? role.musician.username
                                     : "Not yet assigned"}
                                   <button
-                                    className="deleteButtons"
-                                    onClick={() =>
-                                      handleRemoveMusician(
-                                        event._id,
-                                        musician._id
-                                      )
-                                    }
-                                  >
-                                    Remove Musician
-                                  </button>
+  className="deleteButtons"
+  onClick={() => {
+    // Ensure role.musician is available and has _id
+    if (role.musician && role.musician._id) {
+      handleRemoveMusician(event._id, role.musician._id);
+    } else {
+      console.error("Musician not found or invalid");
+    }
+  }}
+>
+  Remove Musician
+</button>
                                   <button
                                     onClick={() =>
                                       handleConfirmMusician(
