@@ -1,5 +1,31 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.olderEventsContainer {
+  background-image: url("/images/1734540931581.jpg");
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.OlderEventsCard {
+  display: flex;
+  color: black;
+  background-color: rgb(255, 255, 255, 0.6);
+  font-family: "Pirata One";
+  font-size: 30px;
+  align-items: center;
+  border: 1px solid black;
+  width: 70%;
+  height: 50%;
+  margin-top: 50px;
+  border-radius: 10px;
+  padding: 30px;
+}
