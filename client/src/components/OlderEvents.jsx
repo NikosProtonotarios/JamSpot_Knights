@@ -18,7 +18,7 @@ function OlderEvents() {
         <div className="olderEventsContainer">
             <div className="OlderEventsCard">
                 <p>It looks like the epic jam nights are still waiting to happen. Our stage is set, the spotlight’s ready, and the instruments are tuned — but no events have rocked the house just yet.
-                Check back soon, and you'll find a collection of past performances to fuel your passion and inspiration! 🚀🎤</p>
+                Check back soon, and you'll find a collection of past performances to fuel your passion and inspiration! 🎤</p>
             </div>
         </div>
       </div>
