@@ -415,12 +415,12 @@ const removeMusicianFromJamNight = async (req, res) => {
   try {
     const { jamNightId, musicianId } = req.params;
     const jamNight = await JamKnight.findById(jamNightId);
-    const user = await User.findById(musicianId);
 
     if (!jamNight) {
       return res.status(404).json({ message: "JamNight not found" });
     }
 
+    const user = await User.findById(musicianId);
     if (!user || user.userType !== "musician") {
       return res.status(404).json({ message: "Musician not found" });
     }
@@ -435,19 +435,27 @@ const removeMusicianFromJamNight = async (req, res) => {
         .json({ message: "You are not authorized to remove this musician" });
     }
 
-    // Ensure confirmedMusicians is an array before pulling
-    if (Array.isArray(jamNight.confirmedMusicians)) {
-      jamNight.confirmedMusicians.pull(musicianId);
-    } else {
-      return res.status(400).json({ message: "Confirmed musicians list is invalid" });
+    // Loop through the songs and roles to find where the musician is assigned
+    let musicianRemoved = false;
+    jamNight.songs.forEach((song) => {
+      song.roles.forEach((role) => {
+        if (role.musician && role.musician.toString() === musicianId) {
+          role.musician = null; // Set musician to null (remove the musician from the role)
+          musicianRemoved = true;
+        }
+      });
+    });
+
+    if (!musicianRemoved) {
+      return res.status(404).json({ message: "Musician is not assigned to any role" });
     }
 
     await jamNight.save();
 
-    res.status(200).json({ message: "Musician removed from the jam night" });
+    res.status(200).json({ message: "Musician removed from the role in the jam night" });
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: "Error removing musician from jam night" });
+    console.error(error);
+    res.status(500).json({ message: "Error removing musician from the role" });
   }
 };
 
