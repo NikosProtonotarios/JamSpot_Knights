@@ -105,6 +105,15 @@ function Events({ user }) {
   // Function to delete an event
   const handleRemoveMusician = async (eventId, musicianId) => {
     try {
+      const confirmRemoval = window.confirm(
+        "Are you sure you want to remove this musician from the jam night? 🥁🎸💥"
+      );
+  
+      if (!confirmRemoval) {
+        alert("Phew! The musician is safe! 🎉");
+        return;
+      }
+  
       // Retrieve the token from localStorage (or wherever you're storing it)
       const token = localStorage.getItem("authToken");
   
@@ -127,12 +136,14 @@ function Events({ user }) {
       // Log response for debugging purposes
       console.log(response.data);
   
-      alert("Musician removed successfully!");
+      alert("Musician removed successfully! 🎶🎤 The stage is yours!");
+  
     } catch (error) {
       console.error("Error removing musician:", error.response ? error.response.data : error.message);
-      alert("Error removing musician!");
+      alert("Oops! Something went wrong! 😬 Please try again.");
     }
   };
+  
 
   // Function to confirm an event
   const handleConfirmEvent = async (eventId) => {
