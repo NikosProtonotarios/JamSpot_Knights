@@ -143,7 +143,6 @@ function Events({ user }) {
       alert("Oops! Something went wrong! 😬 Please try again.");
     }
   };
-  
 
   // Function to confirm an event
   const handleConfirmEvent = async (eventId) => {
