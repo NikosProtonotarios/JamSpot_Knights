@@ -52,19 +52,27 @@ function Events({ user }) {
     let instrument = currentRole.instrument;
     let musicianId = decoded.userId;
   
+    // Check if the user is a ShowRunner and prevent them from taking a role
+    if (decoded.userType === "showRunner") {
+      alert(
+        `🎩 Your Majesty, only the brave musicians can take up the roles in the jam! You already orchestrate the event like a true ShowRunner Knight! 🏰`
+      );
+      return;
+    }
+  
     console.log(instrument);
-
+  
     // Check if the musician already has a role in this song
-  const musicianHasRoleInSong = currentSong.roles.some(
-    (role) => role.musician && role.musician._id === musicianId
-  );
-
-  if (musicianHasRoleInSong) {
-    alert(
-      "You already have a role in this song! You can't take another role in the same song."
+    const musicianHasRoleInSong = currentSong.roles.some(
+      (role) => role.musician && role.musician._id === musicianId
     );
-    return;
-  }
+  
+    if (musicianHasRoleInSong) {
+      alert(
+        "You already have a role in this song! You can't take another role in the same song."
+      );
+      return;
+    }
   
     if (currentRole.musician) {
       alert("Role is already taken by another musician");
@@ -100,7 +108,7 @@ function Events({ user }) {
         console.error("Error updating role:", error);
       }
     }
-  };
+  };  
 
   // Function to delete an event
   const handleRemoveMusician = async (eventId, musicianId) => {

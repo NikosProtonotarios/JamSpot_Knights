@@ -359,7 +359,8 @@ const addMusicianToJamNight = async (req, res) => {
   } catch (error) {
     console.error(error);
   }
-}
+};
+
 //     // Find the user by their musicianId and check if the userType is "musician"
 //     const user = await User.findById(musicianId);
 //     if (!user || user.userType !== "musician") {
