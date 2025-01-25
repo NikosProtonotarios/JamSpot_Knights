@@ -137,12 +137,19 @@ function Events({ user }) {
       console.log(response.data);
   
       alert("Musician removed successfully! 🎶🎤 The stage is yours!");
-  
     } catch (error) {
-      console.error("Error removing musician:", error.response ? error.response.data : error.message);
-      alert("Oops! Something went wrong! 😬 Please try again.");
+      if (error.response && error.response.status === 403) {
+        // If the error is a 403 (Unauthorized), show a cool alert message
+        alert(
+          "🛑 Whoa! Only the ShowRunner of this jam night can remove musicians! 👑⚔️ This isn't your jam, brave warrior! ⚔️"
+        );
+      } else {
+        console.error("Error removing musician:", error.response ? error.response.data : error.message);
+        alert("Oops! Something went wrong! 😬 Please try again.");
+      }
     }
   };
+  
 
   // Function to confirm an event
   const handleConfirmEvent = async (eventId) => {

@@ -425,34 +425,32 @@ const removeMusicianFromJamNight = async (req, res) => {
       return res.status(404).json({ message: "Musician not found" });
     }
 
-    // ShowRunner can remove any musician, but a musician can only remove themselves
+    // Only the owner of the event (ShowRunner) or the musician themselves can remove the musician
     if (
-      (req.user.userType !== "showRunner" && req.user.userId !== musicianId) ||
-      req.user.userId !== jamNight.owner.toString()
+      (req.user.userType === "showRunner" && req.user.userId === jamNight.owner.toString()) ||
+      req.user.userId === musicianId
     ) {
-      return res
-        .status(403)
-        .json({ message: "You are not authorized to remove this musician" });
-    }
-
-    // Loop through the songs and roles to find where the musician is assigned
-    let musicianRemoved = false;
-    jamNight.songs.forEach((song) => {
-      song.roles.forEach((role) => {
-        if (role.musician && role.musician.toString() === musicianId) {
-          role.musician = null; // Set musician to null (remove the musician from the role)
-          musicianRemoved = true;
-        }
+      // Loop through the songs and roles to find where the musician is assigned
+      let musicianRemoved = false;
+      jamNight.songs.forEach((song) => {
+        song.roles.forEach((role) => {
+          if (role.musician && role.musician.toString() === musicianId) {
+            role.musician = null; // Set musician to null (remove the musician from the role)
+            musicianRemoved = true;
+          }
+        });
       });
-    });
 
-    if (!musicianRemoved) {
-      return res.status(404).json({ message: "Musician is not assigned to any role" });
+      if (!musicianRemoved) {
+        return res.status(404).json({ message: "Musician is not assigned to any role" });
+      }
+
+      await jamNight.save();
+      return res.status(200).json({ message: "Musician removed from the role in the jam night" });
     }
 
-    await jamNight.save();
+    return res.status(403).json({ message: "You are not authorized to remove this musician" });
 
-    res.status(200).json({ message: "Musician removed from the role in the jam night" });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Error removing musician from the role" });
