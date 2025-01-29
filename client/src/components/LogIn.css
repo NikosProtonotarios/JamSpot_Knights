@@ -49,14 +49,11 @@
     background-color: #b30000;
     transform: scale(1.1);
   }
-  
-  .footerContainer {
-    height: 239px;
-  }
 
   .content-wrap {
     background-image: url('/images/1735516721232.jpg');
     background-repeat: none;
+    background-repeat: no-repeat;
     background-position: 0px -200px;
     background-size: cover;
     background-attachment: fixed;

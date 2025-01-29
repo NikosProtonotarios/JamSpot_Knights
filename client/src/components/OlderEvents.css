@@ -29,3 +29,21 @@
   border-radius: 10px;
   padding: 30px;
 }
+
+@media (max-width: 824px) {
+  p {
+    font-size: 26px;
+  }
+}
+
+@media (max-width: 726px) {
+  p {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 465px) {
+  p {
+    font-size: 15px;
+  }
+}
