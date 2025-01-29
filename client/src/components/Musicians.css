@@ -118,6 +118,7 @@
   border-radius: 10px;
   box-shadow:inset 0px 0px 10px rgba(0, 0, 0, 0.2);
   color: black;
+  width: 100%;
 }
 
 .bio {
@@ -152,4 +153,98 @@
   margin-bottom: 10px;
   border: 1px solid rgb(185, 185, 185);
   border-radius: 7px;
+}
+
+/* For tablets and smaller devices */
+@media (max-width: 1024px) {
+  .musiciansContainer {
+    padding: 20px; /* Reduce padding */
+    margin: 10px;  /* Adjust margins for smaller screens */
+  }
+
+  .musiciansGrid {
+    gap: 15px; /* Reduce gap between musician cards */
+    margin-top: 15px;
+  }
+
+  .musicianCard {
+    width: 45%; /* Reduce card width */
+    padding: 15px; /* Adjust padding */
+  }
+
+  .musicianPhoto {
+    width: 120px;
+    height: 120px;
+  }
+
+  .updateButton, .deleteButton {
+    padding: 8px; /* Reduce button size */
+  }
+}
+
+/* For mobile devices (landscape and portrait) */
+@media (max-width: 768px) {
+  .musiciansGrid {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px; /* Further reduce gap between cards */
+  }
+
+  .musicianCard {
+    width: 80%; /* Set card width to take up more space */
+  }
+
+  .musicianPhoto {
+    width: 100px;
+    height: 100px;
+  }
+
+  .deleteButton, .updateButton {
+    width: 100%; /* Full-width buttons on small screens */
+    margin: 5px 0; /* Add margin for vertical spacing */
+    padding: 10px;
+  }
+
+  .updatedButtons {
+    flex-direction: column;
+    margin-top: 15px;
+  }
+
+  .inputUpdate {
+    width: 100%; /* Full-width input fields */
+  }
+}
+
+/* For extra small devices (phones) */
+@media (max-width: 480px) {
+  .musiciansContainer {
+    padding: 10px; /* Reduce padding */
+  }
+
+  .musicianCard {
+    width: 100%; /* Cards take up full width on small screens */
+    padding: 10px;
+  }
+
+  .musicianPhoto {
+    width: 80px;
+    height: 80px; /* Smaller image for mobile */
+  }
+
+  .musicianCard h3 {
+    font-size: 1.2rem; /* Smaller font size for mobile */
+  }
+
+  .musicianCard p {
+    font-size: 1rem; /* Smaller font size for mobile */
+  }
+
+  .updateButton, .deleteButton {
+    padding: 8px; /* Adjust button padding for mobile */
+    font-size: 0.9rem; /* Smaller font size */
+  }
+
+  .inputUpdate {
+    font-size: 16px;
+  }
 }
