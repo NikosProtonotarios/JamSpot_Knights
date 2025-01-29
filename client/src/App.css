@@ -184,3 +184,33 @@
   flex-direction: column;
   justify-content: center; /* Center the content vertically */
 }
+
+@media (max-width: 782px) {
+  .mainTitle {
+    padding: 40px;
+    font-size: 20px;
+  }
+
+  .mainDescription {
+    padding: 40px;
+    font-size: 20px;
+  }
+
+  .middle-check-fonts {
+    padding: 5px;
+  }
+}
+
+@media (max-width: 535px) {
+  .mainDescription {
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 433px) {
+  .middle-check-fonts {
+    font-size: 18px;
+  }
+}

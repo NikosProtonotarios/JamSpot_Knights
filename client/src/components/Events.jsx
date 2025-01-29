@@ -7,6 +7,8 @@ import { jwtDecode } from "jwt-decode";
 function Events({ user }) {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [musicians, setMusicians] = useState([]);
+
   let token = null;
   let decoded = null;
 
