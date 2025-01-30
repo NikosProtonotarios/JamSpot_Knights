@@ -326,3 +326,11 @@
     font-size: 20px;
   }
 }
+
+.confirmedMusician {
+  background-color: #d4edda; /* Light green background */
+  color: #155724; /* Darker green text */
+  border: 1px solid #c3e6cb;
+  border: 5px solid green; /* Green border */
+  box-shadow: 0 0 10px rgba(0, 255, 0, 0.7); /* Optional, adds a glowing effect */
+}

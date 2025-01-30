@@ -410,7 +410,16 @@ function Events({ user }) {
                         </div>
                         <ul>
                           {song.roles.map((role, roleIndex) => (
-                            <div key={roleIndex} className="songsInfoContainer">
+                            <div
+                              key={roleIndex}
+                              className={`songsInfoContainer ${
+                                event.confirmedMusicians?.includes(
+                                  role.musician?._id
+                                )
+                                  ? "confirmedMusician"
+                                  : ""
+                              }`}
+                            >
                               <li>
                                 <div className="instrumentsContainer">
                                   <strong className="instrumentMusician">
