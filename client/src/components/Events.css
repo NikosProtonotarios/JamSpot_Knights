@@ -9,6 +9,7 @@
     justify-content: space-evenly;
     padding: 20px;
     font-size: 20px;
+    gap: 10px;
     border: 1px solid rgb(48, 48, 48);
 }
 
@@ -223,4 +224,105 @@
 .confirmedEvent {
   border: 5px solid green; /* Green border */
   box-shadow: 0 0 10px rgba(0, 255, 0, 0.7); /* Optional, adds a glowing effect */
+}
+
+/* For tablets */
+@media (max-width: 768px) {
+  .eventCard {
+    width: 100%;
+    padding: 10px;
+    margin: 10px;
+  }
+
+  .song {
+    width: 500px;
+  }
+
+  .eventTitleCardContainer {
+    width: 90%;
+  }
+
+  .songsInfoContainer {
+    width: 90%;
+  }
+
+  .instrumentsContainer, .rolesSongsContainer {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .eventActions {
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .eventActions button {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .deleteEventButton, .confirmEventButton {
+    font-size: 20px;
+    padding: 8px;
+  }
+}
+
+/* For mobile devices */
+@media (max-width: 480px) {
+  .EventContainer {
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+  }
+
+  .eventCard {
+    width: 100%;
+    padding: 10px;
+    margin: 10px;
+  }
+
+  .song {
+    margin: 20px;
+    font-size: 18px;
+  }
+
+  .jamspotLetters {
+    font-size: 20px;
+  }
+
+  .eventTitleCardContainer {
+    width: 100%;
+    font-size: 20px;
+  }
+
+  .songsInfoContainer {
+    width: 93%;
+    font-size: 12px;
+  }
+
+  .roleButtons, .deleteButtons {
+    font-size: 14px;
+    padding: 3px;
+  }
+
+  .instrumentsContainer, .rolesSongsContainer {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .deleteEventButton, .confirmEventButton {
+    font-size: 18px;
+    padding: 8px;
+    width: 100%;
+  }
+
+  .eventActions {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .confirmedMessage {
+    font-size: 20px;
+  }
 }

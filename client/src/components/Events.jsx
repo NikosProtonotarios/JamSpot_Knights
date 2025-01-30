@@ -237,7 +237,10 @@ function Events({ user }) {
 
       // Optionally update the UI or show a confirmation message
     } catch (error) {
-      if (error.response && error.response.status === 403) {
+      if (error.response && error.response.status === 400) {
+        // Musician already confirmed
+        alert("🛡️ This musician is already confirmed for the jam night! 🎸✨");
+      } else if (error.response && error.response.status === 403) {
         alert(
           "🚫 Only the ShowRunner can confirm musicians for this jam night. 🎸⚔️"
         );
