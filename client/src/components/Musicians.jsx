@@ -237,7 +237,7 @@ function Musicians() {
         </Link>
       </div>
       <div className="musiciansContainer">
-        <h2 style={{ fontFamily: "UnifrakturMaguntia", fontSize: "50px" }}>
+        <h2 className="musiciansTitleContainer" style={{ fontFamily: "UnifrakturMaguntia", fontSize: "50px" }}>
           List of Jam Knights
         </h2>
         {loading ? (
