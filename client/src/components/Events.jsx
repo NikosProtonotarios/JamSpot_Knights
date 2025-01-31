@@ -447,38 +447,62 @@ function Events({ user }) {
                                   <strong className="instrumentMusician">
                                     Musician:
                                   </strong>{" "}
-                                  {role.musician
-                                    ? role.musician.username
-                                    : "Not yet assigned"}
-                                  <button
-                                    className="deleteButtons"
-                                    onClick={() => {
-                                      // Ensure role.musician is available and has _id
-                                      if (role.musician && role.musician._id) {
-                                        handleRemoveMusician(
-                                          event._id,
-                                          role.musician._id
-                                        );
-                                      } else {
-                                        console.error(
-                                          "Musician not found or invalid"
-                                        );
-                                      }
-                                    }}
-                                  >
-                                    Remove Musician
-                                  </button>
-                                  <button
-                                    onClick={() => {
-                                      handleConfirmMusician(
-                                        event._id,
-                                        role.musician._id
-                                      );
-                                    }}
-                                    className="deleteButtons"
-                                  >
-                                    Confirm Musician
-                                  </button>
+                                  {role.musician ? (
+                                    <>
+                                      {role.musician.username}
+                                      {/* Display confirmation message if the musician is assigned */}
+                                      {event.confirmedMusicians?.includes(
+                                        role.musician?._id
+                                      ) && (
+                                        <span
+                                          style={{
+                                            color: "green",
+                                            fontWeight: "bold",
+                                            marginLeft: "10px",
+                                            fontSize: "1.2rem",
+                                          }}
+                                        >
+                                          ✅ This musician is confirmed
+                                        </span>
+                                      )}
+                                    </>
+                                  ) : (
+                                    "Not yet assigned"
+                                  )}
+                                  {/* Only show the buttons if musician is not confirmed */}
+                                  {!event.confirmedMusicians?.includes(
+                                    role.musician?._id
+                                  ) && (
+                                    <>
+                                      <button
+                                        className="deleteButtons"
+                                        onClick={() => {
+                                          if (
+                                            role.musician &&
+                                            role.musician._id
+                                          ) {
+                                            handleRemoveMusician(
+                                              event._id,
+                                              role.musician._id
+                                            );
+                                          }
+                                        }}
+                                      >
+                                        Remove Musician
+                                      </button>
+                                      <button
+                                        onClick={() => {
+                                          handleConfirmMusician(
+                                            event._id,
+                                            role.musician._id
+                                          );
+                                        }}
+                                        className="deleteButtons"
+                                      >
+                                        Confirm Musician
+                                      </button>
+                                    </>
+                                  )}
                                   <br />
                                 </div>
                               </li>
