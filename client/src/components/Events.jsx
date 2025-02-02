@@ -9,6 +9,7 @@ function Events({ user }) {
   const [loading, setLoading] = useState(true);
   const [musicians, setMusicians] = useState([]);
 
+
   let token = null;
   let decoded = null;
 
@@ -37,7 +38,7 @@ function Events({ user }) {
       }
     };
     fetchEvents();
-  }, []);
+  }, [events]);
 
   console.log(events);
 
