@@ -50,7 +50,7 @@ function RegisterMusician() {
 
     try {
       const response = await axios.post(
-        "http://localhost:2000/users/register/musician",
+        "https://jamspot-knights-2.onrender.com/users/register/musician",
         formDataToSend,
         {
           headers: {

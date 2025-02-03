@@ -101,7 +101,7 @@ function CreateEvent() {
 
     try {
       const response = await axios.post(
-        "http://localhost:2000/jamNights/jamNight",
+        "https://jamspot-knights-2.onrender.com/jamNights/jamNight",
         data,
         {
           headers: {

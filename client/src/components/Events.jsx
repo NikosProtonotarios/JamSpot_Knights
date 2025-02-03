@@ -28,7 +28,7 @@ function Events({ user }) {
     const fetchEvents = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:2000/jamNights/jamnights"
+          "https://jamspot-knights-2.onrender.com/jamNights/jamnights"
         );
         setEvents(response.data);
         setLoading(false);
@@ -97,7 +97,7 @@ function Events({ user }) {
 
       try {
         const response = await axios.put(
-          `http://localhost:2000/users/musician/${musicianId}/${jamNightId}`,
+          `https://jamspot-knights-2.onrender.com/users/musician/${musicianId}/${jamNightId}`,
           { currentSongTitle, instrument },
           { headers: { Authorization: `Bearer ${token}` } }
         );
@@ -135,7 +135,7 @@ function Events({ user }) {
 
       // Make PUT request to remove musician with Authorization header
       const response = await axios.put(
-        `http://localhost:2000/users/jamNight/${eventId}/remove/${musicianId}`,
+        `https://jamspot-knights-2.onrender.com/users/jamNight/${eventId}/remove/${musicianId}`,
         {},
         {
           headers: {
@@ -182,7 +182,7 @@ function Events({ user }) {
       }
 
       await axios.put(
-        `http://localhost:2000/jamNights/jamnight/${eventId}/confirm`,
+        `https://jamspot-knights-2.onrender.com/jamNights/jamnight/${eventId}/confirm`,
         {},
         {
           headers: { Authorization: `Bearer ${token}` }, // Headers should be passed as the third argument
@@ -226,7 +226,7 @@ function Events({ user }) {
       }
 
       const response = await axios.put(
-        `http://localhost:2000/jamNights/jamnight/${eventId}/confirmMusician`,
+        `https://jamspot-knights-2.onrender.com/jamNights/jamnight/${eventId}/confirmMusician`,
         { musicianId: musicianId },
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -266,7 +266,7 @@ function Events({ user }) {
 
     try {
       const response = await axios.delete(
-        `http://localhost:2000/jamNights/jamnight/${jamNightId}`,
+        `https://jamspot-knights-2.onrender.com/jamNights/jamnight/${jamNightId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`, // Attach token to the request

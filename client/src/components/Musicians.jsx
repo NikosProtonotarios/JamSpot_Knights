@@ -28,7 +28,7 @@ function Musicians() {
     const fetchMusicians = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:2000/users/musicians"
+          "https://jamspot-knights-2.onrender.com/users/musicians"
         );
         setMusicians(response.data);
         setLoading(false);
@@ -55,7 +55,7 @@ function Musicians() {
         }
         // Send DELETE request to the backend
         await axios.delete(
-          `http://localhost:2000/users/musician/${musicianId}`,
+          `https://jamspot-knights-2.onrender.com/users/musician/${musicianId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -176,7 +176,7 @@ function Musicians() {
       // }
 
       const response = await axios.put(
-        `http://localhost:2000/users/profile/musician/${musicianId}`,
+        `https://jamspot-knights-2.onrender.com/users/profile/musician/${musicianId}`,
         {
           username: musicians[index].username,
           bio: musicians[index].bio,
@@ -258,7 +258,7 @@ function Musicians() {
                   </h3>
                   {musician.photo && (
                     <img
-                      src={`http://localhost:2000${musician.photo}`}
+                      src={`https://jamspot-knights-2.onrender.com${musician.photo}`}
                       alt={`${musician.username}'s photo`}
                       className="musicianPhoto"
                     />

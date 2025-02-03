@@ -30,7 +30,7 @@ function RegisterShowRunner() {
     };
     try {
       const response = await axios.post(
-        "http://localhost:2000/users/register",
+        "https://jamspot-knights-2.onrender.com/users/register",
         registrationData
       );
 
