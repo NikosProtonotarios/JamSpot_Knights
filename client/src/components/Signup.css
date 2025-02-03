@@ -10,23 +10,20 @@
   align-items: center;
   height: 200px;
   font-size: 50px;
-  text-shadow: 
-  1px 1px 0px black,
-  -1px -1px 0px black, 
-  1px -1px 0px black,
-  -1px 1px 0px black; 
+  text-shadow: 1px 1px 0px black, -1px -1px 0px black, 1px -1px 0px black,
+    -1px 1px 0px black;
 }
 
 .signUp {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 30px;
-    gap: 150px;
-    height: 150px;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+  gap: 150px;
+  height: 150px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .showRunnerButton,
@@ -35,22 +32,98 @@
   border: 1px solid rgb(74, 74, 97);
   padding: 10px 20px;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .showRunnerButton:hover,
 .musicianButton:hover {
-  background-color: #ac0606; 
+  background-color: #ac0606;
   transform: scale(1.05);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
   border: 1px solid rgb(122, 122, 122);
 }
 
 .signContainer {
-  background-image: url('/images/1734540507308.jpg');
+  background-image: url("/images/1734540507308.jpg");
   background-attachment: fixed;
   background-size: cover;
   background-position: 0px -370px;
   background-repeat: no-repeat;
   height: 100vh;
+}
+
+@media (max-width: 785px) {
+  .signContainer {
+    background-position: center;
+  }
+}
+
+@media (max-width: 666px) {
+  .signTitle {
+    font-size: 34px;
+  }
+}
+
+@media (max-width: 553px) {
+  .signUp {
+    display: block;
+    text-align: center;
+  }
+
+  .showRunnerButton {
+    margin-right: 20px;
+  }
+
+  .musicianButton {
+    margin-left: 20px;
+  }
+}
+
+@media (max-width: 462px) {
+  .signTitle {
+    font-size: 30px;
+  }
+
+  .signUp {
+    display: block;
+    margin-right: 90px;
+    margin-left: 90px;
+    text-align: center;
+  }
+
+  .showRunnerButton {
+    margin-bottom: 20px;
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+
+  .musicianButton {
+    margin-right: 0px;
+    margin-left: 0px;
+  }
+
+  .signContainer {
+    background-position: center;
+  }
+}
+
+@media (max-width: 399px) {
+  .signTitle {
+    font-size: 20px;
+    background-position: center;
+    background-attachment: scroll;
+  }
+
+  .signTitle {
+    height: 100px;
+  }
+
+  .signContainer {
+    background-position: center;
+  }
+
+  .signUp {
+    margin: 70px;
+  }
 }
