@@ -4,6 +4,11 @@
   box-sizing: border-box;
 }
 
+.input-group {
+  display: flex;
+  justify-content: center;
+}
+
 .login-container {
     width: 300px;
     margin: 50px auto;
@@ -59,3 +64,9 @@
     background-attachment: fixed;
     height: 50vh;
   }
+
+@media (max-width: 571px) {
+  .content-wrap {
+    background-position: center;
+  }
+}

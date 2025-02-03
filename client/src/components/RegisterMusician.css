@@ -18,6 +18,10 @@
   flex-direction: row;
 }
 
+.formGroupPhoto {
+  text-align: center;
+}
+
 .button-register {
   text-align: center;
 }
@@ -47,4 +51,41 @@
   background-repeat: no-repeat;
   height: 100vh;
   background-attachment: fixed;
+}
+
+@media (max-width: 750px) {
+  .registerMusicianContainer {
+    background-position: center;
+  }
+}
+
+@media (max-width: 444px) {
+  .registerMusicianContainer {
+    background-position: bottom;
+  }
+
+  .registerasamusicianContainer {
+    font-size: 40px;
+  }
+
+  .formGroupPhoto {
+    text-align: center;
+  }
+
+  .musicianContainer {
+    height: 99%;
+  }
+}
+
+@media (max-width: 495px) {
+  .registerasamusicianContainer {
+    text-align: center;
+    margin: 10px;
+  }
+}
+
+@media (max-width: 500px) {
+  .musicianContainer {
+    width: 90%;
+  }
 }

@@ -328,7 +328,7 @@ function Events({ user }) {
       </div>
 
       {/* Display loading message if events are still being fetched */}
-      {loading && <p>Loading events...</p>}
+      {loading && <p className="loadingEvents">Loading events...</p>}
       {/* Display events if they are loaded */}
       {!loading && events.length > 0 ? (
         <div className="eventsList">

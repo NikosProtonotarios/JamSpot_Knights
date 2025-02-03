@@ -80,3 +80,44 @@
   display: flex;
   justify-content: center;
 }
+
+/* Responsive styles */
+@media (max-width: 800px) {
+  .createEventContainer {
+    width: 90%;
+  }
+}
+
+@media (max-width: 607px) {
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    width: 100%;
+    max-width: 100%; /* Ensures input fields adjust to container's width */
+    text-align: center;
+  }
+
+  .createEventContainer {
+    width: 100%;
+  }
+
+  .createEventButton {
+    width: 100%; /* Full-width button on smaller screens */
+  }
+}
+
+@media (max-width: 660px) {
+  .createEventContainer {
+    width: 100%;
+    padding: 10px; /* Reduce padding on smaller screens */
+  }
+
+  .createEventContainer2 {
+    background-position: bottom;
+  }
+
+  .createEventButton,
+  .createEventButton3 {
+    width: 100%; /* Full-width buttons for small screens */
+  }
+}

@@ -89,7 +89,7 @@ function RegisterMusician() {
             </h4>
           </Link>
         </div>
-        <h1>Register as a Musician</h1>
+        <h1 className="registerasamusicianContainer">Register as a Musician</h1>
 
         <form onSubmit={handleSubmit} className="registerMusicianForm">
           <div className="formGroup">
@@ -151,7 +151,7 @@ function RegisterMusician() {
             />
           </div>
 
-          <div className="formGroup">
+          <div className="formGroupPhoto">
             <label htmlFor="photo">Upload your photo:</label>
             <input
               type="file"

@@ -154,6 +154,7 @@ function CreateEvent() {
               color: "black",
               fontSize: "40px",
             }}
+            className="createNewJamNight"
           >
             Create a New Jam Night Event
           </h2>

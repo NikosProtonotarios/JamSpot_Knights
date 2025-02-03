@@ -44,3 +44,27 @@
   background-attachment: fixed;
   background-position: center;
 }
+
+@media (max-width: 506px) {
+  .showrunnerContainer {
+    width: 80%;
+  }
+
+  .registerSho {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media (max-width: 343px) {
+  .registerSho {
+    font-size: 30px;
+    margin-top: 20px
+  }
+}
+
+@media (max-width: 284px) {
+  .jamspotLetters {
+    text-align: center;
+  }
+}
