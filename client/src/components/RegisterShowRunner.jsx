@@ -35,7 +35,7 @@ function RegisterShowRunner() {
       );
 
       if (response.status === 201) {
-        navigate("/");
+        navigate("/login");
         alert(
           "Welcome, mighty ShowRunner! 🎩✨ Your event creation powers are unmatched. Let the jam sessions begin and the stage be yours to command! 🎤🎸⚔️"
         );

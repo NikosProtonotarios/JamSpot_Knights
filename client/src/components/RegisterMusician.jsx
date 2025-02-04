@@ -63,7 +63,7 @@ function RegisterMusician() {
         alert(
           "🎶 🛡️ Welcome, Brave Musician! You've joined the JamSpot Knights and are ready to make your mark in the jam nights!"
         );
-        navigate("/"); // Navigate to home page after success
+        navigate("/login");
       }
     } catch (error) {
       console.log("Error during registration", error);
