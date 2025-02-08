@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken");
 const JamKnight = require("../models/jamKnight");
 const fs = require("fs");
 const { response } = require("express");
+const { cloudinary, upload } = require('../config/cloudinary');
 
 // Get user profile
 const userProfile = async (req, res) => {
@@ -78,23 +79,11 @@ const registerMusician = async (req, res) => {
     const saltRounds = parseInt(process.env.SALT);
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-    // Handle the photo upload (if provided)
-    let photoPath = null;
+    // Handle the photo upload (if provided) and upload it to Cloudinary
+    let photoUrl = null;
     if (req.file) {
-      // Define the uploads directory
-      const uploadDir = path.join(__dirname, "../uploads");
-
-      // Ensure the upload directory exists, create if it doesn't
-      if (!fs.existsSync(uploadDir)) {
-        fs.mkdirSync(uploadDir, { recursive: true }); // Create directories recursively
-      }
-
-      // Create a unique filename with a timestamp
-      const photoFilename = `${Date.now()}_${req.file.originalname}`;
-      photoPath = `/uploads/${photoFilename}`; // This is the path you can send back for frontend access
-
-      // Move the uploaded file to the final upload directory
-      fs.renameSync(req.file.path, path.join(uploadDir, photoFilename));
+      // Cloudinary stores the URL and other details after uploading
+      photoUrl = req.file.path;  // This should be the URL provided by Cloudinary
     }
 
     // Create a new user with the role 'musician'
@@ -105,7 +94,7 @@ const registerMusician = async (req, res) => {
       userType, // Automatically set to 'musician'
       bio,
       instruments: instruments.split(",").map((inst) => inst.trim()), // Convert comma-separated instruments to array
-      photo: photoPath, // Save the file path or null if no photo was uploaded
+      photo: photoUrl, // Save the Cloudinary URL
     });
 
     // Save the new musician user in the database
@@ -113,12 +102,13 @@ const registerMusician = async (req, res) => {
 
     return res
       .status(201)
-      .send({ message: "Musician registered successfully" });
+      .send({ message: "Musician registered successfully", photo: photoUrl }); // Corrected here
   } catch (error) {
     console.error(error);
     return res.status(500).send({ message: "Error registering musician" });
   }
 };
+
 
 // User login
 const userLogin = async (req, res) => {
@@ -233,7 +223,23 @@ const updateProfileMusician = async (req, res) => {
     if (instruments && instruments.length > 0)
       updatedData.instruments = instruments;
     // if (roles && roles.length > 0) updatedData.roles = roles;
-
+    // Handle the photo upload (if provided) and upload it to Cloudinary
+    let musician = await User.findById(id)
+    if (!musician) {
+      return res.status(404).json({ message: "Musician not found" });
+    }
+    let photoUrl = musician.photo;
+    
+    if (req.file) {
+      // Cloudinary stores the URL and other details after uploading
+      if (photoUrl) {
+        const publicId = photoUrl.split("/").pop().split('.')[0];
+        console.log(photoUrl);
+        await cloudinary.uploader.destroy(`musician_profiles/${publicId}`);
+      }
+      photoUrl = req.file.path;  // This should be the URL provided by Cloudinary
+    }
+    updatedData.photo = photoUrl;
     // If password is updated, hash it before saving
     // if (password) {
     //   const salt = await bcrypt.genSalt(10);

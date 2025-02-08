@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { authenticate, authorize } = require("../middleware/auth");
 const multer = require('multer');
-const upload = multer({ dest: 'temp/' });
+const { upload } = require('../config/cloudinary'); // Import Multer setup
 
 const {
   userProfile,
@@ -45,7 +45,7 @@ router.get("/musician/:id", authenticate, getMusicianById);
 router.delete("/musician/:id", authenticate, authorize(["musician"]), deleteMusicianProfile);
 
 // Route for updating musician's profile
-router.put("/profile/musician/:id", authenticate, authorize(['musician']), updateProfileMusician);
+router.put("/profile/musician/:id", authenticate, authorize(['musician']), upload.single('photo'), updateProfileMusician);
 
 // Add musician to a jam night (musician chooses a role)
 router.put("/musician/:musicianId/:jamNightId", authenticate, authorize(["musician"]), addMusicianToJamNight);

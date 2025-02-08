@@ -181,11 +181,12 @@ function Musicians() {
           username: musicians[index].username,
           bio: musicians[index].bio,
           instruments: musicians[index].instruments,
+          photo: musicians[index].photo
         },
         {
           headers: {
             Authorization: `Bearer ${token}`,
-            // "Content-Type": "multipart/form-data",
+            "Content-Type": "multipart/form-data",
           },
         }
       );
@@ -258,7 +259,7 @@ function Musicians() {
                   </h3>
                   {musician.photo && (
                     <img
-                      src={`https://jamspot-knights-2.onrender.com${musician.photo}`}
+                      src={`${musician.photo}`}
                       alt={`${musician.username}'s photo`}
                       className="musicianPhoto"
                     />
