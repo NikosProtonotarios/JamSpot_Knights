@@ -45,12 +45,12 @@
   font-size: 30px;
   padding: 50px;
   color: rgb(255, 255, 255);
-  font-weight: bold; /* Makes the text bold */
+  font-weight: bold;
   text-shadow: 
-  1px 1px 0px black,    /* Thin shadow for top-left */
-  -1px -1px 0px black,  /* Thin shadow for bottom-right */
-  1px -1px 0px black,   /* Thin shadow for top-right */
-  -1px 1px 0px black;   /* Thin shadow for bottom-left */
+  1px 1px 0px black,
+  -1px -1px 0px black,
+  1px -1px 0px black,
+  -1px 1px 0px black;
 }
 
 .footerContainer {
@@ -108,8 +108,8 @@
 }
 
 .signUpButton:hover {
-  color: #FF4500; /* Change text color on hover */
-  transform: scale(1.2); /* More dramatic scale effect */
+  color: #FF4500;
+  transform: scale(1.2);
   text-shadow: 4px 4px 10px rgba(255, 69, 0, 0.8), 0 0 25px rgba(255, 69, 0, 0.6);
   letter-spacing: 1px;
 }
@@ -124,8 +124,8 @@
 }
 
 .loginButton:hover {
-  color: #FF4500; /* Change text color on hover */
-  transform: scale(1.2); /* More dramatic scale effect */
+  color: #FF4500;
+  transform: scale(1.2);
   text-shadow: 4px 4px 10px rgba(255, 69, 0, 0.8), 0 0 25px rgba(255, 69, 0, 0.6);
   letter-spacing: 1px;
 }
@@ -140,8 +140,8 @@
 }
 
 .logoutButton:hover {
-  color: #FF4500; /* Change text color on hover */
-  transform: scale(1.2); /* More dramatic scale effect */
+  color: #FF4500;
+  transform: scale(1.2);
   text-shadow: 4px 4px 10px rgba(255, 69, 0, 0.8), 0 0 25px rgba(255, 69, 0, 0.6);
   letter-spacing: 1px;
 }
@@ -157,22 +157,22 @@
   font-size: 25px;
   transition: all 0.3s ease;
   text-shadow: 
-  1px 1px 0px black,    /* Thin shadow for top-left */
-  -1px -1px 0px black,  /* Thin shadow for bottom-right */
-  1px -1px 0px black,   /* Thin shadow for top-right */
-  -1px 1px 0px black;   /* Thin shadow for bottom-left */
+  1px 1px 0px black,
+  -1px -1px 0px black,
+  1px -1px 0px black,
+  -1px 1px 0px black;
 }
 
 .checkButtonsContainer a:hover {
-  color: #FF4500; /* Aggressive orange color */
-  transform: scale(1.2); /* Scale up the text */
-  text-shadow: 0 0 10px #FF4500, 0 0 30px #FF4500, 0 0 60px #FF4500; /* Glowing effect */
+  color: #FF4500;
+  transform: scale(1.2);
+  text-shadow: 0 0 10px #FF4500, 0 0 30px #FF4500, 0 0 60px #FF4500;
   letter-spacing: 1px;
   text-shadow: 
-  1px 1px 0px black,    /* Thin shadow for top-left */
-  -1px -1px 0px black,  /* Thin shadow for bottom-right */
-  1px -1px 0px black,   /* Thin shadow for top-right */
-  -1px 1px 0px black;   /* Thin shadow for bottom-left */
+  1px 1px 0px black,
+  -1px -1px 0px black,
+  1px -1px 0px black,
+  -1px 1px 0px black;
 }
 
 .middleContainer {
@@ -183,7 +183,7 @@
   background-position: center;
   display: flex;
   flex-direction: column;
-  justify-content: center; /* Center the content vertically */
+  justify-content: center;
 }
 
 @media (max-width: 782px) {
@@ -213,5 +213,15 @@
 @media (max-width: 433px) {
   .middle-check-fonts {
     font-size: 18px;
+  }
+}
+
+@media (min-width: 1146px) {
+  .middleContainer {
+    height: 100vh;
+  }
+
+  .mainDescription {
+    margin-bottom: 60px;
   }
 }
