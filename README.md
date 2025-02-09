@@ -7,6 +7,9 @@ This app provides a solution by giving ShowRunners a well-structured form to cre
 
 Whether you're a ShowRunner wanting to host a jam night that runs like clockwork, or a musician looking for your next stage to shine, JamSpot Knights is the place to be. With features like role assignment, musician profiles, and event confirmation, this app creates a community where live music thrives, and jam nights become a harmonious experience!
 
+## About the Project
+JamSpot Knights is a personal project developed entirely by me, Nikos Protonotarios. While others may appear as contributors due to code sharing or review, all development work was done solely by me.
+
 <h2 align="center">📷Photos📷</h2>
 <img src="https://raw.githubusercontent.com/NikosProtonotarios/Web_photos/main/jamspot1.png" alt="JamSpot Screenshot" />
 <img src="https://raw.githubusercontent.com/NikosProtonotarios/Web_photos/main/jamspot4.png" alt="JamSpot Screenshot" />
@@ -68,6 +71,7 @@ Whether you're a ShowRunner wanting to host a jam night that runs like clockwork
 - **Bcrypt** – Library for hashing passwords securely.
 - **JWT (JSON Web Token)** – Authentication method for secure user login and authorization.
 - **Multer** – Middleware for handling multipart/form-data (used for uploading files like musician photos).
+- **Cloudinary** – Cloud-based image and video management service, used for uploading, storing, and delivering musician photos.
 
   <h2 align="center">🔧Usage🔧</h2>
 
