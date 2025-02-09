@@ -7,7 +7,7 @@ This app provides a solution by giving ShowRunners a well-structured form to cre
 
 Whether you're a ShowRunner wanting to host a jam night that runs like clockwork, or a musician looking for your next stage to shine, JamSpot Knights is the place to be. With features like role assignment, musician profiles, and event confirmation, this app creates a community where live music thrives, and jam nights become a harmonious experience!
 
-## About the Project
+<h1 align="center">About the project</h1>
 JamSpot Knights is a personal project developed entirely by me, Nikos Protonotarios. While others may appear as contributors due to code sharing or review, all development work was done solely by me.
 
 <h2 align="center">📷Photos📷</h2>
